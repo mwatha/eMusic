@@ -22,6 +22,38 @@
   height: auto;
 }
 
+.images {
+  width: 200px;
+  height: 150px;
+  color: #F5F5F5;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.item_description {
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
+.image_container {
+}
+
+.zebra-striped {
+  width: 100%;
+}
+
+.details {
+  width: 200px;
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
 </style>
 
 
@@ -85,7 +117,21 @@
 
     <div class="span6">
       <div class="well sidebar-nav">
-        .................
+        <table class="zebra-striped">
+          <tbody>
+          <!-- here is where am going to loop to fill out this page with items -->
+          <tr>
+            <td class="image_container"><img src="/images/artists/heavy_d.jpg" / class="images"></td>
+            <td class="item_description">It's worth it for "Keep It Coming", but if you are not a Heavy D fan, I suggest that you don't buy it because it's kinda boring. I still haven't listened to side B. </td>
+            <td class="details">
+              <p style="">OUT OF STOCK</p>
+              <p>$10.00</p>
+              <p><a class="btn" href="#">View more</a></p>
+            </td>
+          </tr>
+          <!-- the loop will end here -->
+          </tbody>
+        </table>
       </div>
     </div>
 
