@@ -101,6 +101,11 @@
       <ul class="dropdown-menu">
         <li><a href="#">Track order</a></li>
         <li><a href="#">Cancel order</a></li>
+        <% if session[:user_id].blank?%>
+          <li><a href="/users/login">Login</a></li>
+        <%else%>
+          <li><a href="#">Logout</a></li>
+        <%end%>
       </ul>
     </li>
   </ul>
@@ -111,7 +116,8 @@
 
     <div class="span3">
       <div class="well sidebar-nav">
-        .................
+        eMusic is the world’s leading digital retailer of independent music, second only to iTunes in number of downloads sold. Delivering more than 4.5 million downloads per month; eMusic features over 1.2 million tracks from established and emerging artists in every genre from the world’s leading independent labels. A subscription-based service that offers 50 free downloads at sign-up, acclaimed editorial content, a vibrant online community and music discovery tools; eMusic gives consumers an inexpensive, low-risk way to explore great new music they wouldn’t find otherwise.
+        Various pricing plans allow customers to pay as little as 33¢ per track or $9.99 per book, encouraging them to sample new artists and authors and as a result, purchase more entertainment — eMusic customers typically buy more than 20 music tracks per month, so start downloading your FREE MP3s today and take two weeks to decide if you like eMusic. If you're not 100% satisfied simply cancel before your trial period ends and you'll never pay a dime. Keep the 25 FREE MP3s as a gift just for checking out eMusic.
       </div>
     </div>
 
