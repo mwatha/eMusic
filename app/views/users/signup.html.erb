@@ -1,0 +1,316 @@
+<html>
+<head>
+<%= stylesheet_link_tag "bootstrap" %>                                              
+<%= stylesheet_link_tag "docs" %>                                              
+<%= stylesheet_link_tag "prettify" %>                                              
+<%= stylesheet_link_tag "bootstrap-responsive" %>                                              
+
+<%= javascript_include_tag "jquery" %>                                              
+<%= javascript_include_tag "bootstrap-tab" %> 
+<%= javascript_include_tag "bootstrap-dropdown" %> 
+
+<link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">   
+
+<script>
+  function activateTabs() {
+    $('.dropdown-toggle').dropdown();
+  }
+</script>
+                                             
+<style>
+
+input, textarea, select, .uneditable-input {
+  height: 22px !important;
+}
+
+body {  
+padding-top: 40px; 
+background-color: transparent;
+}
+
+.container {
+  height: auto;
+}
+
+.images {
+  width: 200px;
+  height: 150px;
+  color: #F5F5F5;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.item_description {
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
+.image_container {
+}
+
+.zebra-striped {
+  width: 100%;
+}
+
+.details {
+  width: 200px;
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+/*
+user - css
+*/
+
+.row-fluid {
+  background-color: #F5F5F5;
+  text-align: center;
+}
+
+.front-card {
+  height: auto;
+  margin: -154px 0px 0px -418px;
+  top: 250%;
+  width: 838px;
+  left: 50%;
+  position: absolute;
+  color: #333333;
+  vertical-align: baseline;
+  padding: 0px;
+  font: inherit;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 14px 14px 14px 14px;
+}
+
+.front-random-image-city-balcony .front-welcome {
+  border-radius: 6px 6px 6px 6px;
+}
+
+.front-welcome {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 125px rgba(255, 255, 255, 0.35);
+  display: block;
+  height: 328px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 520px;
+  font: inherit;
+  margin: 0px;
+  padding: 0px;
+  vertical-align: baseline;
+  background: url("/images/welcome-1.jpg");
+}
+
+.signin, .signup {
+  background: -moz-linear-gradient(center top , #FFFFFF 0pt, #DDDDDD 100%) repeat scroll 0 0 transparent;
+  border-bottom: 1px solid #CCCCCC;
+  border-left: 1px solid #EEEEEE;
+  border-right: 1px solid #EEEEEE;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.front-card .text-input {
+  height: 20px;
+  border: 1px solid #CCCCCC;
+  box-shadow: 0 1px 0 #EEEEEE inset, 0 1px 0 #FFFFFF; 
+}
+
+input, textarea {
+  -moz-transition: background 0.2s linear 0s;
+}
+
+input, textarea, select {
+  background-color: #FFFFFF;
+  border-radius: 3px 3px 3px 3px;
+  display: inline-block;
+  margin: 0px;
+  outline: medium none;
+  padding: 4px;
+}
+
+label, input, textarea, select, button {
+  font: 13px/20px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.user-details {
+   width: 40%; 
+   position: relative;
+   left:31%;
+   background-color: transparent;
+}
+
+.user-details th {
+  text-align: left;
+  font: 13px/20px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.tos {
+  background: none repeat scroll 0 0 #F4F4F4;
+  border-bottom: 1px solid #DDDDDD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  clear: both;
+  margin: 0;
+  padding: 8px 0 10px;
+  text-shadow: 0 1px 0 #FFFFFF;
+  width: 392px;
+  display: none;
+}
+
+.scroller {
+  color: #888888;
+  height: 68px;
+  outline: medium none;
+  overflow-y: scroll;
+  padding: 0 10px;
+}
+</style>
+
+
+<script>
+
+  function setAttributes() {
+    var scroller = document.getElementsByClassName("scroller")[0]
+    var tos = document.getElementsByClassName("tos")[0]
+    tos.style.height = "80px";
+    scroller.style.height = "79px";
+    tos.style.display = "block";
+  }
+
+  function showAll() {
+    var scroller = document.getElementsByClassName("scroller")[0]
+    var tos = document.getElementsByClassName("tos")[0]
+    tos.style.height = "auto";
+    scroller.style.height = "400px";
+  }
+</script>
+
+
+</head>
+
+
+<body onload="setAttributes();">
+
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container">
+
+<ul class="nav">
+<li><a class="brand" href="/">eMusic</a></li>
+<li class="active">
+<a href="#">Home</a>
+</li>
+<li><a href="#">Mp3s</a></li>
+<li><a href="#">PDAs</a></li>
+<li><a href="#">Media players</a></li>
+<li><a href="#">Tabular computers</a></li>
+<li><a href="#">Blog</a></li>
+<li><a href="#">Support</a></li>
+</ul>
+
+<form class="navbar-search pull-right">
+<input type="text" class="search-query" placeholder="Search">
+</form>
+
+</div>
+</div>
+</div>
+
+
+<div class="container-fluid">
+<!-- -->
+<div class="subnav subnav-fixed">
+  <ul class="nav nav-pills">
+    <li class="dropdown active" style="float:right;">
+      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
+    </li>
+    <li class="dropdown" style="float:right;">
+      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Track order</a></li>
+        <li><a href="#">Cancel order</a></li>
+        <% if session[:user_id].blank?%>
+          <li><a href="/users/login">Login</a></li>
+        <%else%>
+          <li><a href="#">Logout</a></li>
+        <%end%>
+      </ul>
+    </li>
+  </ul>
+</div>
+<%="<br />"*3%>
+<!-- -->
+  <div class="row-fluid">
+  
+    <div class="front-card">
+        
+       <table class="user-details">                               
+        <tbody>                                                                 
+          <tr>                                                                  
+            <th>&nbsp;</th><td>&nbsp;</td>                                                     
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>First name</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Last name</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Gender</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Birthdate</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Email</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Username</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Password</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>Retype-password</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>&nbsp;</th><td>
+              <div class="tos" onclick="showAll();">
+                <div class="scroller" style="height: 400px;" mouseover="showAll();">
+                  <%=@terms_of_condtion%>
+                </div>
+              </div>
+            </td>                                                     
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>&nbsp;</th>
+            <td style="float:right;position:absolute;">              
+              <a class="btn signup_btn" href="/users/signup">Sign up for eMusic</a>
+            </td>                                                               
+          </tr>                                                                 
+          <tr>                                                                  
+            <th>&nbsp;</th><td>&nbsp;</td>                                                     
+          </tr>                                                                 
+        </tbody>                                                                
+       </table>
+
+    </div>
+
+  </div>
+
+</div>
+</body>
+
+<script>
+  activateTabs();
+</script>
+
+</html>
