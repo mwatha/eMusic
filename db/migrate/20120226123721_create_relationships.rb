@@ -1,8 +1,14 @@
 class CreateRelationships < ActiveRecord::Migration
   def self.up
-    create_table :relationships do |t|                                               
+=begin
+    create_table(:relationships , :id => false) do |t|                                               
       t.interger :parent                                                              
       t.interger :child                                                       
+    end
+=end
+    create_table(:relationships, :id => false) do |t|
+      t.column :parent, :integer
+      t.column :child, :integer
     end 
   end
 

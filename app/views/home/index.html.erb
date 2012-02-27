@@ -9,7 +9,7 @@
 <%= javascript_include_tag "bootstrap-tab" %> 
 <%= javascript_include_tag "bootstrap-dropdown" %> 
 
-<link rel="shortcut icon" href="/images/logo.gif" type="image/x-icon">
+<link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">
 
 <script>
   function activateTabs() {
@@ -18,11 +18,18 @@
 </script>
                                              
 <style>
-  body {  padding-top: 40px; }
+body {  
+  padding-top: 40px; 
+  min-width: 900px;
+}
 
 .container {
   height: auto;
 }
+
+input, textarea, select, .uneditable-input {                                    
+   height: 30px !important;                                                      
+} 
 
 .images {
   width: 200px;

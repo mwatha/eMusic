@@ -4,10 +4,12 @@
 <%= stylesheet_link_tag "docs" %>                                              
 <%= stylesheet_link_tag "prettify" %>                                              
 <%= stylesheet_link_tag "bootstrap-responsive" %>                                              
+<%= stylesheet_link_tag "datepicker" %>                                              
 
 <%= javascript_include_tag "jquery" %>                                              
 <%= javascript_include_tag "bootstrap-tab" %> 
 <%= javascript_include_tag "bootstrap-dropdown" %> 
+<%= javascript_include_tag "bootstrap-datepicker" %> 
 
 <link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">   
 
@@ -15,12 +17,15 @@
   function activateTabs() {
     $('.dropdown-toggle').dropdown();
   }
+  
+  function checkBox() {
+  }
 </script>
                                              
 <style>
 
 input, textarea, select, .uneditable-input {
-  height: 22px !important;
+  height: 30px !important;
 }
 
 body {  
@@ -140,9 +145,9 @@ label, input, textarea, select, button {
 }
 
 .user-details {
-   width: 40%; 
+   width: 75%; 
    position: relative;
-   left:31%;
+   left:19%;
    background-color: transparent;
 }
 
@@ -171,6 +176,46 @@ label, input, textarea, select, button {
   overflow-y: scroll;
   padding: 0 10px;
 }
+
+.scroller p{
+  color: #999999;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.scroller h3{
+  font-size: 13px;
+  margin: 15px 0 0;
+  line-height: 1;
+  color: #333333;
+  text-rendering: optimizelegibility;
+}
+
+h1 {
+  clear: both;
+  padding: 40px 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  color: #333333;
+}
+
+#dob_disabled {
+  width: 159px;
+}
+
+.span2 {
+  visibility:hidden;                                                          
+  position: absolute;                                                         
+  bottom: 0px;
+}
+
+.input-prepend .add-on, .input-append .add-on {
+  position: absolute;
+  top: 123px;
+  left: 295px;
+  height: 13px;
+}
 </style>
 
 
@@ -179,7 +224,7 @@ label, input, textarea, select, button {
   function setAttributes() {
     var scroller = document.getElementsByClassName("scroller")[0]
     var tos = document.getElementsByClassName("tos")[0]
-    tos.style.height = "80px";
+    tos.style.height = "105px";
     scroller.style.height = "79px";
     tos.style.display = "block";
   }
@@ -189,6 +234,17 @@ label, input, textarea, select, button {
     var tos = document.getElementsByClassName("tos")[0]
     tos.style.height = "auto";
     scroller.style.height = "400px";
+  }
+
+  function submitForm() {
+    form = document.getElementById("customer");
+    form.submit();
+  }
+
+  function updateDOB() {
+    var dob = document.getElementsByClassName("span2")[0].value;
+    document.getElementById("dob_disabled").value = dob;
+    document.getElementById("user_birtdate").value = dob;
   }
 </script>
 
@@ -249,41 +305,54 @@ label, input, textarea, select, button {
 <%="<br />"*3%>
 <!-- -->
   <div class="row-fluid">
-  
+      
     <div class="front-card">
-        
+       <h1>Join eMusic today.</h1>   
+       <form action="/users/create" method="post" id = "customer">
        <table class="user-details">                               
         <tbody>                                                                 
           <tr>                                                                  
             <th>&nbsp;</th><td>&nbsp;</td>                                                     
           </tr>                                                                 
           <tr>                                                                  
-            <th>First name</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>First name</th><td><%=text_field(:user, :first_name) %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Last name</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>Last name</th><td><%=text_field(:user, :last_name) %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Gender</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>Gender</th><td><%= select_tag "user[gender]", options_for_select(["","Female", "Male"]) %></td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Birthdate</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>Birthdate</th>
+            <td>
+              <input id="dob_disabled" type="text" size="10" name="user[dob]" disabled="disabled">
+              <div class="input-append date" id="dp3" data-date="<%=Date.today - 20.year%>" data-date-format="yyyy-mm-dd">
+                <input class="span2" size="16" type="text" value="<%=Date.today - 20.year%>" style="width: auto;">
+                <span class="add-on"><i class="icon-th"></i></span>
+              </div>
+            </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Email</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>Email</th><td><%=text_field(:user, :email) %> </td>
           </tr>                                                                 
           <tr>                                                                  
             <th>Username</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Password</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>Password</th><td><%=password_field(:user, :password) %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Retype-password</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <th>Retype-password</th><td><%=password_field(:user, :retype_password) %> </td>
           </tr>                                                                 
           <tr>                                                                  
             <th>&nbsp;</th><td>
               <div class="tos" onclick="showAll();">
+                <p>By clicking the check box, you agree to the terms below:
+                   <%=check_box_tag(:female, 
+                      value = "0", checked = false, 
+                      options = {:onchange => "checkBox();"})%>
+                </p>
                 <div class="scroller" style="height: 400px;" mouseover="showAll();">
                   <%=@terms_of_condtion%>
                 </div>
@@ -293,7 +362,7 @@ label, input, textarea, select, button {
           <tr>                                                                  
             <th>&nbsp;</th>
             <td style="float:right;position:absolute;">              
-              <a class="btn signup_btn" href="/users/signup">Sign up for eMusic</a>
+              <a class="btn signup_btn" href="#" onclick="submitForm();">Sign up for eMusic</a>
             </td>                                                               
           </tr>                                                                 
           <tr>                                                                  
@@ -301,7 +370,8 @@ label, input, textarea, select, button {
           </tr>                                                                 
         </tbody>                                                                
        </table>
-
+       <%= hidden_field_tag("user[birtdate]", nil) %>
+       </form>
     </div>
 
   </div>
@@ -311,6 +381,8 @@ label, input, textarea, select, button {
 
 <script>
   activateTabs();
+  $('.date').datepicker();
+  setInterval("updateDOB();",300);
 </script>
 
 </html>
