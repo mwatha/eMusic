@@ -9,6 +9,8 @@
 <%= javascript_include_tag "bootstrap-tab" %> 
 <%= javascript_include_tag "bootstrap-dropdown" %> 
 
+<link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">   
+
 <script>
   function activateTabs() {
     $('.dropdown-toggle').dropdown();
@@ -107,11 +109,16 @@ user - css
 }
 
 .front-signin {
-  height: 108px;
+  height: 118px;
   left: 536px;
   position: absolute;
   top: 0px;
-  width: 300px;
+  width: 233px;
+  border: 1px;
+  border-style: solid;
+  border-radius: 14px 14px 14px 14px;
+  background-color: #DDDDDD; /* D5D5D5;*/
+  border-color: #D5D5D5;
 }
 
 .front-signin .username {
@@ -164,6 +171,30 @@ input, textarea, select {
 
 label, input, textarea, select, button {
   font: 13px/20px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#user_password {
+  width: 65%;
+  height: auto;
+  margin-left: 12px;
+}
+
+#user_username {
+  height: auto;
+  margin-left: 12px;
+}
+
+.signup_btn {
+  /*background-color: #FD9A0F;
+
+  -moz-linear-gradient(#33BCEF, #019AD2)
+
+  background-image: -moz-linear-gradient(center top , #FEE94F 0pt, #FD9A0F 100%);
+  border-color: #FFAA22;*/
+  background-repeat: repeat-x;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
 }
 </style>
 
@@ -239,6 +270,21 @@ label, input, textarea, select, button {
       <div class="front-signin js-front-signin">
        <table class="flex-table password-signin">
         <tbody>
+          <tr>
+            <td><%=text_field(:user, :username, :textCase => "lower",:value => "username") %> </td>
+          </tr>
+          <tr>
+            <td><%=password_field(:user, :password, :textCase => "lower",:value => "XXXXX") %>
+            <a class="btn" href="#">Login</a></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="float:right;position:absolute;right:10px;">
+              <a class="btn signup_btn" href="/users/signup">Sign up for eMusic</a>
+            </td>
+          </tr>
         </tbody> 
        </table> 
       </div>
