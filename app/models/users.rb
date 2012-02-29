@@ -4,7 +4,7 @@ require 'digest/sha2'
 
 class Users < ActiveRecord::Base
   set_table_name :users
-  set_primary_key :ser_id
+  set_primary_key :user_id
 
   before_save :set_password, :before_create
 
@@ -25,6 +25,7 @@ class Users < ActiveRecord::Base
   def self.authenticate(login, password)                                        
     u = find :first, :conditions => {:username => login}                        
     u && u.authenticated?(password) ? u : nil                                   
+    return u
   end                                                                           
                                                                                 
   def authenticated?(plain)                                                     
@@ -40,8 +41,8 @@ class Users < ActiveRecord::Base
 
   def before_create                                                            
     super                                                                       
-    self.salt = User.random_string(10) if !self.salt?                           
-    self.password = User.encrypt(self.password,self.salt)                       
+    self.salt = Users.random_string(10) if !self.salt?                           
+    self.password = Users.encrypt(self.password,self.salt)                       
   end
 
    def self.random_string(len)                                                  

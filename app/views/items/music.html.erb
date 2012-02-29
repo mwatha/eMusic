@@ -59,7 +59,7 @@ input, textarea, select, .uneditable-input {
 }
 
 .details {
-  width: 200px;
+  width: 410px;
   padding-left: 10px;
   vertical-align: top;
   line-height: 1.4em;
@@ -72,15 +72,10 @@ input, textarea, select, .uneditable-input {
   font-size: 13px;
 }
 
-#page-container {
-  display: table;
-  background-color: red;
-  width: 837px;
-  position: relative;
-  height: 70%;
-  margin: 0px auto;
-  vertical-align: baseline;
-  background: url("/images/welcome-2.png");
+.artist_row {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  line-height: 3;
 }
 </style>
 
@@ -100,7 +95,7 @@ input, textarea, select, .uneditable-input {
 <li class="active">
 <a href="#">Home</a>
 </li>
-<li><a href="/items/music">Mp3s</a></li>
+<li><a href="#">Mp3s</a></li>
 <li><a href="#">PDAs</a></li>
 <li><a href="#">Media players</a></li>
 <li><a href="#">Tabular computers</a></li>
@@ -144,19 +139,50 @@ input, textarea, select, .uneditable-input {
     </li>
   </ul>
 </div>
-<%="<br />"*4%>
-
-
+<%="<br />"*3%>
 <!-- -->
-<div id="page-container" class="wrapper profile-container">
-<h1 style="bottom: 40px;position:absolute;color:black;margin-left:10px;">Welcome to eMusic.</h1>   
-<p style="bottom:0px;position:absolute;color:black;margin-left:10px;">
-  Find out what’s new in the muisc World, download the latest mp3s, DVDs and buy the latest media gadgets out there.
-</p> 
+  <div class="row-fluid">
+
+    <!--div class="span3">
+      <div class="well sidebar-nav">
+        eMusic is the world’s leading digital retailer of independent music, second only to iTunes in number of downloads sold. Delivering more than 4.5 million downloads per month; eMusic features over 1.2 million tracks from established and emerging artists in every genre from the world’s leading independent labels. A subscription-based service that offers 50 free downloads at sign-up, acclaimed editorial content, a vibrant online community and music discovery tools; eMusic gives consumers an inexpensive, low-risk way to explore great new music they wouldn’t find otherwise.
+        Various pricing plans allow customers to pay as little as 33¢ per track or $9.99 per book, encouraging them to sample new artists and authors and as a result, purchase more entertainment — eMusic customers typically buy more than 20 music tracks per month, so start downloading your FREE MP3s today and take two weeks to decide if you like eMusic. If you're not 100% satisfied simply cancel before your trial period ends and you'll never pay a dime. Keep the 25 FREE MP3s as a gift just for checking out eMusic.
+      </div>
+    </div -->
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+          <%(@artists || {}).each do |albulm_id , attributes| %>
+          <tr class="artist_row">
+            <td class="image_container"><img src="<%=attributes[:url]%>" / class="images"></td>
+            <td class="item_description"><%=attributes[:description]%></td>
+            <td class="details">
+              <p style="">OUT OF STOCK</p>
+              <p>$10.00</p>
+              <p><a class="btn" href="/items/view/<%=albulm_id%>">View more</a></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        .................
+      </div>
+    </div>
+
+
+
+  </div>
 </div>
-<!-- -->
-
-
 </body>
 
 <script>

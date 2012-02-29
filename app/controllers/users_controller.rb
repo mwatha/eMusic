@@ -30,22 +30,45 @@ EOF
   end
 
   def create
-    person = People.create()
+    person = People.new()
     person.first_name = params[:user]["first_name"]
     person.last_name = params[:user]["last_name"]
     person.birthdate = params[:user]["birtdate"]
     person.gender = params[:user]["gender"]
     person.save
     
-    @user = Users.create()
-    @user.people_id = person.id 
-    @user.username = params[:user]["username"]
-    @user.password = params[:user]["password"]
+    user = Users.new()
+    user.people_id = person.id 
+    user.username = params[:user]["username"]
+    user.password = params[:user]["password"]
     
-    if @user.save
-      render :text => "Ooops done!" and return
+    if user.save
+      session[:user_id] = user.id
+      redirect_to "/home/index" and return   
     end
-       
+    redirect_to "/users/signup" and return   
   end
+  
+  def logout
+    reset_session
+    session[:user_id] = nil
+    redirect_to "/users/login" and return   
+  end
+
+  def login
+    if request.get?
+      reset_session
+    else
+      user = Users.new(params[:user])
+      logged_in_user = user.try_to_login
+      if logged_in_user
+        session[:user_id] = logged_in_user.user_id
+        redirect_to("/home/index")
+      else
+        flash[:error] = "Invalid username or password"
+      end      
+    end
+  end
+
 
 end

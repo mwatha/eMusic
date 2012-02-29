@@ -147,7 +147,7 @@ label, input, textarea, select, button {
 .user-details {
    width: 75%; 
    position: relative;
-   left:19%;
+   left: 35%;
    background-color: transparent;
 }
 
@@ -213,7 +213,7 @@ h1 {
 .input-prepend .add-on, .input-append .add-on {
   position: absolute;
   top: 123px;
-  left: 295px;
+  left: 230px;
   height: 13px;
 }
 </style>
@@ -312,21 +312,21 @@ h1 {
        <table class="user-details">                               
         <tbody>                                                                 
           <tr>                                                                  
-            <th>&nbsp;</th><td>&nbsp;</td>                                                     
+            <td>&nbsp;</td>                                                     
           </tr>                                                                 
           <tr>                                                                  
-            <th>First name</th><td><%=text_field(:user, :first_name) %> </td>
+            <td><%=text_field(:user, :first_name,:placeholder => "First name") %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Last name</th><td><%=text_field(:user, :last_name) %> </td>
+            <td><%=text_field(:user, :last_name ,:placeholder => "Last name") %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Gender</th><td><%= select_tag "user[gender]", options_for_select(["","Female", "Male"]) %></td>
+            <td><%= select_tag "user[gender]", options_for_select(["Select sex","Female", "Male"]),:placeholder => "Sex" %></td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Birthdate</th>
             <td>
-              <input id="dob_disabled" type="text" size="10" name="user[dob]" disabled="disabled">
+              <font style="color: #999999;font-size:12px;">Birthdate:</font>
+              <input id="dob_disabled" type="text" size="10" name="user[dob]" disabled="disabled" placeholder = "Birthdate">
               <div class="input-append date" id="dp3" data-date="<%=Date.today - 20.year%>" data-date-format="yyyy-mm-dd">
                 <input class="span2" size="16" type="text" value="<%=Date.today - 20.year%>" style="width: auto;">
                 <span class="add-on"><i class="icon-th"></i></span>
@@ -334,19 +334,19 @@ h1 {
             </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Email</th><td><%=text_field(:user, :email) %> </td>
+            <td><%=text_field(:user, :email,:placeholder => "Email") %></td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Username</th><td><%=text_field(:user, :username, :textCase => "lower") %> </td>
+            <td><%=text_field(:user, :username, :textCase => "lower",:placeholder => "Username") %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Password</th><td><%=password_field(:user, :password) %> </td>
+            <td><%=password_field(:user, :password,:placeholder => "Password") %></td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>Retype-password</th><td><%=password_field(:user, :retype_password) %> </td>
+            <td><%=password_field(:user, :retype_password,:placeholder => "Retype-password") %> </td>
           </tr>                                                                 
           <tr>                                                                  
-            <th>&nbsp;</th><td>
+            <td>
               <div class="tos" onclick="showAll();">
                 <p>By clicking the check box, you agree to the terms below:
                    <%=check_box_tag(:female, 
@@ -360,13 +360,12 @@ h1 {
             </td>                                                     
           </tr>                                                                 
           <tr>                                                                  
-            <th>&nbsp;</th>
             <td style="float:right;position:absolute;">              
               <a class="btn signup_btn" href="#" onclick="submitForm();">Sign up for eMusic</a>
             </td>                                                               
           </tr>                                                                 
           <tr>                                                                  
-            <th>&nbsp;</th><td>&nbsp;</td>                                                     
+            <td>&nbsp;</td>                                                     
           </tr>                                                                 
         </tbody>                                                                
        </table>

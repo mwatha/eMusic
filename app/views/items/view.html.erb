@@ -31,6 +31,10 @@ input, textarea, select, .uneditable-input {
    height: 30px !important;                                                      
 } 
 
+#order_quantity {
+  width: auto;
+}
+
 .images {
   /*width: 200px;
   height: 150px;
@@ -39,8 +43,8 @@ input, textarea, select, .uneditable-input {
   border-width: 1px;*/
   
   border-radius: 6px 6px 6px 6px;
-  height: 128px;
-  width: 128px;
+  height: 300px;
+  width: 300px;
 }
 
 .item_description {
@@ -59,7 +63,7 @@ input, textarea, select, .uneditable-input {
 }
 
 .details {
-  width: 200px;
+  width: 410px;
   padding-left: 10px;
   vertical-align: top;
   line-height: 1.4em;
@@ -72,15 +76,10 @@ input, textarea, select, .uneditable-input {
   font-size: 13px;
 }
 
-#page-container {
-  display: table;
-  background-color: red;
-  width: 837px;
-  position: relative;
-  height: 70%;
-  margin: 0px auto;
-  vertical-align: baseline;
-  background: url("/images/welcome-2.png");
+.artist_row {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  line-height: 3;
 }
 </style>
 
@@ -96,11 +95,11 @@ input, textarea, select, .uneditable-input {
 <div class="container">
 
 <ul class="nav">
-<li><a class="brand" href="#">eMusic</a></li>
+<li><a class="brand" href="/home/index">eMusic</a></li>
 <li class="active">
-<a href="#">Home</a>
+<a href="/home/index">Home</a>
 </li>
-<li><a href="/items/music">Mp3s</a></li>
+<li><a href="/items/music">mp3s</a></li>
 <li><a href="#">PDAs</a></li>
 <li><a href="#">Media players</a></li>
 <li><a href="#">Tabular computers</a></li>
@@ -144,19 +143,68 @@ input, textarea, select, .uneditable-input {
     </li>
   </ul>
 </div>
-<%="<br />"*4%>
-
-
+<%="<br />"*3%>
 <!-- -->
-<div id="page-container" class="wrapper profile-container">
-<h1 style="bottom: 40px;position:absolute;color:black;margin-left:10px;">Welcome to eMusic.</h1>   
-<p style="bottom:0px;position:absolute;color:black;margin-left:10px;">
-  Find out what’s new in the muisc World, download the latest mp3s, DVDs and buy the latest media gadgets out there.
-</p> 
+  <div class="row-fluid">
+
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+          <%(@album || []).each do |attributes|%>
+          <tr class="artist_row">
+            <td class="image_container"><img src="<%=attributes[:url]%>" / class="images"></td>
+            <td class="item_description"><%=attributes[:description]%></td>
+            <td class="details">
+              <p style="">Quantity<%= select_tag "order[quantity]", options_for_select([1,2,3,4,5,6,7,8,9,10])%></p>
+              <p style=""><a class="btn" href="/items/view/<%=%>">Add to Cart</a></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <%end%>
+          </tbody>
+        </table><br />
+        <% unless @album.blank? %>
+          <font style="font-size:14px;color: blue;">
+          <%=@album[0][:artist]%> - <%= @album[0][:title] %> Album Track Listing
+          </font>
+        <%end%>
+        <table class="zebra-striped table-striped">
+          <tbody style="">
+          <tr style="background-color: #709BCE;color: #FFFFFF;">
+            <td>&nbsp;</td>
+            <td style="padding-top:8px;" valign="top">Song title</td>
+            <td>Time</td>
+            <td>Price</td>
+            <td>&nbsp;</td>
+          </tr>
+          <%(@songs || []).each do |song| %>
+            <tr>
+              <td>&nbsp;</td>
+              <td style="color: #222222;font-size: 12px;"><%=song.title%></td>
+              <td style="color: #222222;font-size: 12px;"><%=%></td>
+              <td style="color: #222222;font-size: 12px;"><%=%></td>
+              <td align="right"><a class="btn" href="/items/view/<%=%>">Add to Cart</a></td>
+            </tr>
+          <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        .................
+      </div>
+    </div>
+
+
+
+  </div>
 </div>
-<!-- -->
-
-
 </body>
 
 <script>

@@ -9,13 +9,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226125941) do
+ActiveRecord::Schema.define(:version => 20120229163005) do
+
+  create_table "albums", :primary_key => "album_id", :force => true do |t|
+    t.string   "artist"
+    t.integer  "year"
+    t.integer  "item_id"
+    t.datetime "date_created",     :default => '2012-02-29 18:48:26'
+    t.boolean  "retired",          :default => false
+    t.integer  "creator_id"
+    t.datetime "retired_datetime"
+  end
 
   create_table "item", :primary_key => "item_id", :force => true do |t|
-    t.string   "item"
+    t.string   "item_type"
     t.text     "description"
     t.text     "image_url"
-    t.datetime "date_created",     :default => '2012-02-27 20:00:34'
+    t.datetime "date_created",     :default => '2012-02-29 18:36:20'
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
     t.string   "retired_reason"
@@ -23,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20120226125941) do
 
   create_table "item_type", :primary_key => "item_type_id", :force => true do |t|
     t.string   "name"
-    t.datetime "date_created",     :default => '2012-02-27 20:00:34'
+    t.datetime "date_created",     :default => '2012-02-29 18:36:19'
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
     t.string   "retired_reason"
@@ -34,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120226125941) do
     t.string   "last_name"
     t.date     "birthdate"
     t.string   "gender"
-    t.datetime "date_created",     :default => '2012-02-27 20:00:33'
+    t.datetime "date_created",     :default => '2012-02-29 18:36:18'
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
     t.string   "retired_reason"
@@ -42,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20120226125941) do
 
   create_table "people_identifier", :primary_key => "people_identifier_id", :force => true do |t|
     t.string   "identifier"
-    t.datetime "date_created",     :default => '2012-02-27 20:03:48'
+    t.datetime "date_created",     :default => '2012-02-29 18:36:19'
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
     t.string   "retired_reason"
@@ -51,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20120226125941) do
   create_table "people_identifier_type", :primary_key => "people_identifier_type_id", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "date_created",     :default => '2012-02-27 20:03:48'
+    t.datetime "date_created",     :default => '2012-02-29 18:36:20'
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
     t.string   "retired_reason"
@@ -62,12 +72,23 @@ ActiveRecord::Schema.define(:version => 20120226125941) do
     t.integer "child"
   end
 
+  create_table "songs", :primary_key => "song_id", :force => true do |t|
+    t.string   "title"
+    t.string   "genre"
+    t.integer  "year"
+    t.integer  "item_id"
+    t.datetime "date_created",     :default => '2012-02-29 18:48:26'
+    t.boolean  "retired",          :default => false
+    t.integer  "creator_id"
+    t.datetime "retired_datetime"
+  end
+
   create_table "users", :primary_key => "user_id", :force => true do |t|
     t.string   "username"
     t.string   "password"
     t.string   "salt"
     t.integer  "people_id"
-    t.datetime "date_created",     :default => '2012-02-27 20:00:33'
+    t.datetime "date_created",     :default => '2012-02-29 18:36:18'
     t.boolean  "retired",          :default => false
     t.integer  "creator_id"
     t.datetime "retired_datetime"

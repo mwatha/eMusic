@@ -12,6 +12,11 @@
 <link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">   
 
 <script>
+  function submitForm() {
+    form = document.getElementById("customer");
+    form.submit();
+  }
+
   function activateTabs() {
     $('.dropdown-toggle').dropdown();
   }
@@ -272,14 +277,15 @@ label, input, textarea, select, button {
 
     
       <div class="front-signin js-front-signin">
+       <form action="/users/login" method="post" id="customer">
        <table class="flex-table password-signin">
         <tbody>
           <tr>
-            <td><%=text_field(:user, :username, :textCase => "lower",:value => "username") %> </td>
+            <td><%=text_field(:user, :username, :textCase => "lower",:placeholder => "username") %> </td>
           </tr>
           <tr>
-            <td><%=password_field(:user, :password, :textCase => "lower",:value => "XXXXX") %>
-            <a class="btn" href="#">Login</a></td>
+            <td><%=password_field(:user, :password, :textCase => "lower",:placeholder => "password") %>
+            <a class="btn" href="#" onclick="submitForm();">Login</a></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -291,6 +297,7 @@ label, input, textarea, select, button {
           </tr>
         </tbody> 
        </table> 
+       </form>
       </div>
 
 
