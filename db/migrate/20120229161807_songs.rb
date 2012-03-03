@@ -1,11 +1,9 @@
 class Songs < ActiveRecord::Migration
   def self.up
     create_table(:songs, :primary_key => 'song_id') do |t|
-      t.interger :album_id 
       t.string :title                                                      
-      t.interger :track_number                                                      
       t.string :genre                                                      
-      t.interger :minutes                                                      
+      t.time :minutes                                                      
       t.integer :year
       t.integer :item_id
       t.datetime :date_created , :default => Time.now()
@@ -14,6 +12,17 @@ class Songs < ActiveRecord::Migration
       t.interger :retired_by                                                    
       t.datetime :retired_datetime
     end
+
+        ActiveRecord::Base.connection.execute <<EOF                             
+ALTER TABLE songs                                                       
+ADD COLUMN album_id INT(11) AFTER song_id;                                
+EOF
+
+        ActiveRecord::Base.connection.execute <<EOF                             
+ALTER TABLE songs                                                       
+ADD COLUMN track_number INT(11) AFTER title;                                
+EOF
+
   end
 
   def self.down

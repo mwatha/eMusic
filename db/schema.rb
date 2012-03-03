@@ -9,10 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120229163005) do
+ActiveRecord::Schema.define(:version => 20120303165804) do
 
   create_table "albums", :primary_key => "album_id", :force => true do |t|
     t.string   "artist"
+    t.string   "album_title"
     t.integer  "year"
     t.integer  "item_id"
     t.datetime "date_created",     :default => '2012-02-29 18:48:26'
@@ -37,6 +38,11 @@ ActiveRecord::Schema.define(:version => 20120229163005) do
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
     t.string   "retired_reason"
+  end
+
+  create_table "orders", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "people", :primary_key => "people_id", :force => true do |t|
@@ -67,6 +73,25 @@ ActiveRecord::Schema.define(:version => 20120229163005) do
     t.string   "retired_reason"
   end
 
+  create_table "product_price_category", :primary_key => "product_price_category_id", :force => true do |t|
+    t.string   "name"
+    t.datetime "date_created",     :default => '2012-03-03 19:58:17'
+    t.boolean  "retired",          :default => false
+    t.datetime "retired_datetime"
+    t.string   "retired_reason"
+  end
+
+  create_table "product_prices", :primary_key => "product_price_id", :force => true do |t|
+    t.integer  "product_unique_id"
+    t.integer  "product_category"
+    t.float    "price"
+    t.float    "quantity"
+    t.datetime "date_created",      :default => '2012-03-03 19:58:15'
+    t.boolean  "retired",           :default => false
+    t.datetime "retired_datetime"
+    t.string   "retired_reason"
+  end
+
   create_table "relationships", :id => false, :force => true do |t|
     t.integer "parent"
     t.integer "child"
@@ -88,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20120229163005) do
     t.string   "password"
     t.string   "salt"
     t.integer  "people_id"
-    t.datetime "date_created",     :default => '2012-02-29 18:36:18'
+    t.datetime "date_created",     :default => '2012-03-03 19:58:15'
     t.boolean  "retired",          :default => false
     t.integer  "creator_id"
     t.datetime "retired_datetime"

@@ -180,7 +180,16 @@ input, textarea, select, .uneditable-input {
               <%=attributes[:description]%>
             </td>
             <td class="details">
-              <p style="">Quantity<%= select_tag "order[quantity]", options_for_select([1,2,3,4,5,6,7,8,9,10])%></p>
+              <% quantity = attributes[:quantity].to_i rescue 0
+                 price = attributes[:price] 
+                 product_available_quantity = []
+                 (1.upto(quantity)).each do | number |
+                  product_available_quantity << number
+                 end
+                 product_available_quantity = ['None'] if product_available_quantity.blank?
+              %>
+              <p style="color:orange;font-size:20px;">$<%= price %></p>
+              <p style="">Quantity:&nbsp;<%= select_tag "order[quantity]", options_for_select(product_available_quantity[0..99])%></p>
               <p style=""><a class="btn" href="#" onclick="addToCart(<%=@album[0][:album_id]%>)">Add to Cart</a></p>
             </td>
           </tr>
