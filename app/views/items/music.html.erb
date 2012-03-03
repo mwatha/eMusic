@@ -23,6 +23,10 @@ body {
   min-width: 900px;
 }
 
+.dropdown-menu {
+  left: -79px !important;
+}
+
 .container {
   height: auto;
 }
@@ -59,7 +63,7 @@ input, textarea, select, .uneditable-input {
 }
 
 .details {
-  width: 410px;
+  width: 200px;
   padding-left: 10px;
   vertical-align: top;
   line-height: 1.4em;
@@ -91,11 +95,11 @@ input, textarea, select, .uneditable-input {
 <div class="container">
 
 <ul class="nav">
-<li><a class="brand" href="#">eMusic</a></li>
+<li><a class="brand" href="/home">eMusic</a></li>
 <li class="active">
-<a href="#">Home</a>
+<a href="/home">Home</a>
 </li>
-<li><a href="#">Mp3s</a></li>
+<li><a href="/items/music">mp3s</a></li>
 <li><a href="#">PDAs</a></li>
 <li><a href="#">Media players</a></li>
 <li><a href="#">Tabular computers</a></li>
@@ -124,6 +128,14 @@ input, textarea, select, .uneditable-input {
   <ul class="nav nav-pills">
     <li class="dropdown active" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
+      <%unless @cart.blank?%>                                                  
+      <ul class="dropdown-menu">                                                
+        <%(@cart[0..9] || []).each do |cart|%>                                                  
+          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>       
+        <%end%>                                                                 
+        <li><a href="#">View all</a></li>                                       
+      </ul>
+      <%end%>                                                                 
     </li>
     <li class="dropdown" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
@@ -175,7 +187,16 @@ input, textarea, select, .uneditable-input {
 
     <div class="span3">
       <div class="well sidebar-nav">
-        .................
+        <table>                                                                 
+        <caption style="font-size:16px;color:Orange;">Categories</caption>      
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+          <tr>                                                                  
+            <td style="font-size:14px;color: blue;">                            
+              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>                                                               
+          </tr>                                                                 
+        <%end%>                                                                 
+        </table>
       </div>
     </div>
 

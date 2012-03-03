@@ -15,12 +15,21 @@
   function activateTabs() {
     $('.dropdown-toggle').dropdown();
   }
+
+  function addToCart(albumID) {
+    var quantity = document.getElementById("order_quantity").value;
+    document.location = "/items/add_to_cart?id=album&album_id=" + albumID + "&quantity=" + quantity;
+  }
 </script>
                                              
 <style>
 body {  
   padding-top: 40px; 
   min-width: 900px;
+}
+
+.dropdown-menu {                                                                
+  left: -79px !important;                                                      
 }
 
 .container {
@@ -63,7 +72,7 @@ input, textarea, select, .uneditable-input {
 }
 
 .details {
-  width: 410px;
+  width: 200px;
   padding-left: 10px;
   vertical-align: top;
   line-height: 1.4em;
@@ -95,9 +104,9 @@ input, textarea, select, .uneditable-input {
 <div class="container">
 
 <ul class="nav">
-<li><a class="brand" href="/home/index">eMusic</a></li>
+<li><a class="brand" href="/home">eMusic</a></li>
 <li class="active">
-<a href="/home/index">Home</a>
+<a href="/home">Home</a>
 </li>
 <li><a href="/items/music">mp3s</a></li>
 <li><a href="#">PDAs</a></li>
@@ -128,6 +137,13 @@ input, textarea, select, .uneditable-input {
   <ul class="nav nav-pills">
     <li class="dropdown active" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <%(@cart || []).each do |cart|
+          raise cart.to_yaml%>
+          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>
+        <%end%>
+        <li><a href="#">View all</a></li>
+      </ul>
     </li>
     <li class="dropdown" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
@@ -155,10 +171,17 @@ input, textarea, select, .uneditable-input {
           <%(@album || []).each do |attributes|%>
           <tr class="artist_row">
             <td class="image_container"><img src="<%=attributes[:url]%>" / class="images"></td>
-            <td class="item_description"><%=attributes[:description]%></td>
+            <td class="item_description">
+              <% unless @album.blank? %>
+                <font style="font-size:14px;color: blue;">
+                <%=@album[0][:artist]%> - <%= @album[0][:title] %> 
+                </font>
+              <%end%></p>
+              <%=attributes[:description]%>
+            </td>
             <td class="details">
               <p style="">Quantity<%= select_tag "order[quantity]", options_for_select([1,2,3,4,5,6,7,8,9,10])%></p>
-              <p style=""><a class="btn" href="/items/view/<%=%>">Add to Cart</a></p>
+              <p style=""><a class="btn" href="#" onclick="addToCart(<%=@album[0][:album_id]%>)">Add to Cart</a></p>
             </td>
           </tr>
           <tr>
@@ -174,12 +197,12 @@ input, textarea, select, .uneditable-input {
         <%end%>
         <table class="zebra-striped table-striped">
           <tbody style="">
-          <tr style="background-color: #709BCE;color: #FFFFFF;">
-            <td>&nbsp;</td>
-            <td style="padding-top:8px;" valign="top">Song title</td>
-            <td>Time</td>
-            <td>Price</td>
-            <td>&nbsp;</td>
+          <tr style="background-color:#709BCE !important;color: black;">
+            <th style="background-color:#709BCE;">&nbsp;</th>
+            <th style="background-color:#709BCE;padding-top:8px;text-align:left;font-size:12px;" valign="top">Song title</th>
+            <th style="background-color:#709BCE;padding-top:8px;text-align:center;font-size:12px;" valign="top">Time</th>
+            <th style="background-color:#709BCE;padding-top:8px;text-align:center;font-size:12px;" valign="top">Price</th>
+            <th style="background-color:#709BCE;">&nbsp;</th>
           </tr>
           <%(@songs || []).each do |song| %>
             <tr>
@@ -187,7 +210,7 @@ input, textarea, select, .uneditable-input {
               <td style="color: #222222;font-size: 12px;"><%=song.title%></td>
               <td style="color: #222222;font-size: 12px;"><%=%></td>
               <td style="color: #222222;font-size: 12px;"><%=%></td>
-              <td align="right"><a class="btn" href="/items/view/<%=%>">Add to Cart</a></td>
+              <td align="right"><a class="btn" href="/items/view/<%=%>">Buy songs</a></td>
             </tr>
           <%end%>
           </tbody>
@@ -197,7 +220,16 @@ input, textarea, select, .uneditable-input {
 
     <div class="span3">
       <div class="well sidebar-nav">
-        .................
+        <table>
+        <caption style="font-size:16px;color:Orange;">Categories</caption>
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table>
       </div>
     </div>
 

@@ -28,6 +28,10 @@ padding-top: 40px;
 background-color: LightSlateGrey;
 }
 
+.dropdown-menu {                                                                
+  left: -79px !important;                                                      
+}
+
 .container {
   height: auto;
 }
@@ -95,7 +99,7 @@ user - css
 }
 
 .front-welcome {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 125px rgba(255, 255, 255, 0.35);
+  /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 125px rgba(255, 255, 255, 0.35);
   display: block;
   height: 328px;
   left: 0px;
@@ -107,6 +111,16 @@ user - css
   padding: 0px;
   vertical-align: baseline;
   background: url("/images/welcome-1.jpg");
+*/
+
+ display: table;                                                               
+  background-color: red;                                                        
+  width: 837px;                                                                 
+  position: relative;                                                           
+  height: 380px;                                                                
+  margin: 0px auto;                                                             
+  vertical-align: baseline;                                                     
+  background: url("/images/welcome-2.jpg") no-repeat scroll 0 0 transparent;
 }
 
 .signin, .signup {
@@ -119,9 +133,9 @@ user - css
 
 .front-signin {
   height: 118px;
-  left: 536px;
+  left: 565px;
   position: absolute;
-  top: 0px;
+  top: 25px;
   width: 233px;
   border: 1px;
   border-style: solid;
@@ -219,11 +233,11 @@ label, input, textarea, select, button {
 <div class="container">
 
 <ul class="nav">
-<li><a class="brand" href="/">eMusic</a></li>
+<li><a class="brand" href="/home">eMusic</a></li>
 <li class="active">
-<a href="#">Home</a>
+<a href="/home">Home</a>
 </li>
-<li><a href="#">Mp3s</a></li>
+<li><a href="/items/music">mp3s</a></li>
 <li><a href="#">PDAs</a></li>
 <li><a href="#">Media players</a></li>
 <li><a href="#">Tabular computers</a></li>
@@ -270,8 +284,9 @@ label, input, textarea, select, button {
 
       <div class="front-welcome">
         <div class="front-welcome-text">
-          <h1 style="bottom: 40px;position:absolute;">Welcome to eMusic.</h1>
-          <p style="bottom: 0px;position:absolute;">Find out what’s new in the muisc World, download the latest mp3s, DVDs and buy the latest media gadgets out there.</p>
+          <h1 style="margin-left:10px;top:50px;position:absolute;color: white;">Welcome to eMusic.</h1>
+          <p style="top:90px;margin-left:10px;position:absolute;color:white;width:350px;">
+          Find out what’s new in the muisc World, download the latest mp3s, DVDs and buy the latest media gadgets out there.</p>
         </div>
       </div>
 
