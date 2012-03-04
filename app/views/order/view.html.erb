@@ -44,7 +44,7 @@
     <th width="70%">Product</th>
     <th style="text-align: right;">Price</th>
     <th style="text-align: right;">Quantity</th>
-    <th style="text-align: right;">Toatal cost</th>
+    <th style="text-align: right;">Total cost</th>
   </tr>
   <%total_cost = 0 ; (@orders || []).each do | order |%>
     <tr>
@@ -57,8 +57,8 @@
   <%end%>
   <%unless @orders.blank? %>
     <tr>
-      <td colspan="3" style="text-align: left;background-color: lightblue;">Total cost</td>
-      <td style="text-align: right;background-color: lightblue;">$<%=total_cost%></td>
+      <td colspan="3" style="text-align:left;background-color:lightblue;font-weight:bold;">Total cost</td>
+      <td style="text-align:right;background-color:lightblue;font-weight:bold;">$<%=total_cost%></td>
     </tr>
     <tr>
       <td colspan="4">&nbsp;</td>
