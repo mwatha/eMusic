@@ -291,6 +291,17 @@ h1 {
   <ul class="nav nav-pills">
     <li class="dropdown active" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
+      <%unless @cart.blank?%>                                                  
+      <ul class="dropdown-menu">                                                
+        <%(@cart[0..9] || []).each do |cart|%>                                                  
+          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>       
+        <%end%>                                                                 
+        <li><a href="#">View all</a></li>                                       
+        <li><a href="/order/view">Finish shopping</a></li>                                       
+        <li><a href="#">Clear Cart</a></li>                                       
+      </ul>
+      <%end%>                                                                 
+      </li>
     </li>
     <li class="dropdown" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>

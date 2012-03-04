@@ -14,22 +14,12 @@ class ItemsController < ApplicationController
        
     end
     
-    @cart = []                                                                  
-    (session[:cart] || []).each do |cart|                                       
-      type = cart.split(":")[0]                                                 
-      if type.match(/album_id/i)                                                
-        album_id = cart.split(":")[1]                                           
-        quantity = cart.split(":")[3]                                           
-        album = Albums.find(album_id)                                           
-        @cart << [album.artist,album.album_title,quantity]                      
-      end                                                                       
-    end
     render :layout => false
   end
 
   def view
     @album = Item.get_album(params[:id])
-    @songs = Item.get_album_songs(@album[0][:item_id]) 
+    @songs = Item.get_album_songs(@album[0][:album_id]) 
     render :layout => false
   end
 

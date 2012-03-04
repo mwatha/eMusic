@@ -3,7 +3,6 @@ class Songs < ActiveRecord::Migration
     create_table(:songs, :primary_key => 'song_id') do |t|
       t.string :title                                                      
       t.string :genre                                                      
-      t.time :minutes                                                      
       t.integer :year
       t.integer :item_id
       t.datetime :date_created , :default => Time.now()
@@ -16,6 +15,11 @@ class Songs < ActiveRecord::Migration
         ActiveRecord::Base.connection.execute <<EOF                             
 ALTER TABLE songs                                                       
 ADD COLUMN album_id INT(11) AFTER song_id;                                
+EOF
+
+        ActiveRecord::Base.connection.execute <<EOF                             
+ALTER TABLE songs                                                       
+ADD COLUMN time TIME AFTER title;                                
 EOF
 
         ActiveRecord::Base.connection.execute <<EOF                             

@@ -47,9 +47,9 @@ class Item < ActiveRecord::Base
     return display
   end
 
-  def self.get_album_songs(item_id)
-    return [] if item_id.blank?
-    Songs.find(:all,:conditions =>["item_id = ?",item_id])
+  def self.get_album_songs(album_id)
+    return [] if album_id.blank?
+    Songs.find(:all,:conditions =>["album_id = ?",album_id])
   end
 
   def self.get_albums_by_genre_for_display(genre)
@@ -57,15 +57,19 @@ class Item < ActiveRecord::Base
       :group => "item_id").collect{|s|s.item_id}
 
     display = {}
+    price_category_id = ProductPriceCategory.find_by_name("Audio CD album").id
     records = Albums.find(:all,:select => "artist,description,
-      image_url url,year,album_id , album_title",
-      :joins =>"INNER JOIN item i ON i.item_id = albums.item_id",
+      image_url url,year,album_id , album_title,price,quantity",
+      :joins =>"INNER JOIN item i ON i.item_id = albums.item_id
+      INNER JOIN product_prices p ON p.product_unique_id=albums.album_id
+      AND p.product_category = #{price_category_id}",
       :conditions =>["albums.item_id IN(?)",item_ids])
     
     (records || []).each do |record|
       display[record.album_id] = {
         :artist => record.artist,:description => record.description,
-        :url => record.url,:year => record.year,:title => record.album_title
+        :url => record.url,:year => record.year,:title => record.album_title,
+        :album_id => record.album_id,:price => record.price,:quantity => record.quantity
       }
     end 
     return display

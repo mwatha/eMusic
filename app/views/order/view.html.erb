@@ -1,2 +1,78 @@
-<h1>Order#view</h1>
-<p>Find me in app/views/order/view.html.erb</p>
+<html>
+<head>
+<style>
+#page-container {                                                               
+  border-color: black;
+  border-radius: 14px 14px 14px 14px;
+  border-style: solid;
+  border-width: 1px;
+  color: #333333;
+  font: inherit;
+  height: auto;
+  left: 50%;
+  margin: -154px 0 0 -418px;
+  padding: 0;
+  position: absolute;
+  top: 250%;
+  vertical-align: baseline;
+  width: 838px;
+}
+
+.orders {
+  left: 15px;
+  position: relative;
+  width: 97%;
+}
+ 
+.orders th {
+  text-align: left;
+  color: orange;
+}
+ 
+.orders td {
+  color: #666666;
+  font-size: small;
+}
+</style>
+</head>
+<body>
+
+<!-- -->                                                                        
+<div id="page-container" class="wrapper profile-container">                     
+<table class="orders">
+  <tr>
+    <th width="70%">Product</th>
+    <th style="text-align: right;">Price</th>
+    <th style="text-align: right;">Quantity</th>
+    <th style="text-align: right;">Toatal cost</th>
+  </tr>
+  <%total_cost = 0 ; (@orders || []).each do | order |%>
+    <tr>
+      <td><%=order[0]%> - <%=order[1]%></td>
+      <td style="text-align: right;">$<%=order[2]%></td>
+      <td style="text-align: right;"><%=order[3]%></td>
+      <td style="text-align: right;">$<%=order[4]%></td>
+      <% total_cost += order[4].to_f %>
+    </tr>
+  <%end%>
+  <%unless @orders.blank? %>
+    <tr>
+      <td colspan="3" style="text-align: left;background-color: lightblue;">Total cost</td>
+      <td style="text-align: right;background-color: lightblue;">$<%=total_cost%></td>
+    </tr>
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td style="text-align: right;"><a class="btn" href="#">Cancel order</a></td>
+      <td style="text-align: right;"><a class="btn" href="#">Continue</a></td>
+    </tr>
+  <%end%>
+</table>
+</div>                                                                          
+<!-- -->
+
+
+</body>
+</html>

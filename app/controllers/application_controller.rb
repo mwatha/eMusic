@@ -17,6 +17,17 @@ class ApplicationController < ActionController::Base
     else                                                                         
       Users.current_user = nil  
     end                                                                         
+
+    @cart = []                                                                  
+    (session[:cart] || []).each do |cart|                                       
+      type = cart.split(":")[0]                                                 
+      if type.match(/album_id/i)                                                
+        album_id = cart.split(":")[1]                                           
+        quantity = cart.split(":")[3]                                           
+        album = Albums.find(album_id)                                           
+        @cart << [album.artist,album.album_title,quantity]                      
+      end                                                                       
+    end
   end
 
 end

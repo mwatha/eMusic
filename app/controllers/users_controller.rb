@@ -59,7 +59,7 @@ EOF
 
   def login
     if request.get?
-      reset_session
+      reset_session if session[:cart].blank?
     else
       user = Users.new(params[:user])
       logged_in_user = user.try_to_login
