@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120303165804) do
+ActiveRecord::Schema.define(:version => 20120305112606) do
 
   create_table "albums", :primary_key => "album_id", :force => true do |t|
     t.string   "artist"
@@ -40,9 +40,18 @@ ActiveRecord::Schema.define(:version => 20120303165804) do
     t.string   "retired_reason"
   end
 
-  create_table "orders", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "orders", :primary_key => "order_id", :force => true do |t|
+    t.integer  "item_type"
+    t.integer  "order_status"
+    t.integer  "orderer"
+    t.text     "instruction"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "canceled",         :default => false
+    t.datetime "cancel_date"
+    t.datetime "date_created",     :default => '2012-03-05 15:51:36'
+    t.boolean  "retired",          :default => false
+    t.datetime "retired_datetime"
   end
 
   create_table "people", :primary_key => "people_id", :force => true do |t|
@@ -73,6 +82,13 @@ ActiveRecord::Schema.define(:version => 20120303165804) do
     t.string   "retired_reason"
   end
 
+  create_table "product_order", :primary_key => "product_order_id", :force => true do |t|
+    t.integer "order_id"
+    t.float   "price"
+    t.integer "quantity"
+    t.float   "total_cost"
+  end
+
   create_table "product_price_category", :primary_key => "product_price_category_id", :force => true do |t|
     t.string   "name"
     t.datetime "date_created",     :default => '2012-03-03 19:58:17'
@@ -98,10 +114,12 @@ ActiveRecord::Schema.define(:version => 20120303165804) do
   end
 
   create_table "songs", :primary_key => "song_id", :force => true do |t|
+    t.integer  "album_id"
     t.string   "title"
+    t.time     "time"
+    t.integer  "track_number"
     t.string   "genre"
     t.integer  "year"
-    t.integer  "item_id"
     t.datetime "date_created",     :default => '2012-02-29 18:48:26'
     t.boolean  "retired",          :default => false
     t.integer  "creator_id"

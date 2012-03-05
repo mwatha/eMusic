@@ -31,10 +31,21 @@ class ItemsController < ApplicationController
         if session[:cart].blank?
           session[:cart] = ["album_id:#{album_id}:quantity:#{quantity}"]
         end
-
         unless session[:cart].include?("album_id:#{album_id}:quantity#{quantity}")
           session[:cart] << "album_id:#{album_id}:quantity:#{quantity}"
         end
+        roundedOrders = Hash.new(0)
+        (session[:cart]).uniq.each do |cart|
+          album_id = cart.split(':')[0..1].join(':')
+          quantity = cart.split(':')[3].to_i
+          roundedOrders[album_id]+= quantity
+        end
+        session[:cart] = []
+        roundedOrders.each do |key , quantity|
+          session[:cart] << "#{key}:quantity:#{quantity}"
+        end
+      when "video"
+      when "pda"
     end
     session[:cart] = session[:cart].uniq
     redirect_to("/items/music")

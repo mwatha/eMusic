@@ -18,7 +18,12 @@ EOF
 
         ActiveRecord::Base.connection.execute <<EOF                             
 ALTER TABLE orders                                                   
-ADD COLUMN order_status INT(11) AFTER item_type;                                
+ADD COLUMN product_unique_id INT(11) AFTER item_type;                                
+EOF
+
+        ActiveRecord::Base.connection.execute <<EOF                             
+ALTER TABLE orders                                                   
+ADD COLUMN order_status INT(11) AFTER product_unique_id;                                
 EOF
 
         ActiveRecord::Base.connection.execute <<EOF                             

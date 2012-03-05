@@ -43,7 +43,13 @@ EOF
     user.people_id = person.id 
     user.username = params[:user]["username"]
     user.password = params[:user]["password"]
-    
+   
+    email = PeopleIdentifier.new()
+    email.identifier =  params[:user]["email"]
+    email.people_id = person.id
+    email.identifier_type = PeopleIdentifierType.find_by_name("Email").id
+    email.save
+
     if user.save
       session[:user_id] = user.id
       redirect_to "/home/index" and return   
