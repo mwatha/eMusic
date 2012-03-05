@@ -4,7 +4,7 @@ class Item < ActiveRecord::Base
 
   def self.get_items_for_display(type)
     case type
-      when "mp3s"
+      when "Audio albums"
         item_type = ItemType.find_by_name(type).id
         price_category_id = ProductPriceCategory.find_by_name("Audio CD album").id
         display = {}

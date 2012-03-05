@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
       when "Rap"
         @artists = Item.get_albums_by_genre_for_display(params[:id])
       else
-        @artists = Item.get_items_for_display("mp3s")
+        @artists = Item.get_items_for_display("Audio albums")
        
     end
     
