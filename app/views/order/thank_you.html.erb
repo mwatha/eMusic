@@ -22,24 +22,17 @@
   margin: 15px 15px 15px 15px;
   font-size: 18px;
   font-weight: bold;
+  text-align: center;
 }
 </style>
 
-<script>
-  function cancelOrder() {
-    var r = confirm("Are you sure you wnat to cancel the order?");
-    if(r == true){
-      window.location = "/home/cancel_order";
-    }
-  }
-</script>
 </head>
 <body>
 
 <!-- -->                                                                        
 <div id="page-container" class="wrapper profile-container">                     
   <div class="thank-you"><%= @thankyou_message %></div>
-</table>
+  <div class="thank-you"><img src="/images/cart-2.gif" /></div>
 </div>                                                                          
 <!-- -->
 
