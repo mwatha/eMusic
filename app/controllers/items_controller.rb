@@ -53,5 +53,10 @@ class ItemsController < ApplicationController
 
   def cart
   end
+  
+  def uploads                                                                   
+    post = Upload.save(params[:upload])                                         
+    render :text => "uploaded" and return                                       
+  end 
 
 end

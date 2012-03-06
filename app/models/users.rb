@@ -57,5 +57,16 @@ class Users < ActiveRecord::Base
     Digest::SHA1.hexdigest(password+salt)                                       
   end
 
+  def admin
+    UserRole.find(:all,:conditions =>["user_id = ?",self.id]).collect{|r|r.role}.include?("admin")
+  end
 
+  def self.save(upload)
+    name =  upload['datafile'].original_filename
+    directory = "#{RAILS_ROOT}/public/images/artists"
+    # create the file path
+    path = File.join(directory, name)
+    # write the file
+    File.open(path, "wb") { |f| f.write(upload['datafile'].read) }
+  end
 end

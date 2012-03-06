@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120305112606) do
+ActiveRecord::Schema.define(:version => 20120306151342) do
 
   create_table "albums", :primary_key => "album_id", :force => true do |t|
     t.string   "artist"
@@ -42,15 +42,16 @@ ActiveRecord::Schema.define(:version => 20120305112606) do
 
   create_table "orders", :primary_key => "order_id", :force => true do |t|
     t.integer  "item_type"
+    t.integer  "product_unique_id"
     t.integer  "order_status"
     t.integer  "orderer"
     t.text     "instruction"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "canceled",         :default => false
+    t.boolean  "canceled",          :default => false
     t.datetime "cancel_date"
-    t.datetime "date_created",     :default => '2012-03-05 15:51:36'
-    t.boolean  "retired",          :default => false
+    t.datetime "date_created",      :default => '2012-03-05 15:51:36'
+    t.boolean  "retired",           :default => false
     t.datetime "retired_datetime"
   end
 
@@ -67,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20120305112606) do
 
   create_table "people_identifier", :primary_key => "people_identifier_id", :force => true do |t|
     t.string   "identifier"
+    t.integer  "identifier_type",                                     :null => false
+    t.integer  "people_id",                                           :null => false
     t.datetime "date_created",     :default => '2012-02-29 18:36:19'
     t.boolean  "retired",          :default => false
     t.datetime "retired_datetime"
@@ -124,6 +127,11 @@ ActiveRecord::Schema.define(:version => 20120305112606) do
     t.boolean  "retired",          :default => false
     t.integer  "creator_id"
     t.datetime "retired_datetime"
+  end
+
+  create_table "user_roles", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.string  "role"
   end
 
   create_table "users", :primary_key => "user_id", :force => true do |t|

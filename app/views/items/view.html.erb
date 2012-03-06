@@ -104,9 +104,9 @@ input, textarea, select, .uneditable-input {
 <div class="container">
 
 <ul class="nav">
-<li><a class="brand" href="/home">eMusic</a></li>
+<li><a class="brand" href="/">eMusic</a></li>
 <li class="active">
-<a href="/home">Home</a>
+<a href="/">Home</a>
 </li>
 <li><a href="/items/music">Audio albums</a></li>
 <li><a href="#">PDAs</a></li>
@@ -151,6 +151,7 @@ input, textarea, select, .uneditable-input {
     <li class="dropdown" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
       <ul class="dropdown-menu">
+        <li><a href="/users/settings">Settings</a></li>
         <li><a href="#">Track order</a></li>
         <li><a href="#">Cancel order</a></li>
         <% if session[:user_id].blank?%>
@@ -222,7 +223,7 @@ input, textarea, select, .uneditable-input {
               <td style="color: #222222;font-size: 12px;"><%=song.title%></td>
               <td style="color: #222222;font-size: 12px;"><%=%></td>
               <td style="color: #222222;font-size: 12px;"><%=%></td>
-              <td align="right"><a class="btn" href="/items/view/<%=%>">Buy songs</a></td>
+              <td align="right"><a class="btn" href="/items/view/<%=%>">Buy song</a></td>
             </tr>
           <%end%>
           </tbody>

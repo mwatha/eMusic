@@ -233,9 +233,9 @@ label, input, textarea, select, button {
 <div class="container">
 
 <ul class="nav">
-<li><a class="brand" href="/home">eMusic</a></li>
+<li><a class="brand" href="/">eMusic</a></li>
 <li class="active">
-<a href="/home">Home</a>
+<a href="/">Home</a>
 </li>
 <li><a href="/items/music">Audio albums</a></li>
 <li><a href="#">PDAs</a></li>
@@ -259,31 +259,31 @@ label, input, textarea, select, button {
 <div class="subnav subnav-fixed">
   <ul class="nav nav-pills">
     <li class="dropdown active" style="float:right;">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
-      <%unless @cart.blank?%>                                                   
+      <!--a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
+      <%#unless @cart.blank?%>                                                   
       <ul class="dropdown-menu">                                                
-        <%(@cart[0..9] || []).each do |cart|%>                                  
-          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>       
-        <%end%>                                                                 
+        <%#(@cart[0..9] || []).each do |cart|%>                                  
+          <li><a href="#"><%#=cart[0]%>:<%#=cart[1]%>:<%#=cart[2]%></a></li>       
+        <%#end%>                                                                 
         <li><a href="#">View all</a></li>                                       
         <li><a href="#">Finish shopping</a></li>                                
         <li><a href="#">Clear Cart</a></li>                                     
       </ul>                                                                     
-      <%end%>
-    </li>
-    <li class="dropdown" style="float:right;">
+      <%#end%>
+    </li -->
+    <!--li class="dropdown" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li><a href="#">Track order</a></li>
         <li><a href="#">Cancel order</a></li>
-        <% if session[:user_id].blank?%>
+        <%# if session[:user_id].blank?%>
           <li><a href="/users/login">Login</a></li>
-        <%else%>
+        <%#else%>
           <li><a href="#">Logout</a></li>
-        <%end%>
+        <%#end%>
       </ul>
     </li>
-  </ul>
+  </ul -->
 </div>
 <%="<br />"*3%>
 <!-- -->

@@ -1,0 +1,47 @@
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+</style>
+</head>
+
+<body>
+
+<% form_for :uploadform, :url => { :action => 'uploads', :controller => 'items'}, 
+   :html => {:multipart => true}  do |f| %>
+<table class="params-table">
+<tr>                                                                  
+  <td><%=text_field(:album, :name, :placeholder => "Album title") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:album, :artist, :placeholder => "Artist") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:album, :genre, :placeholder => "Genre") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:album, :year, :placeholder => "Year") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%= file_field 'upload', 'datafile' ,:size => "11"%></td>
+</tr>  
+<tr>                                                                  
+  <td><hr /></td>
+</tr> 
+<tr>                                                                  
+  <td><%= file_field 'song', 'datafile' ,:size => "11"%></td>
+</tr>  
+<tr>                                                                  
+  <td><hr /></td>
+</tr> 
+<tr>
+  <td><%= submit_tag 'Save' ,:class => 'btn'%></td>
+</tr>
+</table>
+<%end%>
+
+
+</body>
+</html>                                                               

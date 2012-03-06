@@ -52,7 +52,7 @@ EOF
 
     if user.save
       session[:user_id] = user.id
-      redirect_to "/home/index" and return   
+      redirect_to "/" and return   
     end
     redirect_to "/users/signup" and return   
   end
@@ -71,13 +71,12 @@ EOF
       logged_in_user = user.try_to_login
       if logged_in_user
         session[:user_id] = logged_in_user.user_id
-        redirect_to("/home/index") and return
+        redirect_to("/") and return
       else
         flash[:error] = "Invalid username or password"
       end      
     end
     render :layout => false
   end
-
 
 end
