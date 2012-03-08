@@ -53,8 +53,8 @@ class Item < ActiveRecord::Base
   end
 
   def self.get_albums_by_genre_for_display(genre)
-    item_ids = Songs.find(:all,:conditions =>["genre = ?",genre],
-      :group => "item_id").collect{|s|s.item_id}
+    album_ids = Songs.find(:all,:conditions =>["genre = ?",genre],
+      :group => "genre,album_id").collect{|s|s.album_id}
 
     display = {}
     price_category_id = ProductPriceCategory.find_by_name("Audio CD album").id
@@ -63,7 +63,7 @@ class Item < ActiveRecord::Base
       :joins =>"INNER JOIN item i ON i.item_id = albums.item_id
       INNER JOIN product_prices p ON p.product_unique_id=albums.album_id
       AND p.product_category = #{price_category_id}",
-      :conditions =>["albums.item_id IN(?)",item_ids])
+      :conditions =>["albums.album_id IN(?)",album_ids])
     
     (records || []).each do |record|
       display[record.album_id] = {
@@ -75,4 +75,26 @@ class Item < ActiveRecord::Base
     return display
   end
 
+  def self.add_album(params)
+    img = Upload.img(params[:upload])
+    item = self.new()
+    item.item_type = ItemType.find_by_name("Audio albums").id
+    item.description = params[:album]['description']
+    item.image_url = "/images/artists/#{img}"
+    item.save
+
+    album = Albums.new()
+    album.artist = params[:album]['artist'] 
+    album.album_title = params[:album]['name']
+    album.year = params[:album]['year']
+    album.item_id = item.id
+    album.save
+
+    product_price = ProductPrice.new()
+    product_price.product_unique_id = album.id
+    product_price.product_category = ItemType.find_by_name("Audio albums").id
+    product_price.price = params[:album]['price'].to_f
+    product_price.quantity = params[:album]['quantity']
+    product_price.save
+  end
 end

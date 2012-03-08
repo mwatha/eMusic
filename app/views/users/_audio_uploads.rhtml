@@ -4,37 +4,57 @@
 .params-table {
   width: 99%;
 }
+
+#description {
+  height: 60px !important;  
+}
 </style>
 </head>
 
 <body>
 
-<% form_for :uploadform, :url => { :action => 'uploads', :controller => 'items'}, 
+<% form_for :uploadform, :url => { :action => 'music_uploads', :controller => 'items'}, 
    :html => {:multipart => true}  do |f| %>
 <table class="params-table">
 <tr>                                                                  
+  <td id=""><%=text_field(:album, :artist, :placeholder => "Artist") %></td>
   <td><%=text_field(:album, :name, :placeholder => "Album title") %></td>
 </tr>  
 <tr>                                                                  
-  <td><%=text_field(:album, :artist, :placeholder => "Artist") %></td>
+  <td><%=text_field(:album, :genre, :placeholder => "Genre") %></td>
+  <td><%=text_area(:album, :description, :placeholder => "Album description",:id => "description") %></td>
 </tr>  
 <tr>                                                                  
-  <td><%=text_field(:album, :genre, :placeholder => "Genre") %></td>
+  <td><%=text_field(:album, :price, :placeholder => "Price") %></td>
+  <td><%=text_field(:album, :quantity, :placeholder => "Quantity") %></td>
 </tr>  
 <tr>                                                                  
   <td><%=text_field(:album, :year, :placeholder => "Year") %></td>
+  <td>
+    <%= file_field 'upload', 'datafile' ,:size => "11"%>
+    <%='&nbsp;'*2%><span style="color:#999999;">album imagine</span>
+  </td>
 </tr>  
 <tr>                                                                  
-  <td><%= file_field 'upload', 'datafile' ,:size => "11"%></td>
+  <td colspan="2"><hr /></td>
+</tr>
+<tr>                                                                  
+  <td><span style="color:#999999;">Songs</span></td>
+</tr>
+<%1.upto(8) do |number|%> 
+<tr>                                                                  
+  <td>
+    <%= file_field 'song', "datafile#{number}" ,:size => "11"%><%='&nbsp;'*2%>
+    <%=text_field(:song, "price#{number}", :placeholder => "Price", :size => 8) %>
+  </td>
+  <td>
+    <%= file_field 'song', "datafile_#{number}" ,:size => "11"%><%='&nbsp;'*2%>
+    <%=text_field(:song, "price_#{number}", :placeholder => "Price", :size => 8) %>
+  </td>
 </tr>  
+<%end%> 
 <tr>                                                                  
-  <td><hr /></td>
-</tr> 
-<tr>                                                                  
-  <td><%= file_field 'song', 'datafile' ,:size => "11"%></td>
-</tr>  
-<tr>                                                                  
-  <td><hr /></td>
+  <td colspan="2"><hr /></td>
 </tr> 
 <tr>
   <td><%= submit_tag 'Save' ,:class => 'btn'%></td>

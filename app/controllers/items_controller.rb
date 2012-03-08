@@ -1,17 +1,9 @@
 class ItemsController < ApplicationController
   def music
-    case params[:id]
-      when "Rock"
-        @artists = Item.get_albums_by_genre_for_display(params[:id])
-      when "Hip Hop"
-        @artists = Item.get_albums_by_genre_for_display(params[:id])
-      when "R&B"
-        @artists = Item.get_albums_by_genre_for_display(params[:id])
-      when "Rap"
-        @artists = Item.get_albums_by_genre_for_display(params[:id])
-      else
-        @artists = Item.get_items_for_display("Audio albums")
-       
+    if params[:id]
+      @artists = Item.get_albums_by_genre_for_display(params[:id])
+    else
+      @artists = Item.get_items_for_display("Audio albums")
     end
     
     render :layout => false
@@ -54,9 +46,10 @@ class ItemsController < ApplicationController
   def cart
   end
   
-  def uploads                                                                   
-    post = Upload.save(params[:upload])                                         
-    render :text => "uploaded" and return                                       
+  def music_uploads   
+    #raise params.to_yaml             
+    Item.add_album(params)                                                   
+    redirect_to("/users/settings")
   end 
 
 end

@@ -79,4 +79,8 @@ EOF
     render :layout => false
   end
 
+  def settings
+    @partial = params[:id]
+    @partial = 'edit_name' if @partial.blank?
+  end
 end
