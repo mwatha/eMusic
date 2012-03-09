@@ -27,6 +27,11 @@ ALTER TABLE songs
 ADD COLUMN track_number INT(11) AFTER title;                                
 EOF
 
+        ActiveRecord::Base.connection.execute <<EOF                             
+ALTER TABLE songs                                                       
+ADD COLUMN url TEXT AFTER year;                                
+EOF
+
   end
 
   def self.down
