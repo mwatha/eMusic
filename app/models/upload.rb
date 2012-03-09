@@ -30,7 +30,7 @@ class Upload
     song = Songs.new()
     song.album_id = album.id
     song.title = audio_length.tag['title'].humanize
-    song.time = (audio_length.length/60).to_f.round(2)
+    song.time = self.display_time(audio_length.length) 
     song.track_number = audio_length.tag['tracknum']
     song.genre = genre
     song.year = audio_length.tag['year'] || album.year
@@ -44,5 +44,31 @@ class Upload
     product_price.quantity = 1
     return product_price.save
   end 
+  
+  def self.display_time(total_seconds)
+    total_seconds = total_seconds.to_i
+    
+    days = total_seconds / 86400
+    hours = (total_seconds / 3600) - (days * 24)
+    minutes = (total_seconds / 60) - (hours * 60) - (days * 1440)
+    seconds = total_seconds % 60
+    
+    display = ''
+    display_concat = ''
+    if days > 0
+      display = display + display_concat + "#{days}d"
+      display_concat = ' '
+    end
+    if hours > 0 || display.length > 0
+      display = display + display_concat + "#{hours}h"
+      display_concat = ' '
+    end
+    if minutes > 0 || display.length > 0
+      display = display + display_concat + "#{minutes}m"
+      display_concat = ' '
+    end
+    display = display + display_concat + "#{seconds}s"
+    display
+  end
 
 end
