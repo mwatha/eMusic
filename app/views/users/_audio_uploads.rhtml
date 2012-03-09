@@ -44,11 +44,11 @@
 <%1.upto(8) do |number|%> 
 <tr>                                                                  
   <td>
-    <%= file_field 'song', "datafile#{number}" ,:size => "11"%><%='&nbsp;'*2%>
+    <%= file_field 'upload', "datafile#{number}" ,:size => "11"%><%='&nbsp;'*2%>
     <%=text_field(:song, "price#{number}", :placeholder => "Price", :size => 8) %>
   </td>
   <td>
-    <%= file_field 'song', "datafile_#{number}" ,:size => "11"%><%='&nbsp;'*2%>
+    <%= file_field 'upload', "datafile_#{number}" ,:size => "11"%><%='&nbsp;'*2%>
     <%=text_field(:song, "price_#{number}", :placeholder => "Price", :size => 8) %>
   </td>
 </tr>  

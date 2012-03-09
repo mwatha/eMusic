@@ -96,5 +96,18 @@ class Item < ActiveRecord::Base
     product_price.price = params[:album]['price'].to_f
     product_price.quantity = params[:album]['quantity']
     product_price.save
+
+    (1.upto(8)).each do | number |
+      if number.odd?
+        str = "datafile#{number}"
+        price = params[:song]["price#{number}"].to_f rescue nil
+      else
+        str = "datafile_#{number}"
+        price = params[:song]["price_#{number}"].to_f rescue nil
+      end
+      next if price.blank?
+      uploaded = Upload.song(params[:upload],price,str,album,params[:album]['genre'])
+    end
   end
+
 end
