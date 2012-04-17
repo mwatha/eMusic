@@ -87,6 +87,7 @@ class Item < ActiveRecord::Base
     album.artist = params[:album]['artist'] 
     album.album_title = params[:album]['name']
     album.year = params[:album]['year']
+    album.genre = params[:album]['genre']
     album.item_id = item.id
     album.save
 
@@ -96,18 +97,21 @@ class Item < ActiveRecord::Base
     product_price.price = params[:album]['price'].to_f
     product_price.quantity = params[:album]['quantity']
     product_price.save
-
-    (1.upto(8)).each do | number |
-      if number.odd?
-        str = "datafile#{number}"
-        price = params[:song]["price#{number}"].to_f rescue nil
-      else
-        str = "datafile_#{number}"
-        price = params[:song]["price_#{number}"].to_f rescue nil
-      end
-      next if price.blank?
-      uploaded = Upload.song(params[:upload],price,str,album,params[:album]['genre'])
-    end
   end
 
+  def self.add_mp3s(params)
+    number_songs_uploading =  params['number_uploaded'].to_i
+    album = Albums.find(params["album_id"])
+
+
+    (1.upto(number_songs_uploading)).each do | number |
+      str = "datafile#{number}"
+      price = params["price_#{number}"].to_f rescue nil
+      
+      uploaded = Upload.song(params[:upload],price,str,album)
+    end
+
+  end
+
+  
 end

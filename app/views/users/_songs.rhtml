@@ -1,0 +1,130 @@
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+
+#description {
+  height: 60px !important;  
+}
+
+#album_img {
+  border-radius: 6px 6px 6px 6px;
+  height: 128px;
+  width: 128px;
+}
+
+#selected_album_description {
+  color: #222222;
+  font-size: 12px;
+  line-height: 1.4em;
+  padding-left: 10px;
+  vertical-align: top;
+}
+</style>
+<script>
+
+  function selectAlbum(obj) {
+    var numberOfSongs = parseInt(document.getElementById("album_number_of_songs").value);
+    var selectedAlbum = document.getElementById("selected_album");
+
+    if (numberOfSongs > 0 && selectedAlbum.value !="") {
+      if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();                                             
+      }else{// code for IE6, IE5                                                  
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");                           
+      }                                                                           
+                                                                                  
+      xmlhttp.onreadystatechange=function() {                                     
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {                       
+          var results = xmlhttp.responseText;                                     
+          var url = results.split("::")[1];
+          var description = results.split("::")[0];
+          var img = document.getElementById("album_img");
+          var song_fields = document.getElementById("formUpload");
+          var album_description = document.getElementById("selected_album_description");
+      
+          img.src = url;
+          album_description.innerHTML = description;
+          var num = 1;
+          var html= "<table style='width:99%;' id ='uploaded_songs' enctype='multipart/form-data'>"
+
+           for (var i = 0 ; i < numberOfSongs; i++) {
+             html+="<tr>";
+             //html+="<td><input class='files' type='file' name='upload" + num + "[datafile]' id='file_" + num + "' size = '20' /></td>";
+             html+="<td><input id='upload_datafile" + num + "' type='file' size='11' name='upload[datafile" + num + "]'></td>";
+             html+="<td><input id='song_num_" + num + "' type='number' size='5' placeholder='Song price' name='price_"+num+"'></td>";
+             html+="</tr>"  
+             num++
+           }
+           html+="</table>";
+           html+="<input type='hidden' value='" + selectedAlbum.value + "' name='album_id' />";
+           html+="<input type='hidden' value='" + numberOfSongs + "' name='number_uploaded' />";
+           song_fields.innerHTML = html;
+        }                                                                         
+      }                                                                           
+                                                                                  
+      xmlhttp.open("GET","/items/get_album_img?album_id="+selectedAlbum.value,true);    
+      xmlhttp.send();
+
+    }
+  }
+
+  function uploadSongs() {
+    var submitForm = document.getElementById("formUpload")
+    submitForm.action= "/items/add_mp3s";                        
+
+    submitForm.submit();
+  }
+</script>
+</head>
+
+<body>
+
+<table class="params-table">
+<tr>                                                                  
+  <td id="" style="width:130;">
+    <img src="#" id="album_img" />
+  </td>
+  <td id="selected_album_description" style="width:565;">
+    &nbsp;
+  </td>
+  <td>
+    <table style="width:100%;">
+      <tr>
+        <td colspan="2" style="text-align:right;padding-right:10px;">
+          <%=text_field(:album, :number_of_songs,:placeholder => "Enter number of songs") %>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:right;padding-right:10px;">
+          <select onChange="javascript:selectAlbum(this);" id="selected_album">
+            <option>Select album name</option>
+            <%(Albums.find(:all,:order =>"album_id DESC",:limit => 50) || []).each do |album| %>
+              <option value="<%=album.id%>"><%= album.album_title%></option>  
+            <%end%>
+          </select>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>  
+<tr>                                                                  
+  <td colspan="3"><hr /></td>
+</tr>
+<tr>                                                                  
+  <td><span style="color:#999999;">&nbsp;</span></td>
+</tr>
+<tr>
+  <td colspan="3">
+  <form id='formUpload' method='post' enctype="multipart/form-data"></form></td>
+</tr>
+<tr>
+  <td><button onclick="uploadSongs();" class = 'btn'>Upload song(s)</button></td>
+</tr>
+</table>
+
+
+</body>
+</html>                                                               

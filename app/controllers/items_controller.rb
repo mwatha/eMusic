@@ -52,4 +52,17 @@ class ItemsController < ApplicationController
     redirect_to("/users/settings")
   end 
 
+  def get_album_img
+    album_id = params[:album_id]
+    @album_attributes = Item.find(:first,
+        :joins =>"INNER JOIN albums a ON a.item_id = item.item_id AND album_id = #{album_id}")
+
+    render :text => "#{@album_attributes.description}::#{@album_attributes.image_url}"
+    return
+  end
+
+  def add_mp3s
+    Item.add_mp3s(params)
+    redirect_to("/users/settings")
+  end
 end

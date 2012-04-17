@@ -1,7 +1,7 @@
 
 class Upload
 
-  def self.img(upload)                                                         
+  def self.img(upload)          
     img_name =  upload['datafile'].original_filename                                
     image_file_extension = img_name[img_name.rindex(".") .. img_name.length].strip.chomp
     name = "#{Date.today.strftime('%d%m%y')}#{rand(10000)}#{image_file_extension}"
@@ -13,7 +13,7 @@ class Upload
     return name
   end 
 
-  def self.song(upload,price,str,album,genre)                                                         
+  def self.song(upload,price,str,album)                                                         
     song_name =  upload[str].original_filename rescue nil                            
     return false if song_name.blank?
     song_file_extension = song_name[song_name.rindex(".") .. song_name.length].strip.chomp
@@ -32,7 +32,7 @@ class Upload
     song.title = audio_length.tag['title'].humanize
     song.time = self.display_time(audio_length.length) 
     song.track_number = audio_length.tag['tracknum']
-    song.genre = genre
+    song.genre = album.genre
     song.year = audio_length.tag['year'] || album.year
     song.url = "#{directory}/#{name}"
     song.save
