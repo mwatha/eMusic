@@ -55,6 +55,32 @@ class Upload
     
     display = ''
     display_concat = ''
+    if hours 
+      display = hours.to_s.rjust(2,"0")
+      display_concat = display
+    end
+    if minutes 
+      display = minutes.to_s.rjust(2,"0")
+      display_concat += ":" + display
+    end
+    if seconds 
+      display = seconds.to_s.rjust(2,"0")
+      display_concat += ":" + display
+    end
+    display_concat
+  end
+
+=begin
+  def self.display_time(total_seconds)
+    total_seconds = total_seconds.to_i
+    
+    days = total_seconds / 86400
+    hours = (total_seconds / 3600) - (days * 24)
+    minutes = (total_seconds / 60) - (hours * 60) - (days * 1440)
+    seconds = total_seconds % 60
+    
+    display = ''
+    display_concat = ''
     if days > 0
       display = display + display_concat + "#{days}d"
       display_concat = ' '
@@ -70,5 +96,6 @@ class Upload
     display = display + display_concat + "#{seconds}s"
     display
   end
+=end
 
 end

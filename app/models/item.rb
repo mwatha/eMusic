@@ -49,7 +49,20 @@ class Item < ActiveRecord::Base
 
   def self.get_album_songs(album_id)
     return [] if album_id.blank?
-    Songs.find(:all,:conditions =>["album_id = ?",album_id])
+    product_category = ProductPriceCategory.find_by_name("Audio Song").id
+    records = Songs.find(:all,:joins =>"INNER JOIN product_prices p ON p.product_unique_id = songs.song_id
+      AND product_category = #{product_category}",
+      :select => "song_id,title,time,price,track_number",
+      :conditions =>["album_id = ?",album_id],:order => "track_number")
+    
+    display = {}
+    (records || []).each do |record|
+      display[record.song_id] = {
+        :price => record.price,:title => record.title,
+        :time => record.time,:track_number => record.track_number
+      }
+    end 
+    display 
   end
 
   def self.get_albums_by_genre_for_display(genre)

@@ -9,6 +9,9 @@ class ItemsController < ApplicationController
     render :layout => false
   end
 
+  def dvd
+  end
+
   def view
     @album = Item.get_album(params[:id])
     @songs = Item.get_album_songs(@album[0][:album_id]) 
