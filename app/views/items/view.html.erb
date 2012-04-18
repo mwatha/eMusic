@@ -112,8 +112,7 @@ input, textarea, select, .uneditable-input {
 <li><a href="/items/music">Albums</a></li>
 <li><a href="/items/dvd">DVD</a></li>
 <li><a href="#">PDAs</a></li>
-<li><a href="#">mp3 players</a></li>
-<li><a href="#">Tabular computers</a></li>
+<li><a href="#">media gadgets</a></li>
 <li><a href="#">Blog</a></li>
 <li><a href="#">Support</a></li>
 </ul>
@@ -219,7 +218,7 @@ input, textarea, select, .uneditable-input {
             <th style="background-color:#709BCE;padding-top:8px;text-align:center;font-size:12px;" valign="top">Price</th>
             <th style="background-color:#709BCE;">&nbsp;</th>
           </tr>
-          <%(@songs || {}).sort{|a,b|a[0]<=>b[0]}.each do |song_id,attributes| %>
+          <%(@songs || {}).sort{|a,b|(a[1][:track_number].to_i rescue 0)<=>(b[1][:track_number].to_i rescue 0)}.each do |song_id,attributes| %>
             <tr>
               <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:track_number]%></td>
               <td style="color: #222222;font-size: 12px;"><%=attributes[:title]%></td>
@@ -227,7 +226,7 @@ input, textarea, select, .uneditable-input {
               <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:price]%></td>
               <td align="right"><a class="btn" href="/items/view/<%=%>">Buy song</a></td>
             </tr>
-          <%end%>
+          <%end rescue nil%>
           </tbody>
         </table>
       </div>
