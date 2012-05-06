@@ -1,3 +1,4 @@
+#module Rails
 # Be sure to restart your server when you modify this file
 #require 'paperclip'                                                             
 #require 'mini_magick'

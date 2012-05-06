@@ -1,2 +1,25 @@
-<h1>Items#dvd</h1>
-<p>Find me in app/views/items/dvd.html.erb</p>
+<div class="row-fluid">
+<!-- begin -->
+<div class="span9">                                                         
+  <div class="well sidebar-nav"> 
+    #DVD
+  </div>
+</div>
+
+<div class="span3">                                                         
+  <div class="well sidebar-nav"> 
+    <table>                                                                 
+      <caption style="font-size:16px;color:Orange;">Categories</caption>      
+      <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+        <tr>                                                                  
+          <td style="font-size:14px;color: blue;">                            
+            <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+          </td>                                                               
+        </tr>                                                                 
+      <%end%>                                                                 
+    </table>
+  </div>
+</div>
+
+</div>
+<!-- end -->

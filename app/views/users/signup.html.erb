@@ -1,90 +1,39 @@
-<html>
-<head>
-<%= stylesheet_link_tag "bootstrap" %>                                              
-<%= stylesheet_link_tag "docs" %>                                              
-<%= stylesheet_link_tag "prettify" %>                                              
-<%= stylesheet_link_tag "bootstrap-responsive" %>                                              
-<%= stylesheet_link_tag "datepicker" %>                                              
-
-<%= javascript_include_tag "jquery" %>                                              
-<%= javascript_include_tag "bootstrap-tab" %> 
-<%= javascript_include_tag "bootstrap-dropdown" %> 
-<%= javascript_include_tag "bootstrap-datepicker" %> 
-
-<link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">   
-
 <script>
-  function activateTabs() {
-    $('.dropdown-toggle').dropdown();
+
+  function setAttributes() {
+    var scroller = document.getElementsByClassName("scroller")[0]
+    var tos = document.getElementsByClassName("tos")[0]
+    tos.style.height = "105px";
+    scroller.style.height = "79px";
+    tos.style.display = "block";
   }
-  
-  function checkBox() {
+
+  function showAll() {
+    var scroller = document.getElementsByClassName("scroller")[0]
+    var tos = document.getElementsByClassName("tos")[0]
+    tos.style.height = "auto";
+    scroller.style.height = "400px";
+  }
+
+  function submitForm() {
+    form = document.getElementById("customer");
+    form.submit();
+  }
+
+  function updateDOB() {
+    var dob = document.getElementsByClassName("span2")[0].value;
+    document.getElementById("dob_disabled").value = dob;
+    document.getElementById("user_birtdate").value = dob;
   }
 </script>
-                                             
+
 <style>
 
-input, textarea, select, .uneditable-input {
-  height: 30px !important;
-}
-
-body {  
-padding-top: 40px; 
-background-color: transparent;
-}
-
-.dropdown-menu {                                                                
-  left: -79px !important;                                                      
-}
-
-.container {
-  height: auto;
-}
-
-.images {
-  width: 200px;
-  height: 150px;
-  color: #F5F5F5;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.item_description {
-  padding-left: 10px;
-  vertical-align: top;
-  line-height: 1.4em;
-  color: #222222;
-  font-size: 12px;
-}
-
-.image_container {
-}
-
-.zebra-striped {
-  width: 100%;
-}
-
-.details {
-  width: 200px;
-  padding-left: 10px;
-  vertical-align: top;
-  line-height: 1.4em;
-  color: #222222;
-  font-size: 12px;
-}
-/*
-user - css
-*/
-
-.row-fluid {
-  background-color: #F5F5F5;
-  text-align: center;
-}
 
 .front-card {
   height: auto;
   margin: -154px 0px 0px -418px;
-  top: 250%;
+  top: 205px;
   width: 838px;
   left: 50%;
   position: absolute;
@@ -203,6 +152,7 @@ h1 {
   font-weight: bold;
   line-height: 1;
   color: #333333;
+  text-align: center;
 }
 
 #dob_disabled {
@@ -225,181 +175,84 @@ h1 {
 .signup_btn {
   width: 94.7%;
 }
+
+
+
 </style>
 
+<body onload="setAttributes();"> 
 
-<script>
-
-  function setAttributes() {
-    var scroller = document.getElementsByClassName("scroller")[0]
-    var tos = document.getElementsByClassName("tos")[0]
-    tos.style.height = "105px";
-    scroller.style.height = "79px";
-    tos.style.display = "block";
-  }
-
-  function showAll() {
-    var scroller = document.getElementsByClassName("scroller")[0]
-    var tos = document.getElementsByClassName("tos")[0]
-    tos.style.height = "auto";
-    scroller.style.height = "400px";
-  }
-
-  function submitForm() {
-    form = document.getElementById("customer");
-    form.submit();
-  }
-
-  function updateDOB() {
-    var dob = document.getElementsByClassName("span2")[0].value;
-    document.getElementById("dob_disabled").value = dob;
-    document.getElementById("user_birtdate").value = dob;
-  }
-</script>
-
-
-</head>
-
-
-<body onload="setAttributes();">
-
-
-<div class="navbar navbar-fixed-top">
-<div class="navbar-inner">
-<div class="container">
-
-<ul class="nav">
-<li><a class="brand" href="/">eMusic</a></li>
-<li class="active">
-<a href="/">Home</a>
-</li>
-<li><a href="/items/music">Albums</a></li>
-<li><a href="/items/dvd">DVD</a></li>
-<li><a href="#">PDAs</a></li>
-<li><a href="#">media gadgets</a></li>
-<li><a href="#">Blog</a></li>
-<li><a href="#">Support</a></li>
-</ul>
-
-<form class="navbar-search pull-right">
-<input type="text" class="search-query" placeholder="Search">
-</form>
-
-</div>
-</div>
-</div>
-
-
-<div class="container-fluid">
-<!-- -->
-<div class="subnav subnav-fixed">
-  <ul class="nav nav-pills">
-    <li class="dropdown active" style="float:right;">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
-      <%unless @cart.blank?%>                                                  
-      <ul class="dropdown-menu">                                                
-        <%(@cart[0..9] || []).each do |cart|%>                                                  
-          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>       
-        <%end%>                                                                 
-        <li><a href="#">View all</a></li>                                       
-        <li><a href="/order/view">Finish shopping</a></li>                                       
-        <li><a href="#">Clear Cart</a></li>                                       
-      </ul>
-      <%end%>                                                                 
-      </li>
-    </li>
-    <li class="dropdown" style="float:right;">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a href="/users/settings">Settings</a></li>
-        <li><a href="#">Track order</a></li>
-        <li><a href="#">Cancel order</a></li>
-        <% if session[:user_id].blank?%>
-          <li><a href="/users/login">Login</a></li>
-        <%else%>
-          <li><a href="#">Logout</a></li>
-        <%end%>
-      </ul>
-    </li>
-  </ul>
-</div>
-<%="<br />"*3%>
-<!-- -->
-  <div class="row-fluid">
+<div class="row-fluid">
       
     <div class="front-card">
-       <h1>Join eMusic today.</h1>   
-       <form action="/users/create" method="post" id = "customer">
-       <table class="user-details">                               
-        <tbody>                                                                 
-          <tr>                                                                  
-            <td>&nbsp;</td>                                                     
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%=text_field(:user, :first_name,:placeholder => "First name") %> </td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%=text_field(:user, :last_name ,:placeholder => "Last name") %> </td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%= select_tag "user[gender]", options_for_select(["Select sex","Female", "Male"]),:placeholder => "Sex" %></td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td>
-              <font style="color: #999999;font-size:12px;">Birthdate:</font>
-              <input id="dob_disabled" type="text" size="10" name="user[dob]" disabled="disabled" placeholder = "Birthdate">
-              <div class="input-append date" id="dp3" data-date="<%=Date.today - 20.year%>" data-date-format="yyyy-mm-dd">
-                <input class="span2" size="16" type="text" value="<%=Date.today - 20.year%>" style="width: auto;">
-                <span class="add-on"><i class="icon-th"></i></span>
-              </div>
-            </td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%=text_field(:user, :email,:placeholder => "Email") %></td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%=text_field(:user, :username, :textCase => "lower",:placeholder => "Username") %> </td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%=password_field(:user, :password,:placeholder => "Password") %></td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td><%=password_field(:user, :retype_password,:placeholder => "Retype-password") %> </td>
-          </tr>                                                                 
-          <tr>                                                                  
-            <td>
-              <div class="tos" onclick="showAll();">
-                <p>By clicking the check box, you agree to the terms below:
-                   <%=check_box_tag(:female, 
-                      value = "0", checked = false, 
-                      options = {:onchange => "checkBox();"})%>
-                </p>
-                <div class="scroller" style="height: 400px;" mouseover="showAll();">
-                  <%=@terms_of_condtion%>
-                </div>
-              </div>
-            </td>                                                     
-          </tr>                                                                 
-          <tr>                                                                  
-            <td style="float:right;position:absolute;width:99%;">              
-              <a class="btn signup_btn" href="#" onclick="submitForm();">Sign up for eMusic</a>
-            </td>                                                               
-          </tr>                                                                 
-        </tbody>                                                                
-       </table>
-       <%= hidden_field_tag("user[birtdate]", nil) %>
-       </form>
-    </div>
 
-  </div>
-
+<div class="front-card">
+ <h1>Join eMusic today.</h1>   
+ <form action="/users/create" method="post" id = "customer">
+ <table class="user-details">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :first_name,:placeholder => "First name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :last_name ,:placeholder => "Last name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%= select_tag "user[gender]", options_for_select(["Select sex","Female", "Male"]),:placeholder => "Sex" %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>
+        <font style="color: #999999;font-size:12px;">Birthdate:</font>
+        <input id="dob_disabled" type="text" size="10" name="user[dob]" disabled="disabled" placeholder = "Birthdate">
+        <div class="input-append date" id="dp3" data-date="<%=Date.today - 20.year%>" data-date-format="yyyy-mm-dd">
+          <input class="span2" size="16" type="text" value="<%=Date.today - 20.year%>" style="width: auto;">
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+      </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :email,:placeholder => "Email") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :username, :textCase => "lower",:placeholder => "Username") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=password_field(:user, :password,:placeholder => "Password") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=password_field(:user, :retype_password,:placeholder => "Retype-password") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>
+        <div class="tos" onclick="showAll();">
+          <p>By clicking the check box, you agree to the terms below:
+             <%=check_box_tag(:female, 
+                value = "0", checked = false, 
+                options = {:onchange => "checkBox();"})%>
+          </p>
+          <div class="scroller" style="height: 400px;" mouseover="showAll();">
+            <%=@terms_of_condtion%>
+          </div>
+        </div>
+      </td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td style="float:right;position:absolute;width:99%;">              
+        <a class="btn signup_btn" href="#" onclick="submitForm();">Sign up for eMusic</a>
+      </td>                                                               
+    </tr>                                                                 
+  </tbody>                                                                
+ </table>
+ <%= hidden_field_tag("user[birtdate]", nil) %>
+ </form>
 </div>
-</body>
+</div>
+</div>
+<body>
 
 <script>
-  activateTabs();
-  $('.date').datepicker();
   setInterval("updateDOB();",300);
 </script>
-
-</html>

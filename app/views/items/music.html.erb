@@ -1,47 +1,7 @@
-<html>
-<head>
-<%= stylesheet_link_tag "bootstrap" %>                                              
-<%= stylesheet_link_tag "docs" %>                                              
-<%= stylesheet_link_tag "prettify" %>                                              
-<%= stylesheet_link_tag "bootstrap-responsive" %>                                              
 
-<%= javascript_include_tag "jquery" %>                                              
-<%= javascript_include_tag "bootstrap-tab" %> 
-<%= javascript_include_tag "bootstrap-dropdown" %> 
-
-<link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">
-
-<script>
-  function activateTabs() {
-    $('.dropdown-toggle').dropdown();
-  }
-</script>
-                                             
 <style>
-body {  
-  padding-top: 40px; 
-  min-width: 900px;
-}
-
-.dropdown-menu {
-  left: -79px !important;
-}
-
-.container {
-  height: auto;
-}
-
-input, textarea, select, .uneditable-input {                                    
-   height: 30px !important;                                                      
-} 
 
 .images {
-  /*width: 200px;
-  height: 150px;
-  color: #F5F5F5;
-  border-style: solid;
-  border-width: 1px;*/
-  
   border-radius: 6px 6px 6px 6px;
   height: 128px;
   width: 128px;
@@ -59,10 +19,6 @@ input, textarea, select, .uneditable-input {
   width: 150px;
 }
 
-.zebra-striped {
-  width: 100%;
-}
-
 .details {
   width: 200px;
   padding-left: 10px;
@@ -72,90 +28,16 @@ input, textarea, select, .uneditable-input {
   font-size: 12px;
 }
 
-.user-name-bunner {
-  color: white;
-  font-size: 13px;
-}
-
 .artist_row {
   border-width: 0px 0px 1px 0px;
   border-style: solid;
   line-height: 3;
 }
+
 </style>
 
 
-</head>
 
-
-<body>
-
-
-<div class="navbar navbar-fixed-top">
-<div class="navbar-inner">
-<div class="container">
-
-<ul class="nav">
-<li><a class="brand" href="/">eMusic</a></li>
-<li class="active">
-<a href="/">Home</a>
-</li>
-<li><a href="/items/music">Albums</a></li>
-<li><a href="/items/dvd">DVD</a></li>
-<li><a href="#">PDAs</a></li>
-<li><a href="#">media gadgets</a></li>
-<li><a href="#">Blog</a></li>
-<li><a href="#">Support</a></li>
-</ul>
-
-<form class="navbar-search pull-right">
-<% unless Users.current_user.blank? %>
-<span class="user-name-bunner"><font style="color:PowderBlue;">Login as:</font>
-&nbsp;<%=Users.current_user.username%></span><%='&nbsp;'*2%>
-<%else%>
-<span class="user-name-bunner">Not login</span><%='&nbsp;'*2%>
-<%end%>
-<input type="text" class="search-query" placeholder="Search">
-</form>
-
-</div>
-</div>
-</div>
-
-
-<div class="container-fluid">
-<!-- -->
-<div class="subnav subnav-fixed">
-  <ul class="nav nav-pills">
-    <li class="dropdown active" style="float:right;">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
-      <%unless @cart.blank?%>                                                  
-      <ul class="dropdown-menu">                                                
-        <%(@cart[0..9] || []).each do |cart|%>                                                  
-          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>       
-        <%end%>                                                                 
-        <li><a href="#">View all</a></li>                                       
-        <li><a href="/order/view">Finish shopping</a></li>                                       
-        <li><a href="#">Clear Cart</a></li>                                       
-      </ul>
-      <%end%>                                                                 
-    </li>
-    <li class="dropdown" style="float:right;">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a href="/users/settings">Settings</a></li>
-        <li><a href="#">Track order</a></li>
-        <li><a href="#">Cancel order</a></li>
-        <% if session[:user_id].blank?%>
-          <li><a href="/users/login">Login</a></li>
-        <%else%>
-          <li><a href="/users/logout">Logout</a></li>
-        <%end%>
-      </ul>
-    </li>
-  </ul>
-</div>
-<%="<br />"*3%>
 <!-- -->
   <div class="row-fluid">
 
@@ -165,8 +47,14 @@ input, textarea, select, .uneditable-input {
           <tbody>
           <%(@artists || {}).each do |albulm_id , attributes| %>
           <tr class="artist_row">
-            <td class="image_container"><img src="<%=attributes[:url]%>" / class="images"></td>
-            <td class="item_description"><%=attributes[:description]%></td>
+            <td class="image_container">
+              <img src="<%=attributes[:url]%>" / class="images">
+            </td>
+            <td class="item_description">
+               <font style="font-size:15px;">Artist:&nbsp;<font style="color:purple;"><%=attributes[:artist]%></font></font><br />
+               <font style="font-size:20px;">Album:&nbsp;<font style="color:orange;"><%=attributes[:title]%></font></font><p />
+               <%=attributes[:description]%>
+            </td>
             <td class="details">
               <% quantity = attributes[:quantity].to_i rescue 0
                 status = (quantity <= 0) ? "OUT OF STOCK" : "AVAILABLE"
@@ -203,11 +91,4 @@ input, textarea, select, .uneditable-input {
 
 
   </div>
-</div>
-</body>
 
-<script>
-  activateTabs();
-</script>
-
-</html>

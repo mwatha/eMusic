@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
       @artists = Item.get_items_for_display("Audio albums")
     end
     
-    render :layout => false
+    #render :layout => false
   end
 
   def dvd
@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
   def view
     @album = Item.get_album(params[:id])
     @songs = Item.get_album_songs(@album[0][:album_id]) 
-    render :layout => false
+    #render :layout => false
   end
 
   def add_to_cart

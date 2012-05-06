@@ -1,0 +1,77 @@
+
+<style>
+
+.user {
+  width: 65px;
+  height: 65px;
+}
+
+#post {
+ width: 500px;
+ height: 130px !important; 
+}
+
+.post_btn {
+  background-repeat: repeat-x;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+}
+</style>
+
+
+
+<!-- -->
+  <div class="row-fluid">
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+            <tr>
+              <td>
+                <img class="user" src="/images/users.png" />
+                &nbsp;<span style="vertical-align:super;">Login as:
+                <span style="color:Orange;"><%= Users.current_user.username %> &nbsp;</span> ..</span>
+              </td>
+            </tr>
+            <tr>
+              <td><hr /></td>
+            </tr>
+            <tr><form action="post" method="post">
+              <td style="vertical-align: top;">Post your comment here:<br />
+                <textarea name="post" id="post"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td><hr /></td>
+            </tr>
+            <tr>
+              <td>
+                <input type="submit" class="btn post_btn" style="width:100%;" value="Post" /></form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <table>                                                                 
+        <caption style="font-size:16px;color:Orange;">Categories</caption>      
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+          <tr>                                                                  
+            <td style="font-size:14px;color: blue;">                            
+              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>                                                               
+          </tr>                                                                 
+        <%end%>                                                                 
+        </table>
+      </div>
+    </div>
+
+
+
+  </div>
+

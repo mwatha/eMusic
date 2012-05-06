@@ -1,0 +1,59 @@
+
+<style>
+
+
+</style>
+
+
+
+<!-- -->
+  <div class="row-fluid">
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+            <%(@comments || []).each do |comment| %>
+            <tr>
+              <td>.....................</td>
+            </tr>
+            <tr>
+              <td><hr /></td>
+            </tr>
+            <%end
+            if @comments.blank?%>
+              <tr>                                                                            
+                <td>                                                                          
+                  No comments posted yet ....<% unless Users.current_user.blank? %>                                                  
+                  &nbsp;<a href="javascript:location.href='/blog/post';">Click here to post</a>
+                  <%end%>
+                </td>                                                                         
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <table>                                                                 
+        <caption style="font-size:16px;color:Orange;">Categories</caption>      
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+          <tr>                                                                  
+            <td style="font-size:14px;color: blue;">                            
+              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>                                                               
+          </tr>                                                                 
+        <%end%>                                                                 
+        </table>
+      </div>
+    </div>
+
+
+
+  </div>
+

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def login
-    render :layout => false
+    #render :layout => false
   end
 
   def signup
@@ -28,7 +28,7 @@ Privacy
 
 <p>You are responsible for safeguarding the password that you use to access the Services and for any activities or actions under your password. We encourage you to use "strong" passwords (passwords that use a combination of upper and lower case letters, numbers and symbols) with your account. Twitter cannot and will not be liable for any loss or damage arising from your failure to comply with the above requirements.</p>
 EOF
-    render :layout => false
+    #render :layout => false
   end
 
   def create
@@ -76,7 +76,7 @@ EOF
         flash[:error] = "Invalid username or password"
       end      
     end
-    render :layout => false
+    #render :layout => false
   end
 
   def settings
