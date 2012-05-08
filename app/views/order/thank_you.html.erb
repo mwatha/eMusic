@@ -24,6 +24,33 @@
   font-weight: bold;
   text-align: center;
 }
+
+
+.orders {                                                                       
+  left: 15px;                                                                   
+  position: relative;                                                           
+  width: 97%;                                                                   
+}                                                                               
+                                                                                
+.orders th {                                                                    
+  text-align: left;                                                             
+  color: orange;                                                                
+}                                                                               
+                                                                                
+.orders td {                                                                    
+  color: #666666;                                                               
+  font-size: small;                                                             
+}
+
+#cart-img {
+  left: 165px;
+  position: relative;
+  top: -5px; 
+}
+
+#shipping_address {
+  height; 95px !important
+}
 </style>
 
 </head>
@@ -31,8 +58,49 @@
 
 <!-- -->                                                                        
 <div id="page-container" class="wrapper profile-container">                     
-  <div class="thank-you"><%= @thankyou_message %></div>
-  <div class="thank-you"><img src="/images/cart-2.gif" /></div>
+  <div class="thank-you">
+    <img src="/images/cart-2.gif" width="50" height="50" align="left" id="cart-img" />
+    <%= @thankyou_message %>
+  </div>
+  <div class="thank-you">
+    <table class="orders">                                                          
+    <caption><b>Order#:&nbsp;<%=@shipping_details.order_id%></b></h3></caption>
+    <tr>
+      <td colspan="4"><hr /></td>                                                                          
+    </tr>                                                                          
+    <tr>                                                                          
+      <th width="70%">Product</th>                                                
+      <th style="text-align: right;">Price</th>                                   
+      <th style="text-align: right;">Quantity</th>                                
+      <th style="text-align: right;">Total cost</th>                              
+    </tr>                                                                         
+  <%
+    total_cost = 0 ; (@orders || []).each do | order |%>                        
+    <tr>                                                                        
+      <td><%=order[0]%></td>                                    
+      <td style="text-align: right;">$<%=order[3]%></td>                         
+      <td style="text-align: right;"><%=order[2]%></td>                        
+      <td style="text-align: right;">$<%=(order[3] * order[2])%></td>                         
+      <% total_cost += (order[3].to_f)*order[2] %>                                         
+    </tr>                                                                       
+  <%end%>
+      <tr>                                                                        
+        <td colspan="3" style="text-align:left;background-color:lightblue;font-weight:bold;">Total cost</td>
+        <td style="text-align:right;background-color:lightblue;font-weight:bold;">$<%=total_cost%></td>
+      </tr>
+      <tr>
+        <td colspan="4"><hr /></td>                                                                          
+      </tr>                                                                          
+      <tr>
+        <th colspan="4">Product(s) shipped to:</th>                                                                          
+      </tr>                                                                          
+      <tr>
+        <td colspan="4">
+          <textarea disabled="disabled" id="shipping_address"><%=@shipping_details.mailing_address%></textarea>
+        </td>                                                                          
+      </tr>                                                                          
+    </table>
+  </div>
 </div>                                                                          
 <!-- -->
 

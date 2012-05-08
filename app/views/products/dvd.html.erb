@@ -1,0 +1,94 @@
+
+<style>
+
+.images {
+  border-radius: 6px 6px 6px 6px;
+  height: 175px;
+  width: 175px;
+}
+
+.item_description {
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
+.image_container {
+  width: 150px;
+}
+
+.details {
+  width: 200px;
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
+.artist_row {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  line-height: 3;
+}
+
+</style>
+
+
+
+<!-- -->
+  <div class="row-fluid">
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+          <%(@artists || {}).each do |product_id , attributes| %>
+          <tr class="artist_row">
+            <td class="image_container">
+              <img src="<%=attributes[:url]%>" / class="images">
+            </td>
+            <td class="item_description">
+               <font style="font-size:15px;">Title:&nbsp;<font style="color:purple;"><%=attributes[:title]%></font></font><br />
+               <font style="font-size:20px;">Category:&nbsp;<font style="color:orange;"><%=attributes[:category]%></font></font><p />
+               <%=attributes[:description]%>
+            </td>
+            <td class="details">
+              <% quantity = attributes[:quantity].to_i rescue 0
+                status = (quantity <= 0) ? "OUT OF STOCK" : "AVAILABLE"
+              %>
+              <p style="color:Purple;font-size:15px;"><%=status%></p>
+              <p style="color:orange;font-size:20px;">$<%=attributes[:price]%></p>
+              <p><a class="btn" href="/products/view/<%=product_id%>">View more</a></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <table>                                                                 
+        <caption style="font-size:16px;color:Orange;">Categories</caption>      
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+          <tr>                                                                  
+            <td style="font-size:14px;color: blue;">                            
+              <a class="" href="/products/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>                                                               
+          </tr>                                                                 
+        <%end%>                                                                 
+        </table>
+      </div>
+    </div>
+
+
+
+  </div>
+

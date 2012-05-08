@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
         if product.product_category == music.id                                     
           album = Albums.find_by_product_id(product.id)
           @cart << [album.artist,album.album_title,quantity]                      
-        elsif product.product_type == music.id                                     
+        elsif product.product_category == video.id                                     
           video = Video.find_by_product_id(product.id)
           @cart << [video.title,video.category,quantity]                      
         end

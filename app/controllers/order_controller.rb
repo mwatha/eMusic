@@ -16,70 +16,107 @@ class OrderController < ApplicationController
           album = Albums.find_by_product_id(product.id)                         
           album_price = Product.find(album.product_id).price                  
           @orders << [album.artist,album.album_title,album_price,quantity,(quantity * album_price).to_f]
-        elsif product.product_type == music.id                                  
+        elsif product.product_category == video.id                                  
+          video = Video.find_by_product_id(product.id)                         
+          video_price = Product.find(video.product_id).price                  
+          @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f]
         end                                      
       end                                                                       
     end
   end
 
   def create
+    music = ProductCategory.find_by_name("Audio CD album")                      
+    video = ProductCategory.find_by_name("Video")                               
+    #gadget = ProductCategory.find_by_name("Gadget")
     create_identifier("Zip code", params[:address]["zip_code"])
     create_identifier("Phone number", params[:address]["phone_number"])
     create_identifier("Mailing address", params[:address]["mailing_address"])
     create_identifier("Card number", params[:account]["card_number"])
-    create_identifier("Pin number", params[:account]["pin_number"])
-    create_identifier("Bank card", params[:account]["visa"])
+    create_identifier("Email", params[:address]["email"])
+
+    @order = Order.new()
+    @order.order_status = 0
+    @order.orderer = Users.current_user.id
+    @order.start_date = Time.now()
+    @order.end_date = Time.now() + 2.week
+    @order.save
 
     (session[:cart] || []).each do |cart|
       type = cart.split(":")[0]                                                 
-      if type.match(/album_id/i)                                                
-        album_id = cart.split(":")[1]                                           
+      if type.match(/product_id/i)                                                
+        product_id = cart.split(":")[1]                                           
         quantity = cart.split(":")[3].to_i                                          
-        album = Albums.find(album_id)                                           
-        album_price = ProductPrice.find_by_product_unique_id(album.id).price                  
-        create_order(album,album_price,quantity,(quantity * album_price).to_f)
-      end                                                                       
+        product = Product.find(product_id)                                      
+        create_order(@order,product,quantity) 
+=begin
+        if product.product_category == music.id
+          @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f]
+        elsif product.product_category == video.id
+          @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f]
+        end
+=end
+      end
     end
 
+    @details = ShippingDetails.new()
+    @details.order_id = @order.id
+    @details.mailing_address = params[:address]["mailing_address"]
+    @details.pin = params[:account]["pin_number"]
+    @details.card_type = params[:account]["card_number"]
+    @details.phone_number = params[:address]["phone_number"]
+    @details.email = params[:address]["email"]
+    @details.save
+
     session[:cart] = nil
-    redirect_to("/order/thank_you")
+    redirect_to :action => "thank_you",:id => @order.id,:shipping_id => @details.id
   end
 
   def thank_you
+    @orders = Order.find(params[:id]).get_products
+    @shipping_details = ShippingDetails.find(params[:shipping_id])
     person = People.find(Users.current_user.people_id)
     @thankyou_message=<<EOF
 Thank you #{person.name} for shopping with us.
 <p />Your receipt will be sent shortly to: 
-<font style="color: orange;">#{person.email}</font>
+<font style="color: orange;">#{@shipping_details.email}</font>
 EOF
 
+  end
+
+  def confirm_details
+    person = People.find(Users.current_user.people_id)
+    @pemail = person.email
+    @paddress = person.address
+    @phone = person.phone_number
+    @pzip = person.zip_code
   end
 
   private
 
   def create_identifier(type,name)
+    identifier_type = PeopleIdentifierType.find_by_name(type).id
+    available = PeopleIdentifier.find(:first,:conditions =>["people_id = ? 
+                AND identifier_type = ?",Users.current_user.people_id,identifier_type])
+
+    return unless available.blank?
+
     identifier = PeopleIdentifier.new()
-    identifier.identifier_type = PeopleIdentifierType.find_by_name(type).id
+    identifier.identifier_type = identifier_type
     identifier.identifier = name
     identifier.people_id = Users.current_user.people_id
+    identifier.date_created = Time.now()
     identifier.save
   end
 
-  def create_order(product,price,quantity,total_cost)
-    order = Order.new()
-    order.item_type = Item.find(product.item_id).item_type
-    order.product_unique_id = product.id
-    order.order_status = 0
-    order.orderer = Users.current_user.id
-    order.start_date = Time.now()
-    order.end_date = Time.now() + 2.week
-    order.save
-
+  def create_order(order,product,quantity)
     product_order = ProductOrder.new()
     product_order.order_id = order.id
-    product_order.price = price
+    product_order.product_id = product.id
+    product_order.price = product.price
     product_order.quantity = quantity
-    product_order.total_cost = total_cost
+    product_order.total_cost = (quantity * product.price).to_f
+    product_order.description = ""
     product_order.save
   end
 

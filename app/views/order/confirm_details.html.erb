@@ -72,24 +72,27 @@ h1 {
   <td><%= select_tag "account[visa]", options_for_select(cards) %></td>
 </tr>
 <tr>                                                                  
-  <td><%=text_field(:account, :card_number,:placeholder => "Card number") %></td>    
+  <td><%=text_field(:account,:card_number,:placeholder => "Card number") %></td>    
 </tr> 
 <tr>                                                                  
-  <td><%=text_field(:account, :pin_number,:placeholder => "Pin number") %></td>    
+  <td><%=text_field(:account,:pin_number,:placeholder => "Pin number") %></td>    
 </tr> 
 <tr>                                                                  
   <td><hr /></td>    
 </tr> 
 <tr>                                                                  
+  <td><%=text_field(:address,:email,:placeholder => "Email", :value => "#{@pemail}") %></td>    
+</tr> 
+<tr>                                                                  
   <td>
-    <%=text_area(:address,:mailing_address,:placeholder => "Mailing address") %>
+    <%=text_area(:address,:mailing_address,:placeholder => "Mailing address", :value => "#{@paddress}" ) %>
   </td>    
 </tr> 
 <tr>                                                                  
-  <td><%=text_field(:address, :zip_code,:placeholder => "Zip code") %></td>    
+  <td><%=text_field(:address,:zip_code,:placeholder => "Zip code", :value => "#{@pzip}") %></td>    
 </tr> 
 <tr>                                                                  
-  <td><%=text_field(:address, :phone_number,:placeholder => "Phone number") %></td>    
+  <td><%=text_field(:address,:phone_number,:placeholder => "Phone number", :value => "#{@phone}" ) %></td>    
 </tr>
 <tr>                                                                  
   <td style="float:right;position:absolute;width: 99%;;">                         

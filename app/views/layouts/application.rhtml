@@ -126,7 +126,7 @@ input, textarea, select, .uneditable-input {
       <%unless @cart.blank?%>                                                   
       <ul class="dropdown-menu">                                                
         <%(@cart[0..9] || []).each do |cart|%>                                  
-          <li><a href="#"><%=cart[0]%>:<%=cart[1]%>:<%=cart[2]%></a></li>       
+          <li><a href="#"><%=cart[0][0..14]%>:<%=cart[1][0..14]%>:<%=cart[2]%></a></li>       
         <%end%>                                                                 
         <li><a href="#">View all</a></li>                                       
         <li><a href="/order/view">Finish shopping</a></li>                                
