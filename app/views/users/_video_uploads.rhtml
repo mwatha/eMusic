@@ -8,6 +8,10 @@
 #description {
   height: 60px !important;  
 }
+
+.upload_btn {                                                                   
+  width: 100% !important;                                                       
+}  
 </style>
 </head>
 
@@ -42,7 +46,7 @@
   <td><span style="color:#999999;">&nbsp;</span></td>
 </tr>
 <tr>
-  <td><%= submit_tag 'Upload video' ,:class => 'btn'%></td>
+  <td colspan="2"><%= submit_tag 'Upload video' ,:class => 'btn upload_btn'%></td>
 </tr>
 </table>
 <%end%>
