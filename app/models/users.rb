@@ -57,7 +57,7 @@ class Users < ActiveRecord::Base
     Digest::SHA1.hexdigest(password+salt)                                       
   end
 
-  def admin
+  def admin?
     UserRole.find(:all,:conditions =>["user_id = ?",self.id]).collect{|r|r.role}.include?("admin")
   end
 

@@ -65,7 +65,7 @@
         }                                                                         
       }                                                                           
                                                                                   
-      xmlhttp.open("GET","/items/get_album_img?album_id="+selectedAlbum.value,true);    
+      xmlhttp.open("GET","/products/get_album_img?album_id="+selectedAlbum.value,true);    
       xmlhttp.send();
 
     }
@@ -73,7 +73,7 @@
 
   function uploadSongs() {
     var submitForm = document.getElementById("formUpload")
-    submitForm.action= "/items/add_mp3s";                        
+    submitForm.action= "/products/add_mp3s";                        
 
     submitForm.submit();
   }

@@ -94,8 +94,8 @@ input, textarea, select, .uneditable-input {
 <li class="active">
 <a href="/">Home</a>
 </li>
-<li><a href="/items/music">Music</a></li>
-<li><a href="/items/dvd">Video</a></li>
+<li><a href="/products/music">Music</a></li>
+<li><a href="/products/dvd">Video</a></li>
 <!--li><a href="#">PDAs</a></li-->
 <li><a href="#">media accessories</a></li>
 <li><a href="/blog/comments">Blog</a></li>
@@ -137,9 +137,11 @@ input, textarea, select, .uneditable-input {
     <li class="dropdown" style="float:right;">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<b class="caret"></b></a>
       <ul class="dropdown-menu">
+        <% if Users.current_user %>
         <li><a href="/users/settings">Settings</a></li>
         <li><a href="#">Track order</a></li>
         <li><a href="#">Cancel order</a></li>
+        <%end%>
         <% if session[:user_id].blank?%>
           <li><a href="/users/login">Login</a></li>
         <%else%>

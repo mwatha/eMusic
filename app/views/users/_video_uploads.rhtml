@@ -1,1 +1,52 @@
-Video uploads
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+
+#description {
+  height: 60px !important;  
+}
+</style>
+</head>
+
+<body>
+
+<% form_for :uploadform, :url => { :action => 'video_uploads', :controller => 'products'}, 
+   :html => {:multipart => true}  do |f| %>
+<table class="params-table">
+<tr>                                                                  
+  <td id=""><%=text_field(:video, :title, :placeholder => "Title") %></td>
+  <td><%=text_field(:video, :category, :placeholder => "Category") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:video, :length, :placeholder => "Length") %></td>
+  <td><%=text_area(:video, :description, :placeholder => "Film description",:id => "description") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:video, :price, :placeholder => "Price") %></td>
+  <td><%=text_field(:video, :quantity, :placeholder => "Quantity") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:video, :year, :placeholder => "Year") %></td>
+  <td>
+    <%= file_field 'upload', 'datafile' ,:size => "11"%>
+    <%='&nbsp;'*2%><span style="color:#999999;">Video imagine</span>
+  </td>
+</tr>  
+<tr>                                                                  
+  <td colspan="2"><hr /></td>
+</tr>
+<tr>                                                                  
+  <td><span style="color:#999999;">&nbsp;</span></td>
+</tr>
+<tr>
+  <td><%= submit_tag 'Upload video' ,:class => 'btn'%></td>
+</tr>
+</table>
+<%end%>
+
+
+</body>
+</html>                                                               

@@ -1,4 +1,4 @@
-<script>
+<!--script>
   function submitForm() {
     form = document.getElementById("customer");
     form.submit();
@@ -7,7 +7,7 @@
   function activateTabs() {
     $('.dropdown-toggle').dropdown();
   }
-</script>
+</script-->
 
 
 <style>
@@ -180,7 +180,8 @@ label, input, textarea, select, button {
           </tr>
           <tr>
             <td><%=password_field(:user, :password, :textCase => "lower",:placeholder => "password") %>
-            <a class="btn" href="#" onclick="submitForm();">Login</a></td>
+            <!--a class="btn" href="#" onclick="submitForm();">Login</a></td-->
+            <input type ="submit" class="btn" value="Login" /></td>
           </tr>
           <tr>
             <td>&nbsp;</td>

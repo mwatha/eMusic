@@ -23,12 +23,12 @@
         <ul>
           <li><a href="/users/settings/edit_name">Change name</a></li>
           <li><a href="/users/settings/contact_details">Contact details</a></li>
-          <li><a href="/users/settings/audio_uploads">Upload albums</a></li>
-          <li><a href="/users/settings/songs">Upload mp3s</a></li>
-          <li><a href="/users/settings/video_uploads">Upload video</a></li>
-          <li><a href="#">PDAs</a></li>
-          <li><a href="#">Tab PCs</a></li>
-          <li><a href="#">mp3 playes</a></li>
+          <%if Users.current_user.admin? %>
+            <li><a href="/users/settings/audio_uploads">Upload album</a></li>
+            <li><a href="/users/settings/songs">Upload audio songs</a></li>
+            <li><a href="/users/settings/video_uploads">Upload video</a></li>
+            <li><a href="/users/settings/gadget_uploads">Upload Gadgets</a></li>
+          <%end%>
         </ul>
       </div>
     </div>

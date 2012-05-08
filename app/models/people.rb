@@ -5,7 +5,7 @@ class People < ActiveRecord::Base
   def name
     given_name = self.first_name
     family_name = self.last_name
-    return "#{given_name} #{family_name}"
+    return "#{given_name.humanize} #{family_name.humanize}"
   end
 
   def email

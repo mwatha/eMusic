@@ -1,7 +1,12 @@
 
 <style>
+  .user {                                                                         
+    width: 65px;                                                                  
+    height: 65px;                                                                 
+  }
 
-
+  .comments {
+  }
 </style>
 
 
@@ -15,7 +20,11 @@
           <tbody>
             <%(@comments || []).each do |comment| %>
             <tr>
-              <td>.....................</td>
+              <td class="comments">
+                <img align="left" class="user" src="/images/users.png" />
+                <font style="color:Orange;"><%= People.find(Users.find(comment.creator).people_id).name %></font>&nbsp;....<br />
+                <%= comment.comment %>
+              </td>
             </tr>
             <tr>
               <td><hr /></td>
@@ -31,6 +40,17 @@
               </tr>
               <tr>
                 <td><hr /></td>
+              </tr>
+            <%end
+            unless @comments.blank?%>
+              <tr>                                                                            
+                <td>                                                                          
+                  <% if Users.current_user.blank? %>                                                  
+                  &nbsp;<a href="javascript:location.href='/users/login';">Login</a>&nbsp;to post a comment ...
+                  <%else%>
+                  &nbsp;<a href="javascript:location.href='/blog/post';">Click here to post</a>
+                  <%end%>
+                </td>                                                                         
               </tr>
             <%end%>
           </tbody>

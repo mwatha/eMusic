@@ -1,14 +1,23 @@
 class OrderController < ApplicationController
   def view
     @orders = []
+    music = ProductCategory.find_by_name("Audio CD album")                      
+    video = ProductCategory.find_by_name("Video")                               
+    #gadget = ProductCategory.find_by_name("Gadget")
+
     (session[:cart] || []).each do |cart|
       type = cart.split(":")[0]                                                 
-      if type.match(/album_id/i)                                                
-        album_id = cart.split(":")[1]                                           
-        quantity = cart.split(":")[3].to_i                                          
-        album = Albums.find(album_id)                                           
-        album_price = ProductPrice.find_by_product_unique_id(album.id).price                  
-        @orders << [album.artist,album.album_title,album_price,quantity,(quantity * album_price).to_f]
+      if type.match(/product_id/i)                                                
+        product_id = cart.split(":")[1]                                           
+        quantity = cart.split(":")[3].to_i      
+
+        product = Product.find(product_id)                                      
+        if product.product_category == music.id                                 
+          album = Albums.find_by_product_id(product.id)                         
+          album_price = Product.find(album.product_id).price                  
+          @orders << [album.artist,album.album_title,album_price,quantity,(quantity * album_price).to_f]
+        elsif product.product_type == music.id                                  
+        end                                      
       end                                                                       
     end
   end

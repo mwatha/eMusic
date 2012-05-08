@@ -20,6 +20,15 @@ class Upload
     name = "#{Date.today.strftime('%d%m%y')}#{rand(10000)}#{song_file_extension}"
     directory = "#{RAILS_ROOT}/public/songs"                           
     
+    product = Product.new()                                                        
+    product.product_category = ProductCategory.find_by_name("Audio Song").id
+    product.description = album.album_title                    
+    product.image_url = Product.find(album.product_id).image_url                             
+    product.price = price.to_f                                
+    product.quantity = 1                         
+    product.date_created = Time.now()                                           
+    product.save
+
     # create the file path                                                      
     path = File.join(directory, name)                                           
     # write the file                                                            
@@ -28,6 +37,7 @@ class Upload
     audio_length = Mp3Info.open("#{directory}/#{name}")
 
     song = Songs.new()
+    song.product_id = product.id
     song.album_id = album.id
     song.title = audio_length.tag['title'].humanize
     song.time = self.display_time(audio_length.length) 
@@ -36,13 +46,6 @@ class Upload
     song.year = audio_length.tag['year'] || album.year
     song.url = "#{directory}/#{name}"
     song.save
-
-    product_price = ProductPrice.new()
-    product_price.product_unique_id = song.id
-    product_price.product_category = ProductPriceCategory.find_by_name('Audio song').id
-    product_price.price = price
-    product_price.quantity = 1
-    return product_price.save
   end 
   
   def self.display_time(total_seconds)
