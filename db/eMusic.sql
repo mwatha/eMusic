@@ -34,7 +34,7 @@ CREATE TABLE `albums` (
   `creator_id` int(11) DEFAULT NULL,
   `retired_datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`album_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `comments` (
   `date_created` datetime NOT NULL,
   `voided` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,6 +79,25 @@ DROP TABLE IF EXISTS `comments_relationship`;
 CREATE TABLE `comments_relationship` (
   `parent_comment_id` int(11) NOT NULL,
   `child_comment_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gadget`
+--
+
+DROP TABLE IF EXISTS `gadget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gadget` (
+  `gadget_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `brand_name` varchar(255) NOT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `year` varchar(255) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date_created` datetime NOT NULL,
+  `retired` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,7 +121,7 @@ CREATE TABLE `orders` (
   `retired` tinyint(1) DEFAULT '0',
   `retired_datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +162,7 @@ CREATE TABLE `people_identifier` (
   `retired_datetime` datetime DEFAULT NULL,
   `retired_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`people_identifier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +203,7 @@ CREATE TABLE `product` (
   `retired_datetime` datetime DEFAULT NULL,
   `retired_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`product_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +221,7 @@ CREATE TABLE `product_category` (
   `retired_datetime` datetime DEFAULT NULL,
   `retired_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`product_category_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +240,7 @@ CREATE TABLE `product_order` (
   `total_cost` double DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`product_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,7 +285,7 @@ CREATE TABLE `shipping_details` (
   `phone_number` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`shipping_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +310,7 @@ CREATE TABLE `songs` (
   `creator_id` int(11) DEFAULT NULL,
   `retired_datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`song_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -345,7 +364,7 @@ CREATE TABLE `video` (
   `length` varchar(10) NOT NULL,
   `date_created` datetime NOT NULL,
   PRIMARY KEY (`video_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -357,4 +376,4 @@ CREATE TABLE `video` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-09  1:32:32
+-- Dump completed on 2012-05-09 19:57:19

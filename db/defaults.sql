@@ -169,7 +169,7 @@ CREATE TABLE `product_category` (
   `retired_datetime` datetime DEFAULT NULL,
   `retired_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`product_category_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `product_category` (
 
 LOCK TABLES `product_category` WRITE;
 /*!40000 ALTER TABLE `product_category` DISABLE KEYS */;
-INSERT INTO `product_category` VALUES (1,'Audio CD album','2012-03-03 19:58:17',0,NULL,NULL),(2,'Audio Song','2012-03-03 19:58:17',0,NULL,NULL),(3,'Video','2012-05-05 19:55:55',0,NULL,NULL);
+INSERT INTO `product_category` VALUES (1,'Audio CD album','2012-03-03 19:58:17',0,NULL,NULL),(2,'Audio Song','2012-03-03 19:58:17',0,NULL,NULL),(3,'Video','2012-05-05 19:55:55',0,NULL,NULL),(4,'Gadget','2012-01-01 19:33:33',0,NULL,NULL);
 /*!40000 ALTER TABLE `product_category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -191,4 +191,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-09 16:23:52
+-- Dump completed on 2012-05-09 19:57:01
