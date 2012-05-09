@@ -53,7 +53,10 @@
             <td class="item_description">
                <font style="font-size:15px;">Artist:&nbsp;<font style="color:purple;"><%=attributes[:artist]%></font></font><br />
                <font style="font-size:20px;">Album:&nbsp;<font style="color:orange;"><%=attributes[:title]%></font></font><p />
-               <%=attributes[:description]%>
+               <%=attributes[:description][0..599]%>
+               <%if attributes[:description].length > 600 %>
+                &nbsp;....<a href="/products/view/<%=product_id%>">Read more</a>
+               <%end rescue nil%>
             </td>
             <td class="details">
               <% quantity = attributes[:quantity].to_i rescue 0
@@ -77,10 +80,10 @@
       <div class="well sidebar-nav">
         <table>                                                                 
         <caption style="font-size:16px;color:Orange;">Categories</caption>      
-        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+        <% (Albums.find(:all,:group => "genre") || []).each do |album| %>         
           <tr>                                                                  
             <td style="font-size:14px;color: blue;">                            
-              <a class="" href="/products/music/<%=song.genre%>"><%=song.genre%></a>
+              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
             </td>                                                               
           </tr>                                                                 
         <%end%>                                                                 

@@ -43,8 +43,39 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (14,'admin','620eea59fb5901b97eda1bad4481d98763c2e8d6','vQx3imppLI',16,'2012-03-03 19:58:15',0,NULL,NULL,NULL);
+INSERT INTO `users` VALUES (1,'admin','620eea59fb5901b97eda1bad4481d98763c2e8d6','vQx3imppLI',1,'2012-03-03 19:58:15',0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `people`
+--
+
+DROP TABLE IF EXISTS `people`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `people` (
+  `people_id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `date_created` datetime DEFAULT '2012-02-29 18:36:18',
+  `retired` tinyint(1) DEFAULT '0',
+  `retired_datetime` datetime DEFAULT NULL,
+  `retired_reason` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`people_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `people`
+--
+
+LOCK TABLES `people` WRITE;
+/*!40000 ALTER TABLE `people` DISABLE KEYS */;
+INSERT INTO `people` VALUES (1,'Mwatha','Bwanali','1988-01-17','Male','2012-01-01 00:00:00',0,NULL,NULL);
+/*!40000 ALTER TABLE `people` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -66,7 +97,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (14,'admin');
+INSERT INTO `user_roles` VALUES (1,'admin');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,4 +191,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-09  1:32:13
+-- Dump completed on 2012-05-09 16:23:52

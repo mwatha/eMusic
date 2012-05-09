@@ -97,16 +97,16 @@ class Product < ActiveRecord::Base
   end
 
   def self.get_albums_by_genre_for_display(genre)
-    album_ids = Songs.find(:all,:conditions =>["genre = ?",genre],
-      :group => "genre,album_id").collect{|s|s.album_id}
-
-    display = {}
     category_id = ProductCategory.find_by_name("Audio CD album").id
-    records = Albums.find(:all,:select => "artist,description,
-      image_url url,year, p.product_id , album_title,price,quantity",
+    records = Albums.find(:all,
+      :select => "artist,description,
+      image_url url, year , p.product_id product_id ,album_title , p.price , p.quantity",
       :joins =>"INNER JOIN product p ON p.product_id = albums.product_id
       AND p.product_category = #{category_id}",
-      :conditions =>["albums.album_id IN(?)",album_ids])
+      :conditions =>["genre = ?",genre],
+      :group => "genre,album_id")
+
+    display = {}
     
     (records || []).each do |record|
       display[record.product_id] = {

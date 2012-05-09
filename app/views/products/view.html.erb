@@ -116,7 +116,7 @@ input, textarea, select, .uneditable-input {
         </table><br />
         <% if not @product.blank? and @product_type == "Audio CD album" %>
           <font style="font-size:14px;color: blue;">
-          <%=@product[0][:artist]%> - <%= @product[0][:title] %> Album Track Listing
+          <%=@product[0][:product]%> - <%= @product[0][:title] %> Album Track Listing
           </font>
         <%end
         if not @product.blank? and @product_type == "Audio CD album" %>
