@@ -1,0 +1,56 @@
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+
+#description {
+  height: 60px !important;  
+}
+
+.upload_btn {                                                                   
+  width: 100% !important;                                                       
+}  
+</style>
+</head>
+
+<body>
+
+<% form_for :uploadform, :url => { :action => 'gadget_uploads', :controller => 'products'}, 
+   :html => {:multipart => true}  do |f| %>
+<table class="params-table">
+<tr>                                                                  
+  <td id=""><%=text_field(:gadget, :name, :placeholder => "Name") %></td>
+  <td><%=text_field(:gadget, :brand, :placeholder => "Brand name") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:gadget, :version, :placeholder => "Version") %></td>
+  <td><%=text_area(:gadget, :description, :placeholder => "Gadget description",:id => "description") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:gadget, :price, :placeholder => "Price") %></td>
+  <td><%=text_field(:gadget, :quantity, :placeholder => "Quantity") %></td>
+</tr>  
+<tr>                                                                  
+  <td><%=text_field(:gadget, :year, :placeholder => "Year") %></td>
+  <td>
+    <%= file_field 'upload', 'datafile' ,:size => "11"%>
+    <%='&nbsp;'*2%><span style="color:#999999;">Gadget imagine</span>
+  </td>
+</tr>  
+<tr>                                                                  
+  <td colspan="2"><hr /></td>
+</tr>
+<tr>                                                                  
+  <td><span style="color:#999999;">&nbsp;</span></td>
+</tr>
+<tr>
+  <td colspan="2"><%= submit_tag 'Upload Gadget' ,:class => 'btn upload_btn'%></td>
+</tr>
+</table>
+<%end%>
+
+
+</body>
+</html>                                                               

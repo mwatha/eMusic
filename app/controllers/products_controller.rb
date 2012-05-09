@@ -17,10 +17,18 @@ class ProductsController < ApplicationController
     end
   end
 
+  def electronics
+    if params[:id]
+      @electronics = Product.get_gadget_by_category_for_display(params[:id])
+    else
+      @electronics = Product.get_products_for_display("Gadget")
+    end
+  end
+
   def view
     music = ProductCategory.find_by_name("Audio CD album")                      
     video = ProductCategory.find_by_name("Video")                               
-    #gadget = ProductCategory.find_by_name("Gadget")
+    gadget = ProductCategory.find_by_name("Gadget")
 
     product = Product.find(params[:id])                                      
     if product.product_category == music.id
@@ -30,6 +38,9 @@ class ProductsController < ApplicationController
     elsif product.product_category == video.id
       @product_type = video.name
       @product = Product.get_video(params[:id])
+    elsif product.product_category == gadget.id
+      @product_type = gadget.name
+      @product = Product.get_gadget(params[:id])
     end
     #render :layout => false
   end
@@ -68,7 +79,7 @@ class ProductsController < ApplicationController
   def music_uploads   
     #raise params.to_yaml             
     Product.add_album(params)                                                   
-    redirect_to("/users/settings")
+    redirect_to("/products/music")
   end 
 
   def get_album_img
@@ -82,13 +93,19 @@ class ProductsController < ApplicationController
 
   def add_mp3s
     Product.add_mp3s(params)
-    redirect_to("/users/settings")
+    redirect_to("/products/music")
   end
 
   def video_uploads   
     #raise params.to_yaml             
     Product.add_video(params)                                                   
-    redirect_to("/users/settings")
+    redirect_to("/products/dvd")
+  end 
+
+  def gadget_uploads   
+    #raise params.to_yaml             
+    Product.add_gadget(params)                                                   
+    redirect_to("/products/electronics")
   end 
 
 end

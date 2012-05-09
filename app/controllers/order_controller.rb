@@ -3,7 +3,7 @@ class OrderController < ApplicationController
     @orders = []
     music = ProductCategory.find_by_name("Audio CD album")                      
     video = ProductCategory.find_by_name("Video")                               
-    #gadget = ProductCategory.find_by_name("Gadget")
+    gadget = ProductCategory.find_by_name("Gadget")
 
     (session[:cart] || []).each do |cart|
       type = cart.split(":")[0]                                                 
@@ -20,15 +20,20 @@ class OrderController < ApplicationController
           video = Video.find_by_product_id(product.id)                         
           video_price = Product.find(video.product_id).price                  
           @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f]
+        elsif product.product_category == gadget.id                                  
+          gadget = Gadget.find_by_product_id(product.id)                         
+          gadget_price = Product.find(gadget.product_id).price                  
+          @orders << [gadget.name,gadget.version,gadget_price,quantity,(quantity * gadget_price).to_f]
         end                                      
       end                                                                       
     end
   end
 
   def create
-    music = ProductCategory.find_by_name("Audio CD album")                      
-    video = ProductCategory.find_by_name("Video")                               
+    #music = ProductCategory.find_by_name("Audio CD album")                      
+    #video = ProductCategory.find_by_name("Video")                               
     #gadget = ProductCategory.find_by_name("Gadget")
+
     create_identifier("Zip code", params[:address]["zip_code"])
     create_identifier("Phone number", params[:address]["phone_number"])
     create_identifier("Mailing address", params[:address]["mailing_address"])
@@ -90,6 +95,10 @@ EOF
     @paddress = person.address
     @phone = person.phone_number
     @pzip = person.zip_code
+  end
+
+  def buy_song
+    @product_id = params[:id]
   end
 
   private

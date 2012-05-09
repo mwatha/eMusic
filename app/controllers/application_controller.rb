@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     @cart = []                                                                  
     music = ProductCategory.find_by_name("Audio CD album")
     video = ProductCategory.find_by_name("Video")
-    #gadget = ProductCategory.find_by_name("Gadget")
+    gadget = ProductCategory.find_by_name("Gadget")
 
     (session[:cart] || []).each do |cart|                                       
       type = cart.split(":")[0]                                                 
@@ -37,6 +37,9 @@ class ApplicationController < ActionController::Base
         elsif product.product_category == video.id                                     
           video = Video.find_by_product_id(product.id)
           @cart << [video.title,video.category,quantity]                      
+        elsif product.product_category == gadget.id                                     
+          gadget = Gadget.find_by_product_id(product.id)
+          @cart << [gadget.name,gadget.version,quantity]                      
         end
       end                                                                       
     end

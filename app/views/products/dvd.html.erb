@@ -17,6 +17,7 @@
 
 .image_container {
   width: 150px;
+  vertical-align: top;
 }
 
 .details {
@@ -29,10 +30,15 @@
 }
 
 .artist_row {
-  border-width: 0px 0px 1px 0px;
+  /*border-width: 0px 0px 1px 0px;
   border-style: solid;
-  line-height: 3;
+  line-height: 3;*/
 }
+
+.artist_break hr {                                                              
+  /*background-color: black !important;*/                                       
+  height: 3px;                                                                  
+} 
 
 </style>
 
@@ -53,7 +59,10 @@
             <td class="item_description">
                <font style="font-size:15px;">Title:&nbsp;<font style="color:purple;"><%=attributes[:title]%></font></font><br />
                <font style="font-size:20px;">Category:&nbsp;<font style="color:orange;"><%=attributes[:category]%></font></font><p />
-               <%=attributes[:description]%>
+               <%=attributes[:description][0..599]%>                            
+               <%if attributes[:description].length > 600 %>                    
+                &nbsp;....<a href="/products/view/<%=product_id%>">Read more</a>
+               <%end rescue nil%>
             </td>
             <td class="details">
               <% quantity = attributes[:quantity].to_i rescue 0
@@ -65,7 +74,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="3">&nbsp;</td>
+            <td colspan="3" class="artist_break"><hr /></td>
           </tr>
           <%end%>
           </tbody>

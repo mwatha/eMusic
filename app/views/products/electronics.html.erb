@@ -32,17 +32,15 @@
 .artist_row {
   /*border-width: 0px 0px 1px 0px;
   border-style: solid;
-  line-height: 3; */
+  line-height: 3;*/
 }
 
-.artist_break hr {
-  /*background-color: black !important;*/
-  height: 3px;
-}
+.artist_break hr {                                                              
+  /*background-color: black !important;*/                                       
+  height: 3px;                                                                  
+} 
 
 </style>
-
-
 
 <!-- -->
   <div class="row-fluid">
@@ -51,16 +49,16 @@
       <div class="well sidebar-nav">
         <table class="zebra-striped">
           <tbody>
-          <%(@artists || {}).each do |product_id , attributes| %>
+          <%(@electronics || {}).each do |product_id , attributes| %>
           <tr class="artist_row">
             <td class="image_container">
               <img src="<%=attributes[:url]%>" / class="images">
             </td>
             <td class="item_description">
-               <font style="font-size:15px;">Artist:&nbsp;<font style="color:purple;"><%=attributes[:artist]%></font></font><br />
-               <font style="font-size:20px;">Album:&nbsp;<font style="color:orange;"><%=attributes[:title]%></font></font><p />
-               <%=attributes[:description][0..599]%>
-               <%if attributes[:description].length > 600 %>
+               <font style="font-size:15px;">Name:&nbsp;<font style="color:purple;"><%=attributes[:name]%></font></font><br />
+               <font style="font-size:20px;">Version:&nbsp;<font style="color:orange;"><%=attributes[:version]%></font></font><p />
+               <%=attributes[:description][0..599]%>                            
+               <%if attributes[:description].length > 600 %>                    
                 &nbsp;....<a href="/products/view/<%=product_id%>">Read more</a>
                <%end rescue nil%>
             </td>
@@ -86,10 +84,10 @@
       <div class="well sidebar-nav">
         <table>                                                                 
         <caption style="font-size:16px;color:Orange;">Categories</caption>      
-        <% (Albums.find(:all,:group => "genre") || []).each do |album| %>         
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
           <tr>                                                                  
             <td style="font-size:14px;color: blue;">                            
-              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
+              <a class="" href="/products/music/<%=song.genre%>"><%=song.genre%></a>
             </td>                                                               
           </tr>                                                                 
         <%end%>                                                                 

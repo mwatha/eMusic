@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   def get_products
     music = ProductCategory.find_by_name("Audio CD album")                      
     video = ProductCategory.find_by_name("Video")                               
-    #gadget = ProductCategory.find_by_name("Gadget") 
+    gadget = ProductCategory.find_by_name("Gadget") 
 
     orders = ProductOrder.find_all_by_order_id(self.id)
     products = []
@@ -17,6 +17,9 @@ class Order < ActiveRecord::Base
       elsif product.product_category == video.id                              
         video = Video.find_by_product_id(order.product_id)                          
         products << [video.title,video.category,order.quantity,order.price]                    
+      elsif product.product_category == gadget.id                              
+        gadget = Gadget.find_by_product_id(order.product_id)                          
+        products << [gadget.name,gadget.version,order.quantity,order.price]                    
       end
     end
     products

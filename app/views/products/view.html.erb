@@ -30,6 +30,7 @@ input, textarea, select, .uneditable-input {
   border-radius: 6px 6px 6px 6px;
   height: 300px;
   width: 300px;
+  vertical-align: top;
 }
 
 .item_description {
@@ -88,9 +89,8 @@ input, textarea, select, .uneditable-input {
             <td class="image_container"><img src="<%=attributes[:url]%>" / class="images"></td>
             <td class="item_description">
               <% unless @product.blank? %>
-                <font style="font-size:14px;color: blue;">
-                <%=@product[0][:product]%> - <%= @product[0][:title] %> 
-                </font>
+                <font style="font-size:15px;color:purple;"><%=@product[0][:product]%></font></font><br />
+                <font style="font-size:20px;color:orange;"><%=@product[0][:title]%></font></font><p />
               <%end%></p>
               <%=attributes[:description]%>
             </td>
@@ -135,7 +135,7 @@ input, textarea, select, .uneditable-input {
               <td style="color: #222222;font-size: 12px;"><%=attributes[:title]%></td>
               <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:time].to_time.strftime("%M:%S") rescue nil%></td>
               <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:price]%></td>
-              <td align="right"><a class="btn" href="/items/view/<%=%>">Buy song</a></td>
+              <td align="right"><a class="btn" href="/order/buy_song/<%=attributes[:product_id]%>">Buy song</a></td>
             </tr>
           <%end rescue nil%>
           </tbody>
