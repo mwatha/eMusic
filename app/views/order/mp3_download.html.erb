@@ -1,2 +1,115 @@
-<h1>Order#mp3_download</h1>
-<p>Find me in app/views/order/mp3_download.html.erb</p>
+<style>
+#page-container {                                                               
+  border-color: black;
+  border-radius: 14px 14px 14px 14px;
+  border-style: solid;
+  border-width: 1px;
+  color: #333333;
+  font: inherit;
+  height: auto;
+  left: 50%;
+  margin: -154px 0 0 -418px;
+  padding: 0;
+  position: absolute;
+  top: 250%;
+  vertical-align: baseline;
+  width: 838px;
+}
+
+.thank-you {
+  margin: 15px 15px 15px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.orders {                                                                       
+  left: 15px;                                                                   
+  position: relative;                                                           
+  width: 97%;                                                                   
+}                                                                               
+                                                                                
+.orders th {                                                                    
+  text-align: left;                                                             
+  color: orange;                                                                
+}                                                                               
+                                                                                
+.orders td {                                                                    
+  color: #666666;                                                               
+  font-size: small;                                                             
+}
+
+
+</style>
+
+
+<div id="page-container" class="wrapper profile-container">
+
+
+<div class="thank-you">
+    <table class="orders">                                                          
+    <!--caption><b>Order#:</b></h3></caption>
+    <tr>
+      <td colspan="4"><hr /></td>                                                                          
+    </tr -->                                                                          
+    <tr>                                                                          
+      <th width="35%">Song title</th>                                                
+      <th width="35%">Artist</th>                                                
+      <th style="text-align: left;">Album</th>                                   
+      <th style="text-align: right;">Total cost</th>                              
+    </tr>                                                                         
+  <%
+    total_cost = 0 ; (@order || []).each do | order |%>                        
+    <tr>                                                                        
+      <td><%=order[0]%></td>                                    
+      <td><%=order[1]%></td>                                    
+      <td style="text-align: left;"><%=order[2]%></td>                         
+      <td style="text-align: right;">$<%=(order[3])%></td>                         
+    </tr>                                                                       
+  <%end%>
+    <tr>
+      <td colspan="4"><hr /></td>                                                                          
+    </tr>                                                                          
+    <tr>
+      <td colspan="4">
+        Your download will start shortly,please wait ........<%='&nbsp;'*2%>
+        <a href="javascript:downLoad();">Click here</a>&nbsp;if file does not start downloading
+      </td>
+    </tr>                                                                          
+    </table>
+  </div>
+
+
+</div>
+
+<script>
+  window.setTimeout("downLoad();",2000);
+
+  function downLoad() {
+    var order_id = "<%= params[:order_id] %>";
+    if (order_id === "" || order_id === null)
+      return  
+
+    /*if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari  
+      xmlhttp=new XMLHttpRequest();                                             
+    }else{// code for IE6, IE5                                                  
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");                           
+    }                                                                           
+    xmlhttp.onreadystatechange=function() {                                     
+      if (xmlhttp.readyState===4 && xmlhttp.status===200) {                     
+        var results = xmlhttp.responseText;                               
+        if(results) {
+          //var url = "/order/download?id=" + order_id;                                                                
+          //window.location.assign(url);
+        }                                                                       
+      }                                                                         
+    }           
+    
+    var url = "/order/download?id=" + order_id;                                                                
+    xmlhttp.open("GET",url,true);                                               
+    xmlhttp.send(); */
+    var url = "/order/download?id=" + order_id;                                                                
+    window.location.assign(url);
+  }
+</script>

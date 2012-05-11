@@ -85,11 +85,11 @@
     <div class="span3">
       <div class="well sidebar-nav">
         <table>                                                                 
-        <caption style="font-size:16px;color:Orange;">Categories</caption>      
-        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+        <caption style="float:left;font-size:16px;color:Orange;">Categories</caption>      
+        <% (Video.find(:all,:group => "category") || []).each do |video| %>         
           <tr>                                                                  
             <td style="font-size:14px;color: blue;">                            
-              <a class="" href="/products/music/<%=song.genre%>"><%=song.genre%></a>
+              <a class="" href="/products/dvd/<%=video.category%>"><%=video.category%></a>
             </td>                                                               
           </tr>                                                                 
         <%end%>                                                                 

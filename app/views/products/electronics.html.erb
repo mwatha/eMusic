@@ -84,10 +84,10 @@
       <div class="well sidebar-nav">
         <table>                                                                 
         <caption style="font-size:16px;color:Orange;">Categories</caption>      
-        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+        <% (Gadget.find(:all,:group => "brand_name") || []).each do |gadget| %>         
           <tr>                                                                  
             <td style="font-size:14px;color: blue;">                            
-              <a class="" href="/products/music/<%=song.genre%>"><%=song.genre%></a>
+              <a class="" href="/products/electronics/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
             </td>                                                               
           </tr>                                                                 
         <%end%>                                                                 

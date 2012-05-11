@@ -44,7 +44,7 @@ class Upload
     song.track_number = audio_length.tag['tracknum']
     song.genre = album.genre
     song.year = audio_length.tag['year'] || album.year
-    song.url = "#{directory}/#{name}"
+    song.url = "/public/songs/#{name}"
     song.save
   end 
   

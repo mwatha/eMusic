@@ -10,6 +10,7 @@
 <%= javascript_include_tag "bootstrap-dropdown" %> 
 
 <link rel="shortcut icon" href="/images/logo-2.gif" type="image/x-icon">
+<script language="javascripts" src="/javascripts/cart.js" type="text/javascript"></script>
 
 <script>
   function activateTabs() {
@@ -121,8 +122,8 @@ input, textarea, select, .uneditable-input {
 <!-- -->
 <div class="subnav subnav-fixed">
   <ul class="nav nav-pills">
-    <li class="dropdown active" style="float:right;">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart<b class="caret"></b></a>
+    <li class="dropdown active" style="float:right;" id="cart">
+      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cart&nbsp;(0)<b class="caret"></b></a>
       <%unless @cart.blank?%>                                                   
       <ul class="dropdown-menu">                                                
         <%(@cart[0..9] || []).each do |cart|%>                                  

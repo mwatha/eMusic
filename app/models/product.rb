@@ -232,4 +232,48 @@ class Product < ActiveRecord::Base
 
   end
   
+  def self.get_video_by_category_for_display(category)
+    category_id = ProductCategory.find_by_name("Video").id
+    records = Video.find(:all,
+      :select => "title,description,
+      image_url url, year , p.product_id product_id ,category , p.price , p.quantity",
+      :joins =>"INNER JOIN product p ON p.product_id = video.product_id
+      AND p.product_category = #{category_id}",
+      :conditions =>["category = ?",category],
+      :group => "category,video_id")
+
+    display = {}
+    
+    (records || []).each do |record|
+      display[record.product_id] = {
+        :title => record.title,:description => record.description,
+        :url => record.url,:year => record.year,:category => record.category,
+        :price => record.price,:quantity => record.quantity
+      }
+    end 
+    return display
+  end
+
+  def self.get_gadget_by_brand_name_for_display(brand)
+    category_id = ProductCategory.find_by_name("Gadget").id
+    records = Gadget.find(:all,
+      :select => "name,description,
+      image_url url, year , p.product_id product_id ,brand_name , version ,
+      p.price , p.quantity",
+      :joins =>"INNER JOIN product p ON p.product_id = gadget.product_id
+      AND p.product_category = #{category_id}",
+      :conditions =>["brand_name = ?",brand],
+      :group => "brand_name,gadget_id")
+
+    display = {}
+    
+    (records || []).each do |record|
+      display[record.product_id] = {
+        :name => record.name,:description => record.description,
+        :url => record.url,:year => record.year,:version => record.version,
+        :price => record.price,:quantity => record.quantity
+      }
+    end 
+    return display
+  end
 end

@@ -11,6 +11,8 @@ class OrderController < ApplicationController
         product_id = cart.split(":")[1]                                           
         quantity = cart.split(":")[3].to_i      
 
+        next if product_id == '0'
+
         product = Product.find(product_id)                                      
         if product.product_category == music.id                                 
           album = Albums.find_by_product_id(product.id)                         
@@ -51,6 +53,9 @@ class OrderController < ApplicationController
       type = cart.split(":")[0]                                                 
       if type.match(/product_id/i)                                                
         product_id = cart.split(":")[1]                                           
+
+        next if product_id == '0'
+
         quantity = cart.split(":")[3].to_i                                          
         product = Product.find(product_id)                                      
         create_order(@order,product,quantity) 
@@ -98,7 +103,41 @@ EOF
   end
 
   def buy_song
+    if request.post?
+      order = Order.new()                                                        
+      order.order_status = 0                                                     
+      order.orderer = Users.current_user.id                                      
+      order.start_date = Time.now()                                              
+      order.end_date = Time.now()                                     
+      order.save
+
+      create_order(order,Product.find(params[:product_id]),1)
+      redirect_to :action =>'mp3_download',
+        :order_id => order.id and return
+    end
     @product_id = params[:id]
+  end
+
+  def mp3_download
+    if params[:order_id]
+      order = Order.find(params[:order_id])
+      @order = order.get_products
+    end
+  end
+
+  def download
+    order = Order.find(params[:id])
+    product_id = ProductOrder.find_by_order_id(order.id).product_id
+
+    if order.instruction.blank?
+      song = Songs.find_by_product_id(product_id)
+      order.instruction = song.url
+      order.save
+      start_download(song)
+      return 
+      render :text => "Downloading ......." and return
+    end
+    redirect_to('/')
   end
 
   private
@@ -127,6 +166,12 @@ EOF
     product_order.total_cost = (quantity * product.price).to_f
     product_order.description = ""
     product_order.save
+  end
+
+  def start_download(song)
+    send_file(RAILS_ROOT + song.url,:filename => song.title,
+      :type => 'application/msword', :disposition => 'inline')
+    return
   end
 
 end

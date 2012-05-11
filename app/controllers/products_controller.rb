@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
 
   def electronics
     if params[:id]
-      @electronics = Product.get_gadget_by_category_for_display(params[:id])
+      @electronics = Product.get_gadget_by_brand_name_for_display(params[:id])
     else
       @electronics = Product.get_products_for_display("Gadget")
     end
@@ -43,34 +43,6 @@ class ProductsController < ApplicationController
       @product = Product.get_gadget(params[:id])
     end
     #render :layout => false
-  end
-
-  def add_to_cart
-    case params[:id]
-      when "album"
-        quantity = params[:quantity].to_i
-        product_id = params[:product_id].to_i
-        if session[:cart].blank?
-          session[:cart] = ["product_id:#{product_id}:quantity:#{quantity}"]
-        end
-        unless session[:cart].include?("product_id:#{product_id}:quantity#{quantity}")
-          session[:cart] << "product_id:#{product_id}:quantity:#{quantity}"
-        end
-        roundedOrders = Hash.new(0)
-        (session[:cart]).uniq.each do |cart|
-          product_id = cart.split(':')[0..1].join(':')
-          quantity = cart.split(':')[3].to_i
-          roundedOrders[product_id]+= quantity
-        end
-        session[:cart] = []
-        roundedOrders.each do |key , quantity|
-          session[:cart] << "#{key}:quantity:#{quantity}"
-        end
-      when "video"
-      when "pda"
-    end
-    session[:cart] = session[:cart].uniq
-    redirect_to("/products/music")
   end
 
   def cart
