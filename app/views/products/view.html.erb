@@ -150,7 +150,7 @@ input, textarea, select, .uneditable-input {
         <% (Albums.find(:all,:group => "genre") || []).each do |album| %>
           <tr>
             <td style="font-size:14px;color: blue;">
-              <a class="" href="/items/music/<%=album.genre%>"><%=album.genre%></a>
+              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
             </td>
           </tr>
         <%end%>
@@ -160,7 +160,7 @@ input, textarea, select, .uneditable-input {
         <% (Video.find(:all,:group => "category") || []).each do |video| %>
           <tr>
             <td style="font-size:14px;color: blue;">
-              <a class="" href="/items/music/<%=video.category%>"><%=video.category%></a>
+              <a class="" href="/products/dvd/<%=video.category%>"><%=video.category%></a>
             </td>
           </tr>
         <%end%>
@@ -170,7 +170,7 @@ input, textarea, select, .uneditable-input {
         <% (Gadget.find(:all,:group => "brand_name") || []).each do |gadget| %>
           <tr>
             <td style="font-size:14px;color: blue;">
-              <a class="" href="/items/music/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
+              <a class="" href="/products/electronics/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
             </td>
           </tr>
         <%end%>
