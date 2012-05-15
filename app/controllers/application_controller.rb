@@ -35,13 +35,13 @@ class ApplicationController < ActionController::Base
         product = Product.find(product_id) rescue nil
         if product.product_category == music.id                                     
           album = Albums.find_by_product_id(product.id)
-          @cart << ["#{album.artist}::#{album.album_title}::#{quantity}"]                      
+          @cart << ["#{album.artist}::#{album.album_title}::#{quantity}::#{product.id}"]                      
         elsif product.product_category == video.id                                     
           video = Video.find_by_product_id(product.id)
-          @cart << ["#{video.title}::#{video.category}::#{quantity}"]                      
+          @cart << ["#{video.title}::#{video.category}::#{quantity}::#{product.id}"]                      
         elsif product.product_category == gadget.id                                     
           gadget = Gadget.find_by_product_id(product.id)
-          @cart << ["#{gadget.name}::#{gadget.version}::#{quantity}"]                      
+          @cart << ["#{gadget.name}::#{gadget.version}::#{quantity}::#{product.id}"]                      
         end
       end                                                                       
     end

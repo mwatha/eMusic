@@ -7,6 +7,13 @@
 
 <style>
 
+.customer_comments {
+  font-family: Arial,Verdana,"Helvetica Neue",Helvetica,sans-serif;
+  font-size: 16px;
+  line-height: 21px;
+  color: #333333;
+}
+
 .container {
   height: auto;
 }
@@ -42,6 +49,7 @@ input, textarea, select, .uneditable-input {
 
 .image_container {
   width: 300px;
+  vertical-align: top;
 }
 
 .zebra-striped {
@@ -63,7 +71,18 @@ input, textarea, select, .uneditable-input {
   line-height: 3;
 }
 
+.user {                                                                         
+    width: 65px;                                                                  
+    height: 65px;                                                                 
+  }
 
+  .comments {
+    font-size: 12px !important;
+    color: #222222 !important;
+    line-height: 1.4em !important;
+    padding-left: 10px !important;
+    vertical-align: top !important;
+  }
 </style>
 
 
@@ -110,6 +129,12 @@ input, textarea, select, .uneditable-input {
           <tr>
             <td colspan="3">&nbsp;</td>
           </tr>
+          <tr>
+            <td colspan="3">Click <a href="/blog/post/<%=@product[0][:product_id]%>">here</a> to comment on this product ....</td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
           <%end%>
           </tbody>
         </table><br />
@@ -140,6 +165,68 @@ input, textarea, select, .uneditable-input {
           </tbody>
         </table>
         <%end%>
+        <div>&nbsp;</div>
+        <div><hr /></div>
+        <span class="customer_comments">Customer comments</span>
+        <%="<br />"*3%>
+
+
+<!-- starts --->
+
+
+
+        <table>
+          <tbody>
+            <%(Comment.get_comments(@product[0][:product_id]) || []).each do |comment| 
+              product = Product.find(comment.product_id)
+            %>
+            <tr>
+              <td class="comments" colspan="4">
+                <table style="width:925px">
+                  <tr>  
+                    <td style="vertical-align:top;width:65px;">
+                      <img align="left" class="user" src="<%=product.image_url%>" />
+                    </td>
+                    <td style="vertical-align:top;ifont-size:12px!important;">
+                      <font style="font-size:12px!important;color:Orange;">
+                      <%= People.find(Users.find(comment.creator).people_id).name %></font>&nbsp;
+                      &nbsp;@<font style="color:purple;font-size:12px!important;"><%=comment.date_created.strftime('%H:%M:%S')%>&nbsp;
+                      <%=comment.date_created.strftime('%A %d %B %Y')%></font>&nbsp;..<br />
+                      <font style="font-size:12px!important;"><%= comment.comment %><br /></font>
+                      <a href="/blog/post?id=<%=comment.product_id%>&parent_comment_id=<%=comment.id%>">Comment</a> ....
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><hr /></td>
+                  </tr>
+                  <% comment.sub_comments.each do |c| %>
+                    <tr>
+                      <td colspan="2" style="font-size: 13px !important;">
+                        <font style="color:orange;"><%= c[1] %></font>
+                        &nbsp;@<font style="color:purple;"><%=c[2].strftime('%H:%M:%S')%>&nbsp;
+                        <%=c[2].strftime('%A %d %B %Y')%></font>&nbsp;..<br />
+                        <%= c[0] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4"><hr /></td>
+                    </tr>
+                <%end%>
+                </table>  
+              </td>
+            </tr>
+              <%end%>
+            </tbody>  
+          </table>  
+
+
+
+
+
+
+<!-- ends --->
+
+
       </div>
     </div>
 

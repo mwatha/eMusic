@@ -8,7 +8,7 @@
 
 #post {
  width: 500px;
- height: 130px !important; 
+ height: 65px !important; 
 }
 
 .post_btn {
@@ -30,17 +30,23 @@
           <tbody>
             <tr>
               <td>
-                <img class="user" src="/images/users.png" />
-                &nbsp;<span style="vertical-align:super;">Login as:
-                <span style="color:Orange;"><%= Users.current_user.username %> &nbsp;</span> ..</span>
+                <!--img class="user" src="/images/users.png" / -->
+                <table style="width:100%"><form action="post" method="post">
+                  <tr>
+                    <td style="width:65px;vertical-align:top;"><img class="user" src="<%= @image_url %>" /></td>
+                    <td><textarea name="post" id="post"></textarea></td>
+                  </tr>
+                  <input type="hidden" name="product_id" value="<%= @product_id %>" />
+                  <input type="hidden" name="parent_comment_id" value="<%= @parent_comment_id %>" />
+                </table>
               </td>
             </tr>
             <tr>
               <td><hr /></td>
             </tr>
-            <tr><form action="post" method="post">
-              <td style="vertical-align: top;">Post your comment here:<br />
-                <textarea name="post" id="post"></textarea>
+            <tr>
+              <td style="vertical-align: top;">Posting as:&nbsp;
+                <font style="color:purple;"><%= Users.current_user.people.name %></font>&nbsp;(<a href="/users/logout">Not you?</a>)
               </td>
             </tr>
             <tr>
@@ -58,15 +64,35 @@
 
     <div class="span3">
       <div class="well sidebar-nav">
-        <table>                                                                 
-        <caption style="font-size:16px;color:Orange;">Categories</caption>      
-        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
-          <tr>                                                                  
-            <td style="font-size:14px;color: blue;">                            
-              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
-            </td>                                                               
-          </tr>                                                                 
-        <%end%>                                                                 
+        <table>
+        <caption><a style="font-size:16px;color:Orange;" href="/products/music">Music</a></caption>
+        <% (Albums.find(:all,:group => "genre") || []).each do |album| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table><br />
+        <table>
+        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/dvd">Video</a></caption>
+        <% (Video.find(:all,:group => "category") || []).each do |video| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/dvd/<%=video.category%>"><%=video.category%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table><br />
+        <table>
+        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/electronics">Electronics</a></caption>
+        <% (Gadget.find(:all,:group => "brand_name") || []).each do |gadget| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/electronics/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
+            </td>
+          </tr>
+        <%end%>
         </table>
       </div>
     </div>

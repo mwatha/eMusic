@@ -21,9 +21,10 @@ function addToCart(product_id) {
             var product = String(results[i]);
             var name = product.split("::")[0];
             var title = product.split("::")[1];
+            var product_id = product.split("::")[3];
             if(name !== "" || name == null){
               var qty = parseInt(product.split("::")[2]);
-              html += "<li><a href='#'>" + name.substring(0,17) + ":" + title.substring(0,17) + ":" + qty + "</a></li>";
+              html += "<li><a href='/products/view/" + product_id + "'>" + name.substring(0,17) + ":" + title.substring(0,17) + ":" + qty + "</a></li>";
             }
           }
         }                               

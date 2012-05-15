@@ -6,6 +6,7 @@
   }
 
   .comments {
+    font-size: 12px !important;
   }
 </style>
 
@@ -18,38 +19,63 @@
       <div class="well sidebar-nav">
         <table class="zebra-striped">
           <tbody>
-            <%(@comments || []).each do |comment| %>
+            <%(@comments || []).each do |comment| 
+              product = Product.find(comment.product_id)
+            %>
             <tr>
               <td class="comments">
-                <img align="left" class="user" src="/images/users.png" />
-                <font style="color:Orange;"><%= People.find(Users.find(comment.creator).people_id).name %></font>&nbsp;....<br />
-                <%= comment.comment %>
+                <table style="width:100%">
+                  <tr>  
+                    <td style="vertical-align:top;width:65px;">
+                      <img align="left" class="user" src="<%=product.image_url%>" />
+                    </td>
+                    <td style="vertical-align:top;">
+                      <font style="color:Orange;font-size:12px!important;">
+                      <%= People.find(Users.find(comment.creator).people_id).name %></font>&nbsp;
+                      &nbsp;@<font style="color:purple;font-size:12px!important;">
+                      <%=comment.date_created.strftime('%H:%M:%S')%>&nbsp;
+                      <%=comment.date_created.strftime('%A %d %B %Y')%></font>&nbsp;..<br />
+                      <font style="font-size:12px!important;"><%= comment.comment %></font><br />
+                      <a href="/blog/post?id=<%=comment.product_id%>&parent_comment_id=<%=comment.id%>">Comment</a> ....
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><hr /></td>
+                  </tr>
+                  <% comment.sub_comments.each do |c| %>
+                    <tr>
+                      <td colspan="2" style="font-size: 12px !important;">
+                        <font style="color:orange;"><%= c[1] %></font>
+                        &nbsp;@<font style="color:purple;font-size:12px!important;"><%=c[2].strftime('%H:%M:%S')%>&nbsp;
+                        <%=c[2].strftime('%A %d %B %Y')%></font>&nbsp;..<br />
+                        <font style="font-size:12px!important;"><%= c[0] %></font>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><hr /></td>
+                    </tr>
+                  <%end%>
+                </table>  
               </td>
             </tr>
             <tr>
-              <td><hr /></td>
+              <td>&nbsp;</td>
             </tr>
             <%end
             if @comments.blank?%>
               <tr>                                                                            
                 <td>                                                                          
-                  No comments posted yet ....<% unless Users.current_user.blank? %>                                                  
-                  &nbsp;<a href="javascript:location.href='/blog/post';">Click here to post</a>
-                  <%end%>
+                  No comments posted yet ....
                 </td>                                                                         
               </tr>
               <tr>
                 <td><hr /></td>
               </tr>
             <%end
-            unless @comments.blank?%>
+            if @comments.blank?%>
               <tr>                                                                            
                 <td>                                                                          
-                  <% if Users.current_user.blank? %>                                                  
-                  &nbsp;<a href="javascript:location.href='/users/login';">Login</a>&nbsp;to post a comment ...
-                  <%else%>
-                  &nbsp;<a href="javascript:location.href='/blog/post';">Click here to post</a>
-                  <%end%>
+                  No comments posted yet ....
                 </td>                                                                         
               </tr>
             <%end%>
@@ -60,15 +86,35 @@
 
     <div class="span3">
       <div class="well sidebar-nav">
-        <table>                                                                 
-        <caption style="font-size:16px;color:Orange;">Categories</caption>      
-        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
-          <tr>                                                                  
-            <td style="font-size:14px;color: blue;">                            
-              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
-            </td>                                                               
-          </tr>                                                                 
-        <%end%>                                                                 
+        <table>
+        <caption><a style="font-size:16px;color:Orange;" href="/products/music">Music</a></caption>
+        <% (Albums.find(:all,:group => "genre") || []).each do |album| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table><br />
+        <table>
+        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/dvd">Video</a></caption>
+        <% (Video.find(:all,:group => "category") || []).each do |video| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/dvd/<%=video.category%>"><%=video.category%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table><br />
+        <table>
+        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/electronics">Electronics</a></caption>
+        <% (Gadget.find(:all,:group => "brand_name") || []).each do |gadget| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/electronics/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
+            </td>
+          </tr>
+        <%end%>
         </table>
       </div>
     </div>
