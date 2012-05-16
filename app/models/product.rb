@@ -276,4 +276,43 @@ class Product < ActiveRecord::Base
     end 
     return display
   end
+
+  def self.search(search_string)
+    results = {}
+
+    Albums.find(:all,:joins =>"INNER JOIN product p ON p.product_id = albums.product_id
+      LEFT JOIN songs s ON s.album_id = albums.album_id",:select => "artist , description,                                           
+      image_url url, p.product_id product_id , album_title , p.price , p.quantity",
+      :conditions =>["albums.artist LIKE (?) OR albums.album_title LIKE (?)
+      OR s.title LIKE (?)","%#{search_string}%","%#{search_string}%","%#{search_string}%"],
+      :order =>"albums.artist").each do |record|
+        results[record.product_id] = {:artist => record.artist,:title => record.album_title,
+        :price =>  record.price,:description => record.description, :url => record.url,
+        :product_category => "audio",:quantity => record.quantity }
+    end
+
+    Gadget.find(:all,:select => "name,description,                    
+      image_url url,year,gadget_id, p.product_id ,version,price,quantity",      
+      :joins =>"INNER JOIN product p ON p.product_id = gadget.product_id",
+      :conditions =>["gadget.name LIKE (?) OR gadget.version LIKE (?)","%#{search_string}%","%#{search_string}%"],
+      :order =>"gadget.name").each do |record|
+        results[record.product_id] = {:name => record.name,:version => record.version,
+        :price =>  record.price,:description => record.description, :url => record.url,
+        :product_category => "electronics",:quantity => record.quantity }
+    end
+
+    Video.find(:all,:select => "title,description,                    
+      image_url url,year,video_id, p.product_id ,category,price,quantity",      
+      :joins =>"INNER JOIN product p ON p.product_id = video.product_id",
+      :conditions =>["video.title LIKE (?) OR video.category LIKE (?)",
+      "%#{search_string}%","%#{search_string}%"],
+      :order =>"video.title").each do |record|
+        results[record.product_id] = {:title => record.title,:category => record.category,
+        :price =>  record.price,:description => record.description, :url => record.url,
+        :product_category => "video",:quantity => record.quantity }
+    end
+
+    results
+  end
+
 end

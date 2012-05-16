@@ -95,7 +95,7 @@ input, textarea, select, .uneditable-input {
 <li class="active">
 <a href="/">Home</a>
 </li>
-<li><a href="/products/music">Music</a></li>
+<li><a href="/products/music">Audio</a></li>
 <li><a href="/products/dvd">Video</a></li>
 <!--li><a href="#">PDAs</a></li-->
 <li><a href="/products/electronics">Electronics</a></li>
@@ -103,14 +103,14 @@ input, textarea, select, .uneditable-input {
 <li><a href="#">Support</a></li>
 </ul>
 
-<form class="navbar-search pull-right">
+<form class="navbar-search pull-right" action="/products/search" method="Get">
 <% unless Users.current_user.blank? %>
 <span class="user-name-bunner"><font style="color:PowderBlue;">Login as:</font>
 &nbsp;<%=Users.current_user.username%></span><%='&nbsp;'*2%>
 <%else%>
 <span class="user-name-bunner">Not login</span><%='&nbsp;'*2%>
 <%end%>
-<input type="text" class="search-query" placeholder="Search">
+<input type="text" class="search-query" placeholder="Search" name="search_string">
 </form>
 
 </div>
@@ -143,6 +143,8 @@ input, textarea, select, .uneditable-input {
         <li><a href="#">Track order</a></li>
         <li><a href="#">Cancel order</a></li>
         <%end%>
+        <li><a href="#">Terms of conditions</a></li>
+        <li><a href="#">Privacy policy</a></li>
         <% if session[:user_id].blank?%>
           <li><a href="/users/login">Login</a></li>
         <%else%>

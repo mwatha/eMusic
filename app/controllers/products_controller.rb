@@ -1,12 +1,16 @@
 class ProductsController < ApplicationController
+  def search
+    if request.get?
+      @products = Product.search(params[:search_string])
+    end
+  end
+
   def music
     if params[:id]
       @artists = Product.get_albums_by_genre_for_display(params[:id])
     else
       @artists = Product.get_products_for_display("Audio CD album")
     end
-    
-    #render :layout => false
   end
 
   def dvd
