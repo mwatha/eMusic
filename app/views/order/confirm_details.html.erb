@@ -29,7 +29,7 @@ h1 {
 }
 
 .user-details {                                                                 
-  width: 75%;                                                                  
+  width: 90%;                                                                  
   position: relative;                                                          
   left: 5%;                                                                   
   background-color: transparent;                                               
@@ -49,11 +49,40 @@ h1 {
 </style>
 
 <script>
-  function submitForm() {
-    form = document.getElementById("customer");
-    form.submit();
-  }
 
+  function validateForm(){
+    phone = document.getElementById('address_phone_number');
+    pin = document.getElementById('account_pin_number');
+    address = document.getElementById('address_mailing_address');
+    email = document.getElementById('address_email');
+    zip = document.getElementById('address_zip_code');
+    card = document.getElementById('account_visa');
+    card_number = document.getElementById('account_card_number');
+
+    if(phone.value == '') {
+      alert("Please enter phone number ...");
+      return false;
+    }else if(card.value == 'Select a card') {
+      alert("Please select a card type...");
+      return false;
+    }else if(card_number.value == '') {
+      alert("Please enter your card number number ...");
+      return false;
+    }else if(pin.value == '') {
+      alert("Please enter pin number ...");
+      return false;
+    }else if(email.value == '') {
+      alert("Please enter your email address ...");
+      return false;
+    }else if(zip.value == '') {
+      alert("Please enter zip code ...");
+      return false;
+    }else if(address.value == '') {
+      alert("Please enter mailing address ...");
+      return false;
+    } 
+    return true;
+   }
 </script>
 
 </head>
@@ -63,7 +92,7 @@ h1 {
 <div id="page-container" class="wrapper profile-container">
 
 <h1>Enter address and bank account details.</h1>                                              
-<form action="/order/create" method="post" id = "customer">              
+<form action="/order/create" method="post" id = "customer" onSubmit="return validateForm();">              
 <table class="user-details">
 <%
   cards = ["Select a card","Visa","Credit card"]
@@ -75,7 +104,7 @@ h1 {
   <td><%=text_field(:account,:card_number,:placeholder => "Card number") %></td>    
 </tr> 
 <tr>                                                                  
-  <td><%=text_field(:account,:pin_number,:placeholder => "Pin number") %></td>    
+  <td><%=password_field(:account,:pin_number,:placeholder => "Pin number") %></td>    
 </tr> 
 <tr>                                                                  
   <td><hr /></td>    
@@ -96,7 +125,7 @@ h1 {
 </tr>
 <tr>                                                                  
   <td style="float:right;position:absolute;width: 99%;;">                         
-    <a class="btn make_order_btn button" href="#" onclick="submitForm();"><span>Order</span></a>
+    <input type="submit" class="btn make_order_btn button" value="Order" style="width:100%;" />
   </td>                                                               
 </tr> 
 </table>

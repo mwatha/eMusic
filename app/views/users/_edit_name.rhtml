@@ -1,1 +1,70 @@
-Edit name
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+
+#description {
+  height: 60px !important;  
+}
+
+.upload_btn {                                                                   
+  width: 100% !important;                                                       
+}  
+</style>
+</head>
+
+<body>
+
+<form action="/users/update" method="post" id = "customer">
+ <table class="user-details" style="width:100%;">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :first_name,:placeholder => "First name",:value => @person.first_name ) %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :last_name ,:placeholder => "Last name" ,:value => @person.last_name ) %> </td>
+    </tr>                                                                 
+    <tr>                        
+      <% if @person.gender  
+           values = [@person.gender,"Female","Male"]
+         else
+           values = ['Select sex',"Female","Male"]
+         end
+      %>                                        
+      <td><%= select_tag "user[gender]", 
+          options_for_select(values),
+          :placeholder => "Sex" %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :dob ,:placeholder => "Birthdate" ,:value => @person.birthdate ) %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=password_field(:user, :password,:placeholder => "Password") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=password_field(:user, :retype_password,:placeholder => "Retype-password") %> </td>
+    </tr>                                                                 
+                                                       
+    <tr>                                                                  
+      <td colspan="2">&nbsp;</td>                                                               
+    </tr>                                                                 
+    
+    <tr>                                                                  
+      <td>              
+        <button style="width:100%" 
+          class="btn signup_btn" onclick="submitForm();">Update</button>
+      </td>                                                               
+    </tr>  
+    <input type="hidden" name="person_id" value = "<%=@person.id %>" /> 
+  </tbody>                                                                
+ </table>
+ <%= hidden_field_tag("user[birtdate]", nil) %>
+ </form>
+
+</body>
+</html>                                                               

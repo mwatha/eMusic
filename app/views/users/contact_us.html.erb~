@@ -1,0 +1,26 @@
+<style>
+ .contact-details td {
+      vertical-align:top;
+    }
+ </style>
+
+
+
+<form action="index.php" method="post">
+<table>
+  <tr>
+    <td>Email:&nbsp;</td>
+    <td><input type="text" name="email" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><textarea name="comments" cols="50" rows="10"></textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Submit" /></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+</table></form>

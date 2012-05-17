@@ -1,0 +1,83 @@
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+
+#description {
+  height: 60px !important;  
+}
+
+.upload_btn {                                                                   
+  width: 100% !important;                                                       
+}  
+</style>
+</head>
+
+<body>
+
+<form action="/users/create" method="post" id = "customer">
+ <table class="user-details">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :first_name,:placeholder => "First name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :last_name ,:placeholder => "Last name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%= select_tag "user[gender]", options_for_select(["Select sex","Female", "Male"]),:placeholder => "Sex" %></td>
+    </tr>                                                                 
+    <!--tr>                                                                  
+      <td>
+        <font style="color: #999999;font-size:12px;">Birthdate:</font>
+        <input id="dob_disabled" type="text" size="10" name="user[dob]" disabled="disabled" placeholder = "Birthdate">
+        <div class="input-append date" id="dp3" data-date="<%#=Date.today - 20.year%>" data-date-format="yyyy-mm-dd">
+          <input class="span2" size="16" type="text" value="<%#=Date.today - 20.year%>" style="width: auto;">
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+      </td>
+    </tr-->                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :dob ,:placeholder => "Birthdate") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :email,:placeholder => "Email") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:user, :username, :textCase => "lower",:placeholder => "Username") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=password_field(:user, :password,:placeholder => "Password") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=password_field(:user, :retype_password,:placeholder => "Retype-password") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>
+        <div class="tos" onclick="showAll();">
+          <p>By clicking the check box, you agree to the terms below:
+             <%=check_box_tag(:female, 
+                value = "0", checked = false, 
+                options = {:onchange => "checkBox(this);"})%>
+          </p>
+          <div class="scroller" style="height: 400px;" mouseover="showAll();">
+            <%=@terms_of_condtion%>
+          </div>
+        </div>
+      </td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td colspan="2">&nbsp;</td>                                                               
+    </tr>                                                                 
+  </tbody>                                                                
+ </table>
+ <%= hidden_field_tag("user[birtdate]", nil) %>
+ </form>
+
+</body>
+</html>                                                               

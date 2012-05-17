@@ -1,1 +1,63 @@
-Contact details
+<html>
+<head>
+<style>
+.params-table {
+  width: 99%;
+}
+
+#description {
+  height: 60px !important;  
+}
+
+.upload_btn {                                                                   
+  width: 100% !important;                                                       
+}  
+
+#address_mailing_address {                                                      
+  height: 70px !important;                                                      
+}
+</style>
+</head>
+
+<body>
+
+<form action="/users/update_contact_details" method="post" id = "customer">
+ <table class="user-details" style="width:99%;">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+                                                      
+    <tr>                                                                            
+      <td><%=text_field(:address,:email,:placeholder => "Email", :value => "#{@person.email}") %></td>
+    </tr>                                                                           
+    <tr>                                                                            
+      <td>                                                                          
+        <%=text_area(:address,:mailing_address,:placeholder => "Mailing address", :value => "#{@person.address}" ) %>
+      </td>                                                                         
+    </tr>                                                                           
+    <tr>                                                                            
+      <td><%=text_field(:address,:zip_code,:placeholder => "Zip code", :value => "#{@person.zip_code}") %></td>
+    </tr>                                                                           
+    <tr>                                                                            
+      <td><%=text_field(:address,:phone_number,:placeholder => "Phone number", :value => "#{@person.phone_number}" ) %></td>
+    </tr>            
+ 
+    <tr>                                                                  
+      <td colspan="2">&nbsp;</td>                                                               
+    </tr>                                                                 
+
+    <tr>                                                                        
+      <td>                                                                      
+        <button style="width:100%"                                              
+          class="btn signup_btn" onclick="submitForm();">Update</button>        
+      </td>                                                                     
+    </tr>                                                                       
+    <input type="hidden" name="person_id" value = "<%=@person.id %>" /> 
+  </tbody>                                                                
+ </table>
+ <%= hidden_field_tag("user[birtdate]", nil) %>
+ </form>
+
+</body>
+</html>                                                               

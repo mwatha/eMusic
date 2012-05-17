@@ -1,0 +1,47 @@
+ <style>
+ .contact-details td {
+      vertical-align:top;
+    }
+
+ #comments {
+   height: 200px !important;
+   width: 300px !important;
+ }
+ </style>
+
+<div style="padding-left:50px;">
+
+
+<strong>Contacting Us</strong> <br /><br />If there are any questions or comments regarding our services, you may contact us using the information below. <br /><br />
+
+www.emusic.com<br />
+P.O Box 30098<br />
+LL 3<br />
+Lilongwe<br />
+Malawi<br />
+Email:&nbsp;support@emusic.com<br /><br />
+<span></span><span></span>
+<br />
+<br />
+
+
+<form action="/emailer/sendmail" method="post">
+<table>
+  <tr>
+    <td><input type="text" name="email" placeholder = "Email" /></td>
+  </tr>
+  <tr>
+    <td><input type="text" name="subject" placeholder = "Subject" /></td>
+  </tr>
+  <tr>
+    <td><textarea id="comments" name="message" cols="50" rows="10" placeholder="Write your message here"></textarea></td>
+  </tr>
+  <tr>
+    <td><input class="btn" type="submit" value="Submit" style="width:100%;" /></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+</table></form>
+
+</div>

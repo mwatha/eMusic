@@ -43,3 +43,16 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+
+ActionMailer::Base.delivery_method = :smtp
+=begin
+ActionMailer::Base.server_settings = {
+   :address => "smtp.googlemail.com",
+   :port => 25,
+   :domain => "googlemail.com",
+   :authentication => :login,
+   :user_name => "mwathabwanali@gmail.com",
+   :password => "google.ice.canilive!",
+}
+=end

@@ -82,35 +82,5 @@ EOF
   def settings
     @partial = params[:id]
     @partial = 'edit_name' if @partial.blank?
-    if @partial == 'edit_name' || @partial == 'contact_details'
-      @person = Users.current_user.people
-    end
   end
-
-  def update
-    person = People.find(params[:person_id])
-    person.first_name = params[:user]['first_name'] 
-    person.last_name = params[:user]['last_name'] 
-    person.birthdate = params[:user]['dob'] 
-    person.gender = params[:user]['gender'] 
-    person.save
-
-    unless params[:user]['password'].blank?
-      user = Users.current_user
-      user.password = params[:user]['password']
-      user.save 
-    end
-    redirect_to :action => 'settings' and return
-  end
-
-  def update_contact_details
-    update_identifier("Zip code", params[:address]["zip_code"])                 
-    update_identifier("Phone number", params[:address]["phone_number"])         
-    update_identifier("Mailing address", params[:address]["mailing_address"])   
-    update_identifier("Email", params[:address]["email"])  
-
-    redirect_to :action => 'settings',:id =>'contact_details' and return
-  end
-
-
 end

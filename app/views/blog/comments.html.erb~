@@ -65,7 +65,7 @@
             if @comments.blank?%>
               <tr>                                                                            
                 <td>                                                                          
-                  No post posted yet ....
+                  No comments posted yet ....
                 </td>                                                                         
               </tr>
               <tr>
@@ -75,7 +75,7 @@
             if @comments.blank?%>
               <tr>                                                                            
                 <td>                                                                          
-                  &nbsp;
+                  No comments posted yet ....
                 </td>                                                                         
               </tr>
             <%end%>
@@ -86,35 +86,15 @@
 
     <div class="span3">
       <div class="well sidebar-nav">
-        <table>
-        <caption><a style="font-size:16px;color:Orange;" href="/products/music">Music</a></caption>
-        <% (Albums.find(:all,:group => "genre") || []).each do |album| %>
-          <tr>
-            <td style="font-size:14px;color: blue;">
-              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
-            </td>
-          </tr>
-        <%end%>
-        </table><br />
-        <table>
-        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/dvd">Video</a></caption>
-        <% (Video.find(:all,:group => "category") || []).each do |video| %>
-          <tr>
-            <td style="font-size:14px;color: blue;">
-              <a class="" href="/products/dvd/<%=video.category%>"><%=video.category%></a>
-            </td>
-          </tr>
-        <%end%>
-        </table><br />
-        <table>
-        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/electronics">Electronics</a></caption>
-        <% (Gadget.find(:all,:group => "brand_name") || []).each do |gadget| %>
-          <tr>
-            <td style="font-size:14px;color: blue;">
-              <a class="" href="/products/electronics/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
-            </td>
-          </tr>
-        <%end%>
+        <table>                                                                 
+        <caption style="font-size:16px;color:Orange;">Categories</caption>      
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+          <tr>                                                                  
+            <td style="font-size:14px;color: blue;">                            
+              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>                                                               
+          </tr>                                                                 
+        <%end%>                                                                 
         </table>
       </div>
     </div>

@@ -78,4 +78,47 @@ class ApplicationController < ActionController::Base
     session[:cart] = session[:cart].uniq                                        
     render :text => intialize_cart.to_json and return                           
   end
+
+  def create_identifier(type,name)                                              
+    identifier_type = PeopleIdentifierType.find_by_name(type).id                
+    available = PeopleIdentifier.find(:first,:conditions =>["people_id = ?      
+                AND identifier_type = ?",Users.current_user.people_id,identifier_type])
+                                                                                
+    return unless available.blank?                                              
+                                                                                
+    identifier = PeopleIdentifier.new()                                         
+    identifier.identifier_type = identifier_type                                
+    identifier.identifier = name                                                
+    identifier.people_id = Users.current_user.people_id                         
+    identifier.date_created = Time.now()                                        
+    identifier.save                                                             
+  end
+
+  def update_identifier(type,name)                                              
+    identifier_type = PeopleIdentifierType.find_by_name(type).id                
+    identifier = PeopleIdentifier.find(:first,:conditions =>["people_id = ?      
+                AND identifier_type = ?",Users.current_user.people_id,identifier_type])
+                                                                                
+    identifier.identifier_type = identifier_type                                
+    identifier.identifier = name                                                
+    identifier.people_id = Users.current_user.people_id                         
+    identifier.date_created = Time.now()                                        
+    identifier.save                                                             
+  end
+
+  def remove_from_cart(removed_id)                                                         
+    roundedOrders = Hash.new(0)                                                 
+    (session[:cart]).uniq.each do |cart|                                        
+      product_id = cart.split(':')[0..1].join(':')     
+      next if product_id.sub("product_id:","").to_i == removed_id                         
+      quantity = cart.split(':')[3].to_i                                        
+      roundedOrders[product_id]+= quantity                                      
+    end                                                                         
+    session[:cart] = []                                                         
+    roundedOrders.each do |key , quantity|                                      
+      session[:cart] << "#{key}:quantity:#{quantity}"                           
+    end                                                                         
+    session[:cart] = session[:cart].uniq                                        
+  end 
+
 end

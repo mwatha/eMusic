@@ -1,0 +1,83 @@
+
+<style>
+
+.user {
+  width: 65px;
+  height: 65px;
+}
+
+#post {
+ width: 500px;
+ height: 65px !important; 
+}
+
+.post_btn {
+  background-repeat: repeat-x;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+}
+</style>
+
+
+
+<!-- -->
+  <div class="row-fluid">
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+            <tr>
+              <td>
+                <!--img class="user" src="/images/users.png" / -->
+                <table style="width:100%"><form action="post" method="post">
+                  <tr>
+                    <td style="width:65px;vertical-align:top;"><img class="user" src="<%= @image_url %>" /></td>
+                    <td><textarea name="post" id="post"></textarea></td>
+                  </tr>
+                  <input type="hidden" name="product_id" value="<%= @product_id %>" />
+                  <input type="hidden" name="parent_comment_id" value="<%= @parent_comment_id %>" />
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td><hr /></td>
+            </tr>
+            <tr>
+              <td style="vertical-align: top;">Posting as:&nbsp;
+                <font style="color:purple;"><%= Users.current_user.people.name %></font>&nbsp;(<a href="/users/logout">Not you?</a>)
+              </td>
+            </tr>
+            <tr>
+              <td><hr /></td>
+            </tr>
+            <tr>
+              <td>
+                <input type="submit" class="btn post_btn" style="width:100%;" value="Post" /></form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <table>                                                                 
+        <caption style="font-size:16px;color:Orange;">Categories</caption>      
+        <% (Songs.find(:all,:group => "genre") || []).each do |song| %>         
+          <tr>                                                                  
+            <td style="font-size:14px;color: blue;">                            
+              <a class="" href="/items/music/<%=song.genre%>"><%=song.genre%></a>
+            </td>                                                               
+          </tr>                                                                 
+        <%end%>                                                                 
+        </table>
+      </div>
+    </div>
+
+
+
+  </div>
+

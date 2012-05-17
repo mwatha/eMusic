@@ -1,0 +1,250 @@
+<script>
+ /* function addToCart(product_id) {
+    var quantity = document.getElementById("order_quantity").value;
+    document.location = "/products/add_to_cart?id=album&product_id=" + product_id + "&quantity=" + quantity;
+  } */
+</script>
+
+<style>
+
+.customer_comments {
+  font-family: Arial,Verdana,"Helvetica Neue",Helvetica,sans-serif;
+  font-size: 16px;
+  line-height: 21px;
+  color: #333333;
+}
+
+.container {
+  height: auto;
+}
+
+input, textarea, select, .uneditable-input {                                    
+   height: 30px !important;                                                      
+}
+
+#order_quantity {
+  width: auto;
+}
+
+.images {
+  /*width: 200px;
+  height: 150px;
+  color: #F5F5F5;
+  border-style: solid;
+  border-width: 1px;*/
+  
+  border-radius: 6px 6px 6px 6px;
+  height: 300px;
+  width: 300px;
+  vertical-align: top;
+}
+
+.item_description {
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
+.image_container {
+  width: 300px;
+  vertical-align: top;
+}
+
+.zebra-striped {
+  width: 100%;
+}
+
+.details {
+  width: 200px;
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.4em;
+  color: #222222;
+  font-size: 12px;
+}
+
+.artist_row {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  line-height: 3;
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+<div class="row-fluid">
+
+
+    <div class="span9">
+      <div class="well sidebar-nav">
+        <table class="zebra-striped">
+          <tbody>
+          <%(@product || []).each do |attributes|%>
+          <tr class="artist_row">
+            <td class="image_container"><img src="<%=attributes[:url]%>" / class="images"></td>
+            <td class="item_description">
+              <% unless @product.blank? %>
+                <font style="font-size:15px;color:purple;"><%=@product[0][:product]%></font></font><br />
+                <font style="font-size:20px;color:orange;"><%=@product[0][:title]%></font></font><p />
+              <%end%></p>
+              <%=attributes[:description]%>
+            </td>
+            <td class="details">
+              <% quantity = attributes[:quantity].to_i rescue 0
+                 price = attributes[:price] 
+                 product_available_quantity = []
+                 (1.upto(quantity)).each do | number |
+                  product_available_quantity << number
+                 end
+                 product_available_quantity = ['None'] if product_available_quantity.blank?
+              %>
+              <p style="color:orange;font-size:20px;"><font style="color:black;">Price:</font>&nbsp;$<%= price %></p>
+              <p style="">Quantity:&nbsp;<%= select_tag "order[quantity]", options_for_select(product_available_quantity[0..99])%></p>
+              <p style=""><a class="btn" href="#" onclick="addToCart(<%=@product[0][:product_id]%>)">Add to Cart</a></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="3">Click <a href="/blog/post/<%=@product[0][:product_id]%>">here</a> to comment on this product ....</td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <%end%>
+          </tbody>
+        </table><br />
+        <% if not @product.blank? and @product_type == "Audio CD album" %>
+          <font style="font-size:14px;color: blue;">
+          <%=@product[0][:product]%> - <%= @product[0][:title] %> Album Track Listing
+          </font>
+        <%end
+        if not @product.blank? and @product_type == "Audio CD album" %>
+        <table class="zebra-striped table-striped">
+          <tbody style="">
+          <tr style="background-color:#709BCE !important;color: black;">
+            <th style="background-color:#709BCE;">&nbsp;</th>
+            <th style="background-color:#709BCE;padding-top:8px;text-align:left;font-size:12px;" valign="top">Song title</th>
+            <th style="background-color:#709BCE;padding-top:8px;text-align:center;font-size:12px;" valign="top">Time</th>
+            <th style="background-color:#709BCE;padding-top:8px;text-align:center;font-size:12px;" valign="top">Price</th>
+            <th style="background-color:#709BCE;">&nbsp;</th>
+          </tr>
+          <%(@songs || {}).sort{|a,b|(a[1][:track_number].to_i rescue 0)<=>(b[1][:track_number].to_i rescue 0)}.each do |song_id,attributes| %>
+            <tr>
+              <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:track_number]%></td>
+              <td style="color: #222222;font-size: 12px;"><%=attributes[:title]%></td>
+              <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:time].to_time.strftime("%M:%S") rescue nil%></td>
+              <td style="color: #222222;font-size: 12px;text-align: center;"><%=attributes[:price]%></td>
+              <td align="right"><a class="btn" href="/order/buy_song/<%=attributes[:product_id]%>">Buy song</a></td>
+            </tr>
+          <%end rescue nil%>
+          </tbody>
+        </table>
+        <%end%>
+        <div>&nbsp;</div>
+        <span class="customer_comments">Customer comments</span>
+
+
+
+<!-- starts --->
+
+
+
+<table class="zebra-striped">
+          <tbody>
+            <%(@comments || []).each do |comment| 
+              product = Product.find(comment.product_id)
+            %>
+            <tr>
+              <td class="comments">
+                <table style="width:100%">
+                  <tr>  
+                    <td style="vertical-align:top;width:65px;">
+                      <img align="left" class="user" src="<%=product.image_url%>" />
+                    </td>
+                    <td style="vertical-align:top;">
+                      <font style="color:Orange;"><%= People.find(Users.find(comment.creator).people_id).name %></font>&nbsp;
+                      &nbsp;@<font style="color:purple;"><%=comment.date_created.strftime('%H:%M:%S')%>&nbsp;
+                      <%=comment.date_created.strftime('%A %d %B %Y')%></font>&nbsp;..<br />
+                      <%= comment.comment %><br />
+                      <a href="/blog/post?id=<%=comment.product_id%>&parent_comment_id=<%=comment.id%>">Comment</a> ....
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><hr /></td>
+                  </tr>
+                  <% comment.sub_comments.each do |c| %>
+                    <tr>
+                      <td colspan="2" style="font-size: 13px !important;">
+                        <font style="color:orange;"><%= c[1] %></font>
+                        &nbsp;@<font style="color:purple;"><%=c[2].strftime('%H:%M:%S')%>&nbsp;
+                        <%=c[2].strftime('%A %d %B %Y')%></font>&nbsp;..<br />
+                        <%= c[0] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><hr /></td>
+                    </tr>
+                  <%end%>
+                </table>  
+
+
+
+
+
+
+<!-- ends --->
+
+
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <table>
+        <caption><a style="font-size:16px;color:Orange;" href="/products/music">Music</a></caption>
+        <% (Albums.find(:all,:group => "genre") || []).each do |album| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/music/<%=album.genre%>"><%=album.genre%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table><br />
+        <table>
+        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/dvd">Video</a></caption>
+        <% (Video.find(:all,:group => "category") || []).each do |video| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/dvd/<%=video.category%>"><%=video.category%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table><br />
+        <table>
+        <caption style="text-align:left;"><a style="font-size:16px;color:Orange;" href="/products/electronics">Electronics</a></caption>
+        <% (Gadget.find(:all,:group => "brand_name") || []).each do |gadget| %>
+          <tr>
+            <td style="font-size:14px;color: blue;">
+              <a class="" href="/products/electronics/<%=gadget.brand_name%>"><%=gadget.brand_name%></a>
+            </td>
+          </tr>
+        <%end%>
+        </table>
+      </div>
+    </div>
+
+
