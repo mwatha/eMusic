@@ -35,8 +35,16 @@
                       &nbsp;@<font style="color:purple;font-size:12px!important;">
                       <%=comment.date_created.strftime('%H:%M:%S')%>&nbsp;
                       <%=comment.date_created.strftime('%A %d %B %Y')%></font>&nbsp;..<br />
-                      <font style="font-size:12px!important;"><%= comment.comment %></font><br />
-                      <a href="/blog/post?id=<%=comment.product_id%>&parent_comment_id=<%=comment.id%>">Comment</a> ....
+                      <font style="font-size:12px!important;"><%= comment.comment %></font><br /><br />
+                      <% unless Users.current_user.blank? %>
+                        <font style="font-size:12px!important;bottom:6px;position: relative;">
+                          <a href="/blog/post?id=<%=comment.product_id%>&parent_comment_id=<%=comment.id%>">Comment</a> ....
+                        </font>
+                      <%else%>
+                        <font style="font-size:12px!important;bottom:6px;position: relative;">
+                          <a href="/users/login">Login</a> to comment ....
+                        </font>
+                      <%end%>
                     </td>
                   </tr>
                   <tr>

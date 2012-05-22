@@ -49,11 +49,23 @@ h1 {
 </style>
 
 <script>
-  function submitForm() {
-    form = document.getElementById("customer");
-    form.submit();
-  }
-
+  function validateForm(){                                                      
+    pin = document.getElementById('account_pin_number');                        
+    card = document.getElementById('account_visa');                             
+    card_number = document.getElementById('account_card_number');               
+                                                                                
+    if(card.value == 'Select a card') {                                   
+      alert("Please select a card type...");                                    
+      return false;                                                             
+    }else if(card_number.value == '') {                                         
+      alert("Please enter your card number number ...");                        
+      return false;                                                             
+    }else if(pin.value == '') {                                                 
+      alert("Please enter pin number ...");                                     
+      return false;                                                             
+    }                                                                           
+    return true;                                                                
+   }               
 </script>
 
 </head>
@@ -63,7 +75,7 @@ h1 {
 <div id="page-container" class="wrapper profile-container">
 
 <h1>Enter bank account details.</h1>                                              
-<form action="/order/buy_song" method="post" id = "customer">              
+<form action="/order/buy_song" method="post" id = "customer" onSubmit="return validateForm();">              
 <table class="user-details">
 <%
   cards = ["Select a card","Visa","Credit card"]
@@ -75,15 +87,15 @@ h1 {
   <td><%=text_field(:account,:card_number,:placeholder => "Card number") %></td>    
 </tr> 
 <tr>                                                                  
-  <td><%=text_field(:account,:pin_number,:placeholder => "Pin number") %></td>    
+  <td><%=password_field(:account,:pin_number,:placeholder => "Pin number") %></td>    
 </tr> 
 <tr>                                                                  
   <td><hr /></td>    
 </tr> 
 <tr>                                                                  
-  <td style="float:right;position:absolute;width: 99%;;">                         
-    <a class="btn make_order_btn button" href="#" onclick="submitForm();"><span>Buy song</span></a>
-  </td>                                                               
+  <td style="float:right;position:absolute;width: 99%;">                       
+    <input type="submit" class="btn make_order_btn button" value="Buy song" style="width:100%;" />
+  </td>                                                         
 </tr> 
 </table>
 <input type="hidden" name="product_id" value="<%=@product_id%>" />

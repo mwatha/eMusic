@@ -171,6 +171,11 @@ EOF
     product_order.total_cost = (quantity * product.price).to_f
     product_order.description = ""
     product_order.save
+
+    if not product.product_category == ProductCategory.find_by_name('Audio Song').id
+      product.quantity = (product.quantity - quantity)
+      product.save
+    end
   end
 
   def start_download(song)

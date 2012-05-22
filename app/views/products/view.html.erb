@@ -130,7 +130,13 @@ input, textarea, select, .uneditable-input {
             <td colspan="3">&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="3">Click <a href="/blog/post/<%=@product[0][:product_id]%>">here</a> to comment on this product ....</td>
+            <td colspan="3">
+              <% unless Users.current_user.blank? %>
+              Click <a href="/blog/post/<%=@product[0][:product_id]%>">here</a> to comment on this product ....
+              <%else%>
+                <a href="/users/login">Login</a> to leave a comment ....
+              <%end%>
+            </td>
           </tr>
           <tr>
             <td colspan="3">&nbsp;</td>
