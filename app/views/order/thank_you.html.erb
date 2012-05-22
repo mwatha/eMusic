@@ -77,7 +77,7 @@
   <%
     total_cost = 0 ; (@orders || []).each do | order |%>                        
     <tr>                                                                        
-      <td><%=order[0]%></td>                                    
+      <td><%= (order[0] + " - " + order[1]) %></td>                                    
       <td style="text-align: right;">$<%=order[3]%></td>                         
       <td style="text-align: right;"><%=order[2]%></td>                        
       <td style="text-align: right;">$<%=(order[3] * order[2])%></td>                         
