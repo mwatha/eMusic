@@ -33,9 +33,8 @@ function addToCart(product_id) {
           if(results.length > 0) {
             html2 += "<ul class='dropdown-menu'>";
             html2 += html;
-            html2 += "<li><a href='/'>View all</a></li>";
             html2 += "<li><a href='/order/view'>Finish shopping</a></li>";
-            html2 += "<li><a href='/'>Clear Cart</a></li>";
+            html2 += "<li><a href='javascript:clearCart();'>Clear Cart</a></li>";
             document.getElementById("cart").innerHTML = html2;          
           }
         }                                                                         
@@ -54,4 +53,23 @@ function addToCart(product_id) {
 
 
 
-
+  function clearCart() {
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari  
+      xmlhttp=new XMLHttpRequest();                                             
+    }else{// code for IE6, IE5                                                  
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");                           
+    }                                                                           
+    xmlhttp.onreadystatechange=function() {                                     
+      if (xmlhttp.readyState===4 && xmlhttp.status===200) {                     
+        var results = eval(xmlhttp.responseText);                               
+        if(results) {                                                           
+          var html = "<a class='dropdown-toggle' href='#' data-toggle='dropdown'>Cart&nbsp;(0)<b class='caret'></b></a>";
+          document.getElementById("cart").innerHTML = html;          
+        }                                                                       
+      }                                                                         
+    }            
+                                                                              
+    var url = "/application/clear_cart";
+    xmlhttp.open("GET",url,true); 
+    xmlhttp.send();
+  } 

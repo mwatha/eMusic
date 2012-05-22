@@ -121,4 +121,9 @@ class ApplicationController < ActionController::Base
     session[:cart] = session[:cart].uniq                                        
   end 
 
+  def clear_cart
+    session[:cart] = nil
+    render :text => "cleared".to_json and return
+  end
+
 end
