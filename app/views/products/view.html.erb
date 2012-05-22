@@ -120,10 +120,18 @@ input, textarea, select, .uneditable-input {
                   product_available_quantity << number
                  end
                  product_available_quantity = ['None'] if product_available_quantity.blank?
+                 disabled = false
+                 disabled = true if product_available_quantity === ['None']
               %>
               <p style="color:orange;font-size:20px;"><font style="color:black;">Price:</font>&nbsp;$<%= price %></p>
               <p style="">Quantity:&nbsp;<%= select_tag "order[quantity]", options_for_select(product_available_quantity[0..99])%></p>
-              <p style=""><a class="btn" href="#" onclick="addToCart(<%=@product[0][:product_id]%>)">Add to Cart</a></p>
+              <p style="">
+                <%if not disabled %>
+                  <a class="btn" href="javascript:addToCart(<%=@product[0][:product_id]%>)">Add to Cart</a>
+                <%else%>
+                  <button class="btn" disabled="disabled">Add to Cart</button>
+                <%end%>
+              </p>
             </td>
           </tr>
           <tr>

@@ -1,9 +1,9 @@
 class OrderController < ApplicationController
   def view
     @orders = []
-    music = ProductCategory.find_by_name("Audio CD album")                      
-    video = ProductCategory.find_by_name("Video")                               
-    gadget = ProductCategory.find_by_name("Gadget")
+    music_category = ProductCategory.find_by_name("Audio CD album")             
+    video_category = ProductCategory.find_by_name("Video")                      
+    gadget_category = ProductCategory.find_by_name("Gadget")
 
     (session[:cart] || []).each do |cart|
       type = cart.split(":")[0]                                                 
@@ -14,15 +14,15 @@ class OrderController < ApplicationController
         next if product_id == '0'
 
         product = Product.find(product_id)                                      
-        if product.product_category == music.id                                 
+        if product.product_category == music_category.id                                 
           album = Albums.find_by_product_id(product.id)                         
           album_price = Product.find(album.product_id).price                  
           @orders << [album.artist,album.album_title,album_price,quantity,(quantity * album_price).to_f,album.product_id]
-        elsif product.product_category == video.id                                  
+        elsif product.product_category == video_category.id                                  
           video = Video.find_by_product_id(product.id)                         
           video_price = Product.find(video.product_id).price                  
           @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f,video.product_id]
-        elsif product.product_category == gadget.id                                  
+        elsif product.product_category == gadget_category.id                                  
           gadget = Gadget.find_by_product_id(product.id)                         
           gadget_price = Product.find(gadget.product_id).price                  
           @orders << [gadget.name,gadget.version,gadget_price,quantity,(quantity * gadget_price).to_f,gadget.product_id]
@@ -32,10 +32,6 @@ class OrderController < ApplicationController
   end
 
   def create
-    #music = ProductCategory.find_by_name("Audio CD album")                      
-    #video = ProductCategory.find_by_name("Video")                               
-    #gadget = ProductCategory.find_by_name("Gadget")
-
     create_identifier("Zip code", params[:address]["zip_code"])
     create_identifier("Phone number", params[:address]["phone_number"])
     create_identifier("Mailing address", params[:address]["mailing_address"])
@@ -48,24 +44,17 @@ class OrderController < ApplicationController
     @order.start_date = Time.now()
     @order.end_date = Time.now() + 2.week
     @order.save
+    count = 0
 
     (session[:cart] || []).each do |cart|
       type = cart.split(":")[0]                                                 
       if type.match(/product_id/i)                                                
         product_id = cart.split(":")[1]                                           
-
         next if product_id == '0'
-
         quantity = cart.split(":")[3].to_i                                          
         product = Product.find(product_id)                                      
         create_order(@order,product,quantity) 
-=begin
-        if product.product_category == music.id
-          @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f]
-        elsif product.product_category == video.id
-          @orders << [video.title,video.category,video_price,quantity,(quantity * video_price).to_f]
-        end
-=end
+        count+=1
       end
     end
 

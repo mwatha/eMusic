@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+=begin
   def login
     #render :layout => false
   end
+=end
 
   def signup
     @terms_of_condtion =<<EOF
@@ -35,7 +37,7 @@ EOF
     person = People.new()
     person.first_name = params[:user]["first_name"]
     person.last_name = params[:user]["last_name"]
-    person.birthdate = params[:user]["birtdate"]
+    person.birthdate = params[:user]["dob"]
     person.gender = params[:user]["gender"]
     person.save
     
@@ -69,14 +71,13 @@ EOF
     else
       user = Users.new(params[:user])
       logged_in_user = user.try_to_login
-      if logged_in_user
+      if not logged_in_user.blank?
         session[:user_id] = logged_in_user.user_id
         redirect_to("/") and return
       else
         flash[:error] = "Invalid username or password"
       end      
     end
-    #render :layout => false
   end
 
   def settings
@@ -111,6 +112,14 @@ EOF
 
     redirect_to :action => 'settings',:id =>'contact_details' and return
   end
-
+  
+  def validate_username
+    user = Users.find(:first,:conditions => ["username = ?",params[:username]])
+    if user
+      render :text =>'not validate'.to_json and return
+    else
+      render :text =>'valide'.to_json and return
+    end
+  end
 
 end

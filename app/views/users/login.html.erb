@@ -158,6 +158,10 @@ label, input, textarea, select, button {
   
     <div class="front-card">
         
+      <% if flash[:error] %>                                                     
+        <font id="flash" style="color:red;"><%= flash[:error] %></font>            
+      <% end %>                                         
+    
 
       <div class="front-welcome">
         <div class="front-welcome-text">
@@ -167,7 +171,6 @@ label, input, textarea, select, button {
         </div>
       </div>
 
-    
       <div class="front-signin js-front-signin">
        <form action="/users/login" method="post" id="customer">
        <table class="flex-table password-signin">

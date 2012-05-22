@@ -22,9 +22,9 @@ class ApplicationController < ActionController::Base
 
   def intialize_cart
     @cart = []                                                                  
-    music = ProductCategory.find_by_name("Audio CD album")
-    video = ProductCategory.find_by_name("Video")
-    gadget = ProductCategory.find_by_name("Gadget")
+    music_category = ProductCategory.find_by_name("Audio CD album")
+    video_category = ProductCategory.find_by_name("Video")
+    gadget_category = ProductCategory.find_by_name("Gadget")
 
     (session[:cart] || []).each do |cart|   
       type = cart.split(":")[0]                                                 
@@ -33,13 +33,13 @@ class ApplicationController < ActionController::Base
         quantity = cart.split(":")[3]                                           
         next if product_id == "0"                                  
         product = Product.find(product_id) rescue nil
-        if product.product_category == music.id                                     
+        if product.product_category == music_category.id                                     
           album = Albums.find_by_product_id(product.id)
           @cart << ["#{album.artist}::#{album.album_title}::#{quantity}::#{product.id}"]                      
-        elsif product.product_category == video.id                                     
+        elsif product.product_category == video_category.id                                     
           video = Video.find_by_product_id(product.id)
           @cart << ["#{video.title}::#{video.category}::#{quantity}::#{product.id}"]                      
-        elsif product.product_category == gadget.id                                     
+        elsif product.product_category == gadget_category.id                                     
           gadget = Gadget.find_by_product_id(product.id)
           @cart << ["#{gadget.name}::#{gadget.version}::#{quantity}::#{product.id}"]                      
         end
@@ -73,9 +73,9 @@ class ApplicationController < ActionController::Base
     end                                                                         
     session[:cart] = []                                                         
     roundedOrders.each do |key , quantity|                                      
+      next if key == 'product_id:0'
       session[:cart] << "#{key}:quantity:#{quantity}"                           
     end                                                                         
-    session[:cart] = session[:cart].uniq                                        
     render :text => intialize_cart.to_json and return                           
   end
 

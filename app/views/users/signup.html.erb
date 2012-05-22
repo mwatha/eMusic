@@ -1,11 +1,13 @@
 <script>
 
   function setAttributes() {
-    var scroller = document.getElementsByClassName("scroller")[0]
-    var tos = document.getElementsByClassName("tos")[0]
-    tos.style.height = "105px";
-    scroller.style.height = "79px";
-    tos.style.display = "block";
+    try {
+      var scroller = document.getElementsByClassName("scroller")[0]
+      var tos = document.getElementsByClassName("tos")[0]
+      tos.style.height = "105px";
+      scroller.style.height = "79px";
+      tos.style.display = "block";
+    }catch(e) {}
   }
 
   function showAll() {
@@ -21,9 +23,11 @@
   }
 
   function updateDOB() {
-    var dob = document.getElementsByClassName("span2")[0].value;
-    document.getElementById("dob_disabled").value = dob;
-    document.getElementById("user_birtdate").value = dob;
+    try {
+      var dob = document.getElementsByClassName("span2")[0].value;
+      document.getElementById("dob_disabled").value = dob;
+      document.getElementById("user_birtdate").value = dob;
+    }catch(e) {}
   }
 
   function checkBox(element) {
@@ -33,6 +37,66 @@
       document.getElementById("signup").disabled = true;                           
     }
   }
+
+  function validateForm(){                                                      
+    fname = document.getElementById('user_first_name');                    
+    lname = document.getElementById('user_last_name');                        
+    sex = document.getElementById('user_gender');               
+    dob = document.getElementById('user_dob');                           
+    email = document.getElementById('user_email');                          
+    username = document.getElementById('user_username');                             
+    password = document.getElementById('user_password');               
+    password2 = document.getElementById('user_retype_password');               
+                                                                                
+    if(fname.value == '') {                                                     
+      alert("Please enter first name ...");                                   
+      return false;                                                             
+    }else if(lname.value == '') {                                   
+      alert("Please enter last name...");                                    
+      return false;                                                             
+    }else if(sex.value == 'Select sex') {                                         
+      alert("Please select sex ...");                        
+      return false;                                                             
+    }else if(dob.value == '') {                                                 
+      alert("Please enter birthdate ...");                                     
+      return false;                                                             
+    }else if(email.value == '') {                                               
+      alert("Please enter your email address ...");                             
+      return false;                                                             
+    }else if(username.value == '') {                                                 
+      alert("Please enter username ...");                                       
+      return false;                                                             
+    }else if(password.value == '') {                                             
+      alert("Please enter password ...");                                
+      return false;                                                             
+    }else if(password.value != password2.value) {                                             
+      alert("The two passwords do not match ...");                                
+      return false;                                                             
+    } 
+
+
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();                                             
+    }else{// code for IE6, IE5                                                  
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");                           
+    }                                                                           
+    xmlhttp.onreadystatechange=function() {                                     
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {                       
+        var results = xmlhttp.responseText;                                     
+        if(results == 'undefined' || results == '' || results == '"not validate"') {                           
+          alert("The username is not available, please try another one")      
+          return false;                                                               
+        }else{ 
+          document.getElementById('customer').submit();                                                           
+          return true;                                                               
+        }                                                                       
+      }                                                                         
+    }                                                                           
+    xmlhttp.open("GET","/users/validate_username?username="+username.value,true);           
+    xmlhttp.send();      
+                                                                          
+    return false;                                                                
+   }
 </script>
 
 <style>
@@ -196,7 +260,7 @@ h1 {
 
 <div class="front-card">
  <h1>Join eMusic today.</h1>   
- <form action="/users/create" method="post" id = "customer">
+ <form action="/users/create" method="post" id = "customer" onSubmit="return validateForm();">
  <table class="user-details">                               
   <tbody>                                                                 
     <tr>                                                                  
@@ -252,8 +316,8 @@ h1 {
     </tr>                                                                 
     <tr>                                                                  
       <td style="float:right;position:absolute;width:99%;">              
-        <button id="signup" disabled="disabled" 
-          class="btn signup_btn" onclick="submitForm();">Sign up for eMusic</button>
+        <input type="submit" id="signup" disabled="disabled" 
+          class="btn signup_btn" value="Sign up for eMusic" style="width:100%;" />
       </td>                                                               
     </tr>                                                                 
   </tbody>                                                                
