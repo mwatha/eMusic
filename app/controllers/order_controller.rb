@@ -95,7 +95,7 @@ EOF
     if request.post?
       order = Order.new()                                                        
       order.order_status = 0                                                     
-      order.orderer = Users.current_user.id                                      
+      order.orderer = (Users.current_user.id rescue 0)                                      
       order.start_date = Time.now()                                              
       order.end_date = Time.now()                                     
       order.save
